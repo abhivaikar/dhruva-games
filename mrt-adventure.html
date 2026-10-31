@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf7f0">
+  <meta name="description" content="All aboard! Explore Singapore's North-East Line with Dhruva, one little maths adventure at a time.">
+  <title>Dhruva's MRT Adventure</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Back to all games">
+        <img src="./assets/favicon.svg" width="45" height="45" alt="">
+        <span>Dhruva’s<span class="brand-second">← ALL GAMES</span></span>
+      </a>
+      <div class="header-actions">
+        <button class="icon-button" id="sound" type="button" aria-label="Turn sound off" aria-pressed="true"></button>
+        <button class="icon-button" id="settings-open" type="button" aria-label="Journey settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div><p class="eyebrow">A LITTLE MATHS. A BIG ADVENTURE.</p><h1 id="page-title">Let’s ride, <span>Dhruva!</span> <span class="wave" aria-hidden="true">✦</span></h1><p class="intro-copy">Next stop: something wonderful.</p></div>
+        <div class="line-pill"><span class="line-symbol">NE</span><span>North-East Line<small>Punggol Coast <span aria-hidden="true">→</span> HarbourFront</small></span></div>
+      </section>
+
+      <div class="game-grid">
+        <section class="journey-scene" id="scene" aria-label="Your train journey">
+          <div class="scene-top"><span class="scene-label"><span class="status-dot"></span><span id="scene-status">READY TO ROLL</span></span><span class="scene-count" id="scene-count">17 stops of fun</span></div>
+          <div class="station-sign"><span class="station-code" id="station-code">NE18</span><div><small id="station-prefix">YOUR ADVENTURE STARTS AT</small><h2 id="station-name">Punggol Coast</h2></div></div>
+          <div id="scenery" class="scenery" aria-hidden="true"></div>
+          <div id="souvenir-peek" class="souvenir-peek"></div>
+          <div id="train-greeting" class="train-greeting" aria-hidden="true"></div>
+          <button type="button" class="train-wrap" id="train" aria-label="Ring Pip the train’s bell">
+            <svg class="train" viewBox="0 0 610 160">
+              <defs><linearGradient id="body" x2="0" y2="1"><stop stop-color="#fffef9"/><stop offset="1" stop-color="#eae9e8"/></linearGradient></defs>
+              <ellipse cx="304" cy="146" rx="275" ry="9" fill="#4a3e4d" opacity=".12"/>
+              <g fill="#364350"><rect x="59" y="121" width="48" height="22" rx="10"/><rect x="200" y="121" width="48" height="22" rx="10"/><rect x="352" y="121" width="48" height="22" rx="10"/><rect x="502" y="121" width="48" height="22" rx="10"/></g>
+              <rect x="267" y="65" width="26" height="59" rx="6" fill="#6c6580"/>
+              <path d="M36 29h215q18 0 18 20v78H20V49q0-20 16-20z" fill="url(#body)" stroke="#d1d5d6" stroke-width="2"/>
+              <path d="M308 29h215q39 0 56 40l15 38q8 20-12 20H291V49q0-20 17-20z" fill="url(#body)" stroke="#d1d5d6" stroke-width="2"/>
+              <path d="M20 101h249v16H20zm271 0h301q5 8 1 16H291z" fill="var(--train-colour, #8956b8)"/>
+              <path d="M22 119h247v8H22zm269 0h300v8H291z" fill="var(--train-accent, #b690d2)"/>
+              <g fill="#bddce0" stroke="#94beca" stroke-width="2"><rect x="37" y="47" width="51" height="39" rx="9"/><rect x="105" y="47" width="46" height="39" rx="9"/><rect x="205" y="47" width="46" height="39" rx="9"/><rect x="311" y="47" width="48" height="39" rx="9"/><rect x="375" y="47" width="48" height="39" rx="9"/><rect x="473" y="47" width="38" height="39" rx="9"/></g>
+              <g fill="#d9e8e8" stroke="#b5c7ce" stroke-width="2"><rect x="165" y="43" width="27" height="79" rx="5"/><rect x="435" y="43" width="25" height="79" rx="5"/></g>
+              <path d="M178 47v71m269-71v71" stroke="#bbcdd0" stroke-width="2"/>
+              <path d="M529 45q25 6 37 35h-37q-5 0-5-5V50q0-6 5-5z" fill="#344d64"/>
+              <path d="M536 49q15 6 23 24h-23z" fill="#5c7a8c"/>
+              <g fill="#fff" opacity=".55"><path d="M43 50h13L42 80V55zm68 0h10l-11 28zm206 0h10l-11 29zm64 0h10l-11 29z"/></g>
+              <rect x="552" y="92" width="17" height="9" rx="4" fill="#f8c76c"/>
+              <path d="M575 104q-4 9-14 8" fill="none" stroke="#4e3d64" stroke-width="3" stroke-linecap="round"/>
+              <rect x="330" y="18" width="136" height="17" rx="6" fill="#6d4a97"/><text x="398" y="30" text-anchor="middle" font-size="9" fill="#fff" font-family="sans-serif" letter-spacing="2">NORTH EAST LINE</text>
+              <g><circle cx="129" cy="69" r="10" fill="#e6ac7b"/><path d="M119 65q1-14 12-9 10 1 8 13l-8-6-12 2" fill="#453c46"/><path d="M117 86q1-12 12-12t12 12" fill="#edab59"/><circle cx="126" cy="68" r="1.2" fill="#453c46"/><circle cx="133" cy="68" r="1.2" fill="#453c46"/><path d="M127 72q3 3 5 0" stroke="#453c46" fill="none"/></g>
+            </svg>
+          </button>
+          <div class="scene-bottom"><span class="scene-caption" id="scene-caption">A little adventure begins here.</span><span class="tiny-sparkle" aria-hidden="true">✦</span></div>
+        </section>
+
+        <section class="challenge-card" id="challenge" aria-label="Maths adventure"></section>
+      </div>
+
+      <section class="route-card" aria-labelledby="route-title">
+        <div class="route-heading"><h2 id="route-title">Your explorer passport</h2><span id="route-progress">17 little treasures to discover</span></div>
+        <div class="route-scroll" id="route-scroll" role="region" aria-label="All stations from Punggol Coast to HarbourFront" tabindex="0"><ol class="route" id="route"></ol></div>
+        <div class="route-footer"><span><span class="purple-dot"></span> Towards HarbourFront</span><span id="stamp-count">A surprise at every stop!</span></div>
+      </section>
+      <footer class="page-footer"><span>Made for little minds & big imaginations.</span><span class="keyboard-tip"><kbd>←</kbd> <kbd>→</kbd> choose <span class="tip-dot">·</span> <kbd>space</kbd> answer</span><span class="mobile-tip">Tap, count & explore <span aria-hidden="true">♡</span></span></footer>
+    </main>
+  </div>
+
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog"><div class="dialog-heading"><div><p class="eyebrow">FOR YOUR LITTLE EXPLORER</p><h2 id="settings-title">Journey settings</h2></div><button class="icon-button close-button" aria-label="Close settings" value="close">×</button></div>
+    <fieldset><legend>Choose a little challenge</legend><div id="difficulty-options"></div></fieldset>
+    <p class="settings-note" id="settings-note">Choose the maths for your next adventure.</p>
+    <p class="settings-help">No timers. Unlimited tries. Every little step counts.<br>Sound includes spoken questions and gentle chimes.</p>
+    <button class="primary-button" value="done">Ready to ride <span aria-hidden="true">→</span></button></form>
+  </dialog>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <p id="announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <noscript><p class="noscript">Please enable JavaScript to play Dhruva’s MRT Adventure.</p></noscript>
+</body>
+</html>

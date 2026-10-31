@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf7f0">
+  <title>Let’s play · Dhruva’s Discovery Club</title>
+  <link rel="icon" href="./assets/club.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./club.css">
+  <script type="module" src="./src/club/play.js"></script>
+</head>
+<body class="club play-page">
+  <div class="club-shell">
+    <header class="club-header"><a class="club-brand" href="./"><img src="./assets/club.svg" width="43" height="43" alt=""><span>Dhruva’s<small>DISCOVERY CLUB</small></span></a><div class="play-header-actions"><a class="back-link" href="./">← All games</a><button id="club-sound" class="round-button" type="button" aria-label="Turn sound off" aria-pressed="true">♪</button></div></header>
+    <main id="play-root" tabindex="-1"></main>
+    <footer class="club-footer"><span>Little steps. Lovely discoveries.</span><a href="./">Choose another adventure ↗</a></footer>
+  </div>
+  <p id="club-announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <div id="club-confetti" class="club-confetti" aria-hidden="true"></div>
+  <noscript><p class="no-script">Please enable JavaScript to play the games.</p></noscript>
+</body>
+</html>

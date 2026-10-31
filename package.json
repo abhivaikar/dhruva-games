@@ -1,0 +1,14 @@
+{
+  "name": "dhruvas-discovery-club",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Playful Singapore transport, primary maths, maps and flag games.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=22" }
+}
