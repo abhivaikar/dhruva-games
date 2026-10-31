@@ -6,7 +6,8 @@ import { flagsDeck, transportDeck, worldDeck } from './decks.js';
 import { mathsDeck, MATH_LEVELS } from './maths.js';
 import { WORLD_PATHS } from './data/world-paths.js';
 import { project } from './data/countries.js';
-import { TreasureTrail, TREASURES, ROCKS, DIRECTIONS, coordinate } from './treasure.js';
+import { TreasureTrail, DIRECTIONS, islandPath } from './treasure.js';
+import { trailGame, trailClue, treasureSceneArt } from './treasure-view.js';
 import { ROUTE } from '../route.js';
 import { AudioGuide } from '../audio.js';
 
@@ -23,12 +24,15 @@ let mathLevel = 'lower';
 let feedback = '';
 let keyboardMode = false;
 let recorded = false;
+let trailHint = false;
+let trailWalking = false;
+let voyageVersion = 0;
 
 const DESCRIPTIONS = {
   transport: { symbol: '🚆', eyebrow: 'YOU’RE THE DISPATCHER', title: 'Let’s get Singapore moving!', text: 'Follow real station names, read the train display, and discover MRT lines and buses.', button: 'Start dispatching', finish: 'Brilliant dispatching!', reward: 'Eight little missions. Singapore’s rides are in good hands.' },
   maths: { symbol: '🚀', eyebrow: 'SMALL SUMS. BIG IDEAS.', title: 'Let’s build a rocket!', text: 'Each puzzle adds a little spark to your rocket. Choose a practice level and take your time.', button: 'Start building', finish: 'Ready for lift-off!', reward: 'Eight puzzles solved. A rocket full of brilliant ideas.' },
   'world-map': { symbol: '🌍', eyebrow: 'A LITTLE TRIP AROUND THE WORLD', title: 'Where shall we explore?', text: 'Find the country on a real world map. Tap a highlighted place or its A, B, C button.', button: 'Explore the world', finish: 'Wonderful world explorer!', reward: 'Eight countries discovered. There’s a whole world to wonder about.' },
-  'treasure-map': { symbol: '🧭', eyebrow: 'YOUR COMPASS IS READY', title: 'An island full of treasure!', text: 'Find the square in your clue. Use the arrows to walk, then dig. Letters go across; numbers go down.', button: 'Explore the island', finish: 'Treasure trail complete!', reward: 'Four hidden treasures! Your compass and map led the way.' },
+  'treasure-map': { symbol: '🏴‍☠️', eyebrow: 'CAPTAIN DHRUVA & THE LOST SUNSTONE', title: 'A secret map. A legendary treasure.', text: 'Set sail with Pepper the parrot! Explore a mysterious island, find three map pieces and shape keys, then crack the vault. Watch for sparkle shells and a turtle who needs a friend.', button: 'Set sail, Captain!', finish: 'The Sunstone is yours!', reward: 'Three map pieces. Three magical keys. One brilliant captain.' },
   flags: { symbol: '⚑', eyebrow: 'CALLING ALL FLAG DETECTIVES', title: 'Spot a little clue!', text: 'Look for colours, shapes and stars. Match flags and countries to collect eight little postcards.', button: 'Start discovering', finish: 'Fantastic flag detective!', reward: 'Eight flag postcards collected. What colourful discoveries!' },
 };
 
@@ -50,12 +54,17 @@ function intro(status = 'A little adventure awaits') {
 }
 
 function setup() {
+  audio.stop();
+  $('#club-confetti').replaceChildren();
+  voyageVersion++;
+  trailWalking = false;
+  trailHint = false;
   session = null;
   trail = null;
   feedback = '';
   keyboardMode = false;
   const description = DESCRIPTIONS[id];
-  root.innerHTML = `${intro()}<div class="play-arena" id="game-board"><div class="play-scene">${illustration(game.art)}</div><section class="play-panel" aria-labelledby="setup-title"><div class="setup-symbol" aria-hidden="true">${description.symbol}</div><p class="eyebrow">${description.eyebrow}</p><h2 id="setup-title">${description.title}</h2><p class="panel-copy">${description.text}</p>${id === 'maths' ? `<fieldset class="level-picker"><legend>Choose a little challenge</legend>${Object.entries(MATH_LEVELS).map(([value, level]) => `<label class="level-choice"><input type="radio" name="math-level" value="${value}" ${mathLevel === value ? 'checked' : ''}><span><strong>${level.label} · ${level.title}</strong><small>${level.description}</small></span></label>`).join('')}</fieldset>` : ''}<button class="club-primary" type="button" data-action="start">${description.button} <span aria-hidden="true">→</span></button><p class="setup-note">No rush. Every try helps you learn.</p></section></div>`;
+  root.innerHTML = `${intro()}<div class="play-arena" id="game-board"><div class="play-scene">${id === 'treasure-map' ? treasureSceneArt() : illustration(game.art)}</div><section class="play-panel" aria-labelledby="setup-title"><div class="setup-symbol" aria-hidden="true">${description.symbol}</div><p class="eyebrow">${description.eyebrow}</p><h2 id="setup-title">${description.title}</h2><p class="panel-copy">${description.text}</p>${id === 'maths' ? `<fieldset class="level-picker"><legend>Choose a little challenge</legend>${Object.entries(MATH_LEVELS).map(([value, level]) => `<label class="level-choice"><input type="radio" name="math-level" value="${value}" ${mathLevel === value ? 'checked' : ''}><span><strong>${level.label} · ${level.title}</strong><small>${level.description}</small></span></label>`).join('')}</fieldset>` : ''}<button class="club-primary" type="button" data-action="start">${description.button} <span aria-hidden="true">→</span></button><p class="setup-note">No rush. Every try helps you learn.</p></section></div>`;
 }
 
 function start() {
@@ -66,7 +75,7 @@ function start() {
   if (id === 'treasure-map') {
     trail = new TreasureTrail();
     renderTrail();
-    announce(`Find the treasure at ${trail.target}. Letters go across the top. Numbers go down the side. Use the arrows to move, then dig here.`);
+    announce(trailClue(trail));
   } else {
     const decks = { transport: transportDeck, flags: flagsDeck, 'world-map': worldDeck, maths: () => mathsDeck(mathLevel) };
     session = new RoundSession(decks[id]());
@@ -85,7 +94,7 @@ function speakQuestion() {
 }
 
 function mapScene(q) {
-  const colours = ['#ba86ac', '#e3b04f', '#6eaba8'];
+  const colours = ['#d74b9c', '#e3a621', '#139d9a'];
   return `<h3>A LITTLE WORLD. SO MUCH TO EXPLORE.</h3><svg class="world-map" viewBox="0 0 720 290" aria-label="World map with three highlighted locations" role="group">${WORLD_PATHS.map(country => `<path class="land-outline" d="${country.path}"/>`).join('')}${q.choices.map((choice, i) => {
     const [x, y] = project(choice.country.lon, choice.country.lat);
     const outline = WORLD_PATHS.find(item => item.id === choice.country.mapId);
@@ -155,49 +164,103 @@ function focusChoice() {
   buttons[session.selected]?.focus({ preventScroll: true });
 }
 
-function islandGrid() {
-  const found = TREASURES.slice(0, trail.completed);
-  const treasureFound = trail.phase === 'found';
-  const clue = treasureFound ? TREASURES[trail.completed - 1] : trail.target;
-  let cells = '<span></span>' + Array.from({ length: 5 }, (_, x) => `<span class="grid-heading">${String.fromCharCode(65 + x)}</span>`).join('');
-  for (let y = 0; y < 5; y++) {
-    cells += `<span class="grid-heading">${y + 1}</span>`;
-    for (let x = 0; x < 5; x++) {
-      const cell = coordinate(x, y);
-      const rock = ROCKS.includes(cell);
-      const here = trail.cell === cell;
-      const collected = found.includes(cell);
-      cells += `<button type="button" class="island-cell ${rock ? 'rock' : ''} ${here ? 'player' : ''} ${collected ? 'found' : ''}" data-cell="${cell}" aria-label="${cell}${here ? ', you are here' : rock ? ', rock' : collected ? ', treasure found' : ''}" ${rock || trail.phase !== 'exploring' ? 'disabled' : ''}><span aria-hidden="true">${here ? '🧭' : rock ? '⛰' : collected ? '🪙' : (x + y) % 4 === 0 ? '🌴' : ''}</span><span class="cell-code" aria-hidden="true">${cell}</span></button>`;
-    }
-  }
-  return `<div class="island-mobile-status"><span>${treasureFound ? 'FOUND IT!' : 'FIND THE TREASURE'}</span><strong>${clue}</strong><span>You are at <b>${trail.cell}</b></span></div><div class="compass-label">↑ NORTH · LETTERS ACROSS · NUMBERS DOWN</div><div class="island-grid" role="group" aria-label="Treasure island coordinates">${cells}</div><div class="island-mobile-ui">${treasureFound ? '' : `<div class="island-arrow-row" role="group" aria-label="Move your explorer">${[['north','↑'],['east','→'],['south','↓'],['west','←']].map(([direction, arrow]) => `<button type="button" data-direction="${direction}" aria-label="Move ${direction}">${arrow}<small>${direction}</small></button>`).join('')}</div>`}<p class="round-feedback ${treasureFound ? 'success' : ''}">${treasureFound ? '★ You found a little treasure!' : feedback || 'Tap a neighbouring square, or use the arrows.'}</p><button type="button" class="club-primary" data-action="${treasureFound ? 'next-treasure' : 'dig'}">${treasureFound ? trail.completed === 4 ? 'See my treasures' : 'Next treasure' : 'Dig here'} <span aria-hidden="true">${treasureFound ? '→' : '✦'}</span></button><button type="button" class="soft-button" data-action="repeat">♪ Hear my clue</button></div><p class="map-note">Walk one square at a time.<br>Mountains are rocks to walk around.</p>`;
-}
-
 function renderTrail() {
   if (trail.phase === 'complete') { finish(); return; }
-  const found = trail.phase === 'found';
-  const clue = found ? TREASURES[trail.completed - 1] : trail.target;
-  root.innerHTML = `${intro(`Treasure ${Math.min(trail.completed + (found ? 0 : 1), TREASURES.length)} of 4`)}<div class="play-arena" id="game-board"><section class="play-scene island-scene" aria-label="Your treasure island">${islandGrid()}</section><section class="play-panel trail-panel" aria-labelledby="trail-title"><p class="eyebrow">${found ? 'TREASURE DISCOVERED!' : 'YOUR LITTLE MAP CLUE'}</p><h2 id="trail-title">${found ? 'You found it, navigator!' : 'Find the treasure at…'}</h2><div class="coordinate-clue">${clue}</div><p class="position-label">You are at <strong>${trail.cell}</strong></p>${found ? '' : `<div class="compass-controls" role="group" aria-label="Move your explorer"><button class="north" type="button" data-direction="north" aria-label="Move north">↑<small>NORTH</small></button><button class="west" type="button" data-direction="west" aria-label="Move west">←<small>WEST</small></button><span class="compass-centre" aria-hidden="true">✧</span><button class="east" type="button" data-direction="east" aria-label="Move east">→<small>EAST</small></button><button class="south" type="button" data-direction="south" aria-label="Move south">↓<small>SOUTH</small></button></div>`}<p class="round-feedback ${found ? 'success' : ''}">${found ? '★ A little treasure for your explorer’s pocket!' : feedback || 'Match the letter and number. Then dig!'}</p><button type="button" class="club-primary" data-action="${found ? 'next-treasure' : 'dig'}">${found ? trail.completed === 4 ? 'See my treasures' : 'Next treasure' : 'Dig here'} <span aria-hidden="true">${found ? '→' : '✦'}</span></button><p class="treasure-hint">Letters A–E go from left to right.<br>Numbers 1–5 go from top to bottom.</p><div class="play-tools"><button type="button" class="soft-button" data-action="repeat">♪ Hear my clue</button></div></section></div>${progress(trail.completed, 4, 'Four little treasures are waiting.')}`;
+  const status = trail.phase === 'unlocking' ? `${trail.unlocked} of 3 locks open` : trail.completed === 3 ? 'The final treasure!' : `${trail.completed} of 3 map pieces`;
+  root.innerHTML = `${intro(status)}${trailGame(trail, { feedback, hint: trailHint, walking: trailWalking })}`;
 }
 
-function move(direction) {
+function move(direction, automatic = false) {
+  if (!trail || trailWalking && !automatic) return 'ignored';
   const result = trail.move(direction);
-  if (result === 'ignored') return;
-  feedback = result === 'edge' ? 'That’s the edge of our island. Try another direction.' : result === 'rock' ? 'A mountain is in the way. Let’s go around it.' : `You’re at ${trail.cell}. Ready to explore!`;
+  if (result === 'ignored') return result;
+  trailHint = false;
+  feedback = result === 'edge' ? 'That’s the sea! Let’s stay on our island.' : result === 'rock' ? 'A mountain! Walk around it, or tap a square to find a path.' : trail.lastEvent?.text || (trail.distance === 0 ? 'X marks the spot! Dig here, Captain!' : `Now at ${trail.cell}. ${trail.distance <= 2 ? 'The treasure is very close!' : 'Keep exploring, Captain!'}`);
   renderTrail();
-  announce(result === 'moved' ? trail.cell : feedback);
-  if (keyboardMode) [...root.querySelectorAll('[data-action="dig"]')].find(button => button.getClientRects().length)?.focus({ preventScroll: true });
+  if (!automatic) {
+    if (trail.lastEvent) audio.celebrate();
+    announce(feedback);
+    if (keyboardMode) root.querySelector('[data-trail-action="dig"]')?.focus({ preventScroll: true });
+  }
+  return result;
+}
+
+async function walkTo(cell) {
+  if (!trail || trail.phase !== 'exploring' || trailWalking) return;
+  const steps = islandPath(trail.cell, cell);
+  if (!steps) return;
+  if (!steps.length) { feedback = trail.distance === 0 ? 'Treasure under your boots! Tap Dig for treasure.' : 'You’re already here, Captain. Choose another square.'; renderTrail(); announce(feedback); return; }
+  const version = voyageVersion;
+  trailWalking = true;
+  const discoveries = [];
+  try {
+    for (const direction of steps) {
+      if (version !== voyageVersion) return;
+      move(direction, true);
+      if (trail.lastEvent) { discoveries.push(trail.lastEvent.text); audio.celebrate(); }
+      if (!reducedMotion.matches) await new Promise(resolve => setTimeout(resolve, 170));
+    }
+    if (version !== voyageVersion) return;
+    trailWalking = false;
+    feedback = [...discoveries, feedback].filter((text, index, items) => items.indexOf(text) === index).join(' ');
+    renderTrail();
+    announce(feedback);
+  } finally {
+    if (version === voyageVersion) trailWalking = false;
+  }
+}
+
+function handleTrailControl(button) {
+  if (!trail) return;
+  if (button.dataset.trailCell) { void walkTo(button.dataset.trailCell); return; }
+  if (button.dataset.trailDirection) { move(button.dataset.trailDirection); return; }
+  if (button.dataset.trailKey) {
+    const result = trail.turnKey(button.dataset.trailKey);
+    if (result === 'ignored') return;
+    feedback = result === 'retry' ? 'That key is for later. Match the next shape glowing on your secret map.' : result === 'unlocked' ? 'Click! One more lock is open.' : '';
+    renderTrail();
+    if (result !== 'complete') { if (result === 'unlocked') audio.celebrate(); announce(feedback); }
+    if (keyboardMode) root.querySelector('[data-trail-key]:not(:disabled)')?.focus({ preventScroll: true });
+    return;
+  }
+  const action = button.dataset.trailAction;
+  if (action === 'repeat') { hearClue(); return; }
+  if (trailWalking) return;
+  if (action === 'hint' && trail.phase === 'exploring') {
+    trailHint = true;
+    feedback = trail.nextStep ? `Pepper says: go one square ${trail.nextStep}. Follow the glowing square!` : 'Pepper says: you found the spot! Time to dig.';
+    renderTrail(); announce(feedback);
+  } else if (action === 'continue' && trail.advance()) {
+    feedback = ''; trailHint = false; renderTrail(); announce(trailClue(trail)); scrollToBoard();
+  } else if (action === 'dig') {
+    const result = trail.dig();
+    if (result === 'ignored') return;
+    if (result === 'retry') {
+      feedback = `A little sand, but no treasure yet. Your clue says ${trail.target}. You’re at ${trail.cell}. Ask Pepper for a hint!`;
+      renderTrail(); announce(feedback);
+    } else {
+      feedback = ''; renderTrail(); confetti(false); audio.celebrate(); announce(trailClue(trail)); scrollToBoard();
+      if (keyboardMode) root.querySelector('[data-trail-action="continue"], [data-trail-key]')?.focus({ preventScroll: true });
+    }
+  }
+}
+
+function hearClue() {
+  if (!audio.enabled) { audio.enabled = true; settings.sound = true; writeClub({ ...readClub(), sound: true }); audio.unlock(); soundButton(); }
+  if (trail) announce(trailClue(trail));
+  else speakQuestion();
 }
 
 function finish() {
   if (!recorded) { recordCompletion(id); recorded = true; confetti(true); audio.celebrate(true); announce(DESCRIPTIONS[id].finish); }
+  if (id === 'treasure-map') { root.innerHTML = `${intro('Legendary treasure found!')}${trailGame(trail)}`; return; }
   const countries = session?.questions.filter(q => q.country).map(q => q.country) || [];
-  root.innerHTML = `${intro('Adventure complete!')}<section class="completion-arena" id="game-board"><div class="completion-art">${id === 'maths' ? rocketArt(8) : illustration(game.art)}</div><div class="completion-copy"><div class="big-medal" aria-hidden="true">🏅</div><p class="eyebrow">A LOVELY LITTLE “I DID IT!”</p><h2>${DESCRIPTIONS[id].finish}</h2><p>${DESCRIPTIONS[id].reward}</p>${countries.length ? `<div class="collected-flags" aria-label="Your discoveries">${countries.map(country => `<img src="./assets/flags/${country.id}.svg" alt="${country.name}" title="${country.name}">`).join('')}</div>` : `<p aria-label="${id === 'treasure-map' ? 'Four' : 'Eight'} discoveries">${'⭐ '.repeat(id === 'treasure-map' ? 4 : 8)}</p>`}<button class="club-primary" type="button" data-action="replay">Play again <span aria-hidden="true">→</span></button><a class="back-link" href="./">Choose another adventure ↗</a></div></section>`;
+  root.innerHTML = `${intro('Adventure complete!')}<section class="completion-arena" id="game-board"><div class="completion-art">${id === 'maths' ? rocketArt(8) : illustration(game.art)}</div><div class="completion-copy"><div class="big-medal" aria-hidden="true">🏅</div><p class="eyebrow">A LOVELY LITTLE “I DID IT!”</p><h2>${DESCRIPTIONS[id].finish}</h2><p>${DESCRIPTIONS[id].reward}</p>${countries.length ? `<div class="collected-flags" aria-label="Your discoveries">${countries.map(country => `<img src="./assets/flags/${country.id}.svg" alt="${country.name}" title="${country.name}">`).join('')}</div>` : `<p aria-label="Eight discoveries">${'⭐ '.repeat(8)}</p>`}<button class="club-primary" type="button" data-action="replay">Play again <span aria-hidden="true">→</span></button><a class="back-link" href="./">Choose another adventure ↗</a></div></section>`;
 }
 
 function confetti(final) {
   if (reducedMotion.matches) return;
-  const colours = ['#b8a0ce', '#edc773', '#9fbea2', '#d5a0ad', '#8db8c9'];
+  const colours = ['#8849e8', '#ffda39', '#30d6a2', '#ff6fa9', '#34bdee'];
   $('#club-confetti').innerHTML = Array.from({ length: final ? 50 : 15 }, (_, i) => `<i style="--left:${Math.random() * 100}%;--delay:${Math.random() * .35}s;--colour:${colours[i % colours.length]}"></i>`).join('');
 }
 
@@ -209,34 +272,15 @@ root.addEventListener('click', event => {
   const button = event.target.closest('button, [data-map-answer]');
   if (!button || button.disabled || button.getAttribute('aria-disabled') === 'true') return;
   audio.unlock();
+  if (button.matches('[data-trail-cell], [data-trail-direction], [data-trail-action], [data-trail-key]')) { handleTrailControl(button); return; }
   if (button.hasAttribute('data-choice')) { answer(button.dataset.choice); return; }
   if (button.hasAttribute('data-map-answer')) { answer(button.dataset.mapAnswer); return; }
-  if (button.hasAttribute('data-direction')) { move(button.dataset.direction); return; }
-  if (button.hasAttribute('data-cell')) {
-    if (!trail || trail.phase !== 'exploring') return;
-    const cell = button.dataset.cell;
-    const dx = cell.charCodeAt(0) - 65 - trail.x, dy = Number(cell[1]) - 1 - trail.y;
-    const entry = Object.entries(DIRECTIONS).find(([, [x, y]]) => x === dx && y === dy);
-    if (entry) move(entry[0]);
-    else { feedback = 'One square at a time. Use the compass arrows to walk.'; renderTrail(); announce(feedback); }
-    return;
-  }
   const action = button.dataset.action;
   if (action === 'start') start();
   else if (action === 'replay') { setup(); scrollToBoard(); }
   else if (action === 'next' && session.advance()) { feedback = ''; keyboardMode = false; renderRound(); if (session.phase === 'question') speakQuestion(); scrollToBoard(); }
-  else if (action === 'next-treasure' && trail.advance()) { feedback = ''; renderTrail(); if (trail.phase === 'exploring') announce(`Find the treasure at ${trail.target}.`); scrollToBoard(); }
-  else if (action === 'repeat') {
-    if (!audio.enabled) { audio.enabled = true; settings.sound = true; writeClub({ ...readClub(), sound: true }); audio.unlock(); soundButton(); }
-    if (trail) announce(trail.phase === 'found' ? `You found the treasure at ${trail.cell}!` : `Find the treasure at ${trail.target}. You are at ${trail.cell}.`);
-    else speakQuestion();
-  } else if (action === 'hint' && session?.phase === 'question') {
+  else if (action === 'repeat') { hearClue(); } else if (action === 'hint' && session?.phase === 'question') {
     feedback = session.current.hint; renderRound(); announce(feedback);
-  } else if (action === 'dig') {
-    const result = trail.dig();
-    if (result === 'ignored') return;
-    if (result === 'found') { feedback = ''; renderTrail(); confetti(false); audio.celebrate(); announce(`You found the treasure at ${trail.cell}!`); }
-    else { feedback = `Not quite yet. Your clue says ${trail.target}. You are at ${trail.cell}. Keep exploring!`; renderTrail(); announce(feedback); }
   }
 });
 
@@ -247,6 +291,7 @@ root.addEventListener('focusin', event => {
 document.addEventListener('pointerdown', () => { keyboardMode = false; document.querySelectorAll('.keyboard-selected').forEach(button => button.classList.remove('keyboard-selected')); });
 document.addEventListener('keydown', event => {
   if (event.altKey || event.ctrlKey || event.metaKey || !game) return;
+  if (event.key === 'Tab') keyboardMode = true;
   const mapButton = event.target.closest('[data-map-answer]');
   if (mapButton && ['Enter', ' '].includes(event.key)) {
     event.preventDefault();
@@ -277,13 +322,15 @@ $('#club-sound').addEventListener('click', () => {
   soundButton();
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden) audio.stop(); });
-window.addEventListener('pagehide', () => audio.stop());
+window.addEventListener('pagehide', () => { audio.stop(); voyageVersion++; trailWalking = false; });
+window.addEventListener('pageshow', event => { if (event.persisted && trail) renderTrail(); });
 
 soundButton();
 if (game) {
+  document.body.classList.toggle('treasure-page', id === 'treasure-map');
   document.title = `${game.title} · Dhruva’s Discovery Club`;
   document.documentElement.style.setProperty('--accent', game.colour);
-  document.documentElement.style.setProperty('--soft', { transport: '#e1ece5', maths: '#f0e5d8', 'world-map': '#e1edf4', 'treasure-map': '#e7eddc', flags: '#f1e4e9' }[id]);
+  document.documentElement.style.setProperty('--soft', { transport: '#b8f0de', maths: '#ffe4bf', 'world-map': '#a9e8ff', 'treasure-map': '#a9e8c7', flags: '#ffbcd8' }[id]);
   setup();
 } else {
   root.innerHTML = '<section class="play-panel" style="margin:35px 0"><div class="setup-symbol" aria-hidden="true">🧭</div><h1>Let’s find an adventure</h1><p class="panel-copy">Choose a game from the Discovery Club.</p><a class="club-primary" href="./">See all games →</a></section>';

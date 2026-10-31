@@ -7,7 +7,7 @@ import { WORLD_PATHS } from '../src/club/data/world-paths.js';
 import { RoundSession } from '../src/club/rounds.js';
 import { transportDeck, flagsDeck, worldDeck, LINES } from '../src/club/decks.js';
 import { MATH_LEVELS, mathsDeck, mathsQuestion, fraction } from '../src/club/maths.js';
-import { TreasureTrail, ROCKS, TREASURES, DIRECTIONS, coordinate, position } from '../src/club/treasure.js';
+import { TreasureTrail, ROCKS, KEYS, DIRECTIONS, coordinate, position, islandPath } from '../src/club/treasure.js';
 import { readClub, writeClub, recordCompletion } from '../src/club/progress.js';
 import { ROUTE } from '../src/route.js';
 
@@ -182,28 +182,97 @@ function routeBetween(start, goal) {
   return null;
 }
 
-test('treasure island clues are reachable and each treasure is collected only once', () => {
-  const trail = new TreasureTrail();
-  assert.equal(trail.cell, 'A5');
-  assert.equal(trail.move('west'), 'edge');
-  assert.equal(trail.move('south'), 'edge');
-  assert.equal(trail.move('unknown'), 'ignored');
-  assert.equal(trail.dig(), 'retry');
-  assert.equal(trail.completed, 0);
-  for (let i = 0; i < TREASURES.length; i++) {
-    const route = routeBetween(trail.cell, trail.target);
-    assert.ok(route, 'Each clue has a navigable route around mountains');
-    for (const direction of route) assert.equal(trail.move(direction), 'moved');
-    assert.equal(trail.cell, TREASURES[i]);
-    assert.equal(trail.dig(), 'found');
-    assert.equal(trail.dig(), 'ignored');
-    assert.equal(trail.move('east'), 'ignored');
-    assert.equal(trail.completed, i + 1);
-    assert.equal(trail.advance(), true);
+test('pirate quests have reachable, separated hiding places and require all three keys before victory', () => {
+  const routes = new Set();
+  for (let seed = 1; seed <= 500; seed++) {
+    const trail = new TreasureTrail(randomGenerator(seed));
+    assert.equal(trail.cell, 'A5');
+    assert.equal(trail.move('west'), 'edge');
+    assert.equal(trail.move('south'), 'edge');
+    assert.equal(trail.move('unknown'), 'ignored');
+    assert.equal(trail.dig(), 'retry');
+    assert.equal(trail.turnKey('star'), 'ignored');
+    assert.equal(trail.completed, 0);
+    routes.add(trail.missions.map(mission => mission.cell).join(','));
+    assert.equal(new Set(trail.missions.map(mission => mission.cell)).size, 4);
+    for (let i = 0; i < 4; i++) {
+      // Independent BFS checks generation and the routes used by the parrot and tap-to-walk.
+      const route = routeBetween(trail.cell, trail.target);
+      assert.ok(route.length >= 3);
+      assert.equal(islandPath(trail.cell, trail.target).length, route.length);
+      assert.equal(trail.distance, route.length);
+      assert.ok(DIRECTIONS[trail.nextStep]);
+      assert.equal(trail.advance(), false);
+      for (const direction of route) assert.equal(trail.move(direction), 'moved');
+      assert.equal(trail.distance, 0);
+      assert.equal(trail.nextStep, null);
+      assert.equal(trail.dig(), i === 3 ? 'vault' : 'found');
+      assert.equal(trail.dig(), 'ignored');
+      assert.equal(trail.move('east'), 'ignored');
+      assert.equal(trail.completed, i === 3 ? 3 : i + 1);
+      if (i < 3) {
+        assert.equal(trail.ownedKeys.length, i + 1);
+        assert.equal(trail.advance(), true);
+        assert.equal(trail.advance(), false);
+      }
+    }
+    assert.equal(trail.phase, 'unlocking');
     assert.equal(trail.advance(), false);
+    assert.equal(trail.turnKey('unknown'), 'ignored');
+    for (let i = 0; i < 3; i++) {
+      const wrong = KEYS.find(key => key.id !== trail.lockOrder[i]).id;
+      assert.equal(trail.turnKey(wrong), 'retry');
+      assert.equal(trail.unlocked, i);
+      assert.equal(trail.turnKey(trail.lockOrder[i]), i === 2 ? 'complete' : 'unlocked');
+      assert.equal(trail.unlocked, i + 1);
+    }
+    assert.equal(trail.phase, 'complete');
+    assert.equal(trail.completed, 4);
+    assert.equal(trail.turnKey(trail.lockOrder[2]), 'ignored');
+    assert.equal(trail.dig(), 'ignored');
   }
-  assert.equal(trail.phase, 'complete');
-  assert.equal(trail.completed, 4);
+  assert.ok(routes.size > 450, 'Voyages should have varied hiding places');
+});
+
+test('island exploration reveals nearby places, collects each shell once, and rescues Tilly once', () => {
+  const trail = new TreasureTrail(randomGenerator());
+  assert.equal(trail.isVisible('A5'), true);
+  assert.equal(trail.isVisible('A4'), true);
+  assert.equal(trail.isVisible('B5'), true);
+  assert.equal(trail.isVisible('B4'), false);
+  const special = [...trail.missions.map(mission => mission.cell), ...trail.shellSpots, trail.turtleCell, 'A5', ...ROCKS];
+  assert.equal(new Set(special).size, special.length);
+  assert.equal(trail.shellSpots.length, 5);
+  for (const goal of [...trail.shellSpots, trail.turtleCell]) {
+    for (const direction of routeBetween(trail.cell, goal)) trail.move(direction);
+    assert.ok(trail.visited.has(goal));
+    assert.ok(trail.isVisible(goal));
+  }
+  assert.equal(trail.shells.size, 5);
+  assert.equal(trail.rescued, true);
+  for (const direction of routeBetween(trail.cell, 'A5')) trail.move(direction);
+  for (const goal of [...trail.shellSpots, trail.turtleCell]) {
+    for (const direction of routeBetween(trail.cell, goal)) trail.move(direction);
+    assert.equal(trail.lastEvent, null);
+  }
+  assert.equal(trail.shells.size, 5);
+  assert.equal(trail.rescued, true);
+  assert.ok(trail.visited.size <= 21);
+  assert.ok(trail.steps >= trail.visited.size - 1);
+});
+
+test('automatic island routes reject invalid destinations and never cross rocks or edges', () => {
+  assert.equal(islandPath('A5', 'A5').length, 0);
+  for (const cell of ['A0', 'A6', 'F3', 'B2', '', 'A11']) assert.equal(islandPath('A5', cell), null);
+  for (let y = 0; y < 5; y++) for (let x = 0; x < 5; x++) {
+    const goal = coordinate(x, y);
+    if (ROCKS.includes(goal)) continue;
+    const trail = new TreasureTrail(() => 0);
+    for (const direction of islandPath('A5', goal)) assert.equal(trail.move(direction), 'moved');
+    assert.equal(trail.cell, goal);
+  }
+  const constantVoyages = [() => 0, () => .99999].map(random => new TreasureTrail(random));
+  assert.notDeepEqual(constantVoyages[0].missions, constantVoyages[1].missions);
 });
 
 test('mountains block movement without moving or penalising the explorer', () => {

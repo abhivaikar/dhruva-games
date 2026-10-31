@@ -1,11 +1,11 @@
 :root {
   color-scheme: light;
-  --ink: #30334c;
-  --muted: #6c6f80;
-  --purple: #7650ac;
-  --deep-purple: #5f3a94;
-  --cream: #faf7f0;
-  --border: #e8e4dc;
+  --ink: #20234c;
+  --muted: #58627a;
+  --purple: #6935d3;
+  --deep-purple: #5023b3;
+  --cream: #f2f7ff;
+  --border: #d9e2f3;
   --green: #32674f;
   font-family: "Avenir Next","Nunito","Trebuchet MS",sans-serif;
   font-synthesis: none;
@@ -162,8 +162,8 @@ h1>span:first-child {
   display: flex;
   gap: 11px;
   align-items: center;
-  background: #f0e9f6;
-  border: 1px solid #e7dcef;
+  background: #e6dcff;
+  border: 2px solid #c8b3f3;
   padding: 11px 16px;
   border-radius: 15px;
   font-size: 12px;
@@ -336,9 +336,9 @@ h1>span:first-child {
 }
 
 .challenge-card {
-  background: #fffefd;
+  background: #ffffff;
   border: 1px solid var(--border);
-  box-shadow: 0 5px 16px #544b3d03;
+  box-shadow: 0 5px 0 #ded6fa;
   border-radius: 24px;
   padding: 25px 26px;
   display: flex;
@@ -388,7 +388,7 @@ h1>span:first-child {
   justify-content: center;
   width: 70px;
   height: 70px;
-  background: #f3edf8;
+  background: #ffe978;
   border: 1px solid #e9ddf2;
   border-radius: 23px;
   margin: 0 auto 20px;
@@ -558,21 +558,21 @@ h1>span:first-child {
   font-size: 31px;
   font-weight: 800;
   transition: transform .15s,background .15s,opacity .15s;
-  background: #f2ebf9;
-  color: #664190;
-  box-shadow: 0 4px 0 #e7dcee;
+  background: #eee2ff;
+  color: #5930a3;
+  box-shadow: 0 4px 0 #cbb0f4;
 }
 
 .answer:nth-child(2) {
-  background: #eaf2e9;
-  color: #3a6650;
-  box-shadow: 0 4px 0 #dce8dc;
+  background: #d3f6e8;
+  color: #096e54;
+  box-shadow: 0 4px 0 #8cdbbf;
 }
 
 .answer:nth-child(3) {
-  background: #fcf0d8;
-  color: #886221;
-  box-shadow: 0 4px 0 #eee1c1;
+  background: #fff1ae;
+  color: #705200;
+  box-shadow: 0 4px 0 #e8ce6d;
 }
 
 .answer:hover:enabled {
@@ -584,10 +584,10 @@ h1>span:first-child {
 }
 
 .answer.correct {
-  background: #e2f2dc;
+  background: #aff0cc;
   opacity: 1;
   color: #2d6141;
-  border-color: #729c69;
+  border-color: #16875b;
   box-shadow: 0 4px 0 #c7dfbd;
 }
 
@@ -664,7 +664,7 @@ h1>span:first-child {
 .route-card {
   border: 1px solid var(--border);
   border-radius: 21px;
-  background: #fffefd;
+  background: #ffffff;
   margin-top: 22px;
   padding: 23px 25px 15px;
 }
@@ -752,7 +752,7 @@ h1>span:first-child {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fffefd;
+  background: #ffffff;
   border: 2px solid #d7c9e4;
   border-radius: 50%;
   font-size: 14px;
@@ -919,7 +919,7 @@ legend {
 }
 
 .level-option:has(input:checked) {
-  background: #f3edf8;
+  background: #ffe978;
   border-color: #9875bd;
 }
 
@@ -1948,3 +1948,20 @@ legend {
     transition: none !important;
   }
 }
+
+/* Shared Discovery Club adventure theme. */
+body { background-image: radial-gradient(#cbd9ef 1px, transparent 1px); background-size: 24px 24px; }
+.topbar { border-bottom: 0; }
+.icon-button { background: #fff; border: 2px solid #d9e2f3; box-shadow: 0 3px 0 #d9e2f3; }
+.journey-scene { border: 2px solid #88bcd3; box-shadow: 0 5px 0 #c9e0ec; }
+.scenery { filter: saturate(1.25); }
+.challenge-card { border: 2px solid #c7bcf4; }
+.route-card { border: 2px solid #c7bcf4; box-shadow: 0 5px 0 #ded6fa; background: #fff; }
+.primary-button { border: 2px solid #4d20b1; }
+.answer { border-color: #bc9cf6; }
+.answer:nth-child(2) { border-color: #7ad8b8; }
+.answer:nth-child(3) { border-color: #e8c951; }
+.answer.correct { border-color: #16875b; }
+.route li.current .route-node { background: #7134d8; color: #fff; }
+.route li.done .route-node { background: #ffe36b; border-color: #d8ad24; color: #654d0d; }
+.finish-ticket { background: #ffefad; border-color: #e0ba44; }

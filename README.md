@@ -8,7 +8,7 @@ A family website with six playful learning games. Built with static HTML, CSS, o
 | Transport Dispatcher | Read real Singapore station sequences and destination displays, recognise MRT line colours, and distinguish buses from rail. |
 | Maths Workshop | Solve eight selected primary maths puzzles to light up a rocket. Choose Primary 1–2, 3–4, or 5–6 practice. |
 | World Explorer | Find eight countries on an actual world map using highlighted outlines, locator dots, and A/B/C controls. |
-| Treasure Trails | Navigate a coordinate-grid island, follow compass directions, avoid mountains, and dig up four treasures. |
+| Treasure Trails | Become Captain Dhruva: explore a misty island, find three map pieces and shape keys, collect shells, rescue Tilly and unlock the lost Sunstone. |
 | Flag Detective | Match countries to flags and flags to countries, drawing from 20 locally bundled flag images. |
 
 ## Play locally
@@ -27,7 +27,7 @@ The original game is now at `mrt-adventure.html`. Its 17-stop route, train colou
 
 - Touch or click the large choices. New quiz games use **Next discovery** after a correct answer so the child controls the pace. Wrong answers invite another try.
 - For quiz answers, **← / →** changes selection and **Space** confirms. Tab and Enter also work. World-map markers support Enter and Space.
-- In Treasure Trails, tap adjacent map squares or use the compass buttons. Keyboard arrows also move the explorer; then use **Dig here**. On phones the clue, map, arrows and dig action share one play area.
+- In Treasure Trails, tap any walkable map square to have Captain Dhruva follow a path there, or use compass buttons / keyboard arrows one step at a time. Match the coordinate clue and **Dig for treasure**. **Parrot, help!** highlights one useful step. Collect three map pieces and shape keys, then match the shuffled key order to open the Sunstone vault. Five sparkle shells and Tilly’s rescue are optional discoveries. Every replay shuffles the hiding places.
 - **Hear again** repeats a spoken prompt and enables sound if muted. **A little clue** provides an untimed hint. Browser speech availability and voice quality vary; all prompts are also visible.
 - Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Refresh starts a fresh session; completed badges remain when browser storage is available.
 - Reduced-motion preferences suppress celebration motion. Sound starts after user interaction to respect browser autoplay rules.
@@ -52,7 +52,7 @@ npm run build
 node scripts/serve.mjs --dist
 ```
 
-The 28 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, treasure reachability, keyboard selection and blocked storage.
+The 30 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection and blocked storage.
 
 The build copies the three HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
 
@@ -74,7 +74,8 @@ No environment variables or backend are required. Other static hosts can serve t
 - `src/club/rounds.js`: guarded quiz sessions and answer selection.
 - `src/club/decks.js`: transport, flag and world-map missions.
 - `src/club/maths.js`: primary maths questions and exact answer formatting.
-- `src/club/treasure.js`: coordinate navigation, obstacles and treasure progression.
+- `src/club/treasure.js`: generated pirate voyages, shortest paths, fog discovery, optional collectibles and the guarded key-lock state machine.
+- `src/club/treasure-view.js`, `src/club/treasure-art.js`, `treasure.css`: pirate quest screens, original captain/parrot/key/chest SVG artwork, and responsive game styling.
 - `src/club/data/`: country metadata and locally generated map outlines.
 - `src/club/art.js`: original hub/game SVG illustrations.
 - `src/club/progress.js`: validated, optional browser-local settings and completion badges.

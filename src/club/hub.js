@@ -10,7 +10,7 @@ let category = 'all';
 function renderGames() {
   const { completed } = readClub();
   const games = GAMES.filter(game => category === 'all' || game.category === category);
-  $('#game-grid').innerHTML = games.map(game => `<a class="game-card" href="${game.href}" style="--game-colour:${game.colour}"><div class="game-card-art">${illustration(game.art)}${completed[game.id] ? '<span class="played-badge">★ Explored</span>' : ''}</div><div class="game-card-copy"><p class="eyebrow">${game.badge}</p><h3>${game.title}</h3><p>${game.description}</p><div class="card-foot"><span>${game.detail}</span><span class="play-arrow" aria-label="Play">↗</span></div></div></a>`).join('');
+  $('#game-grid').innerHTML = games.map(game => `<a class="game-card" href="${game.href}" style="--game-colour:${game.colour}"><div class="game-card-art">${illustration(game.art)}<span class="adventure-number" aria-hidden="true">${String(GAMES.indexOf(game) + 1).padStart(2, '0')}</span>${completed[game.id] ? '<span class="played-badge">★ Explored</span>' : ''}</div><div class="game-card-copy"><p class="eyebrow">${game.badge}</p><h3>${game.title}</h3><p>${game.description}</p><div class="card-foot"><span>${game.detail}</span><span class="play-arrow">Play <span aria-hidden="true">→</span></span></div></div></a>`).join('');
   $('#game-count').textContent = `${games.length} ${games.length === 1 ? 'adventure' : 'adventures'} to play`;
   document.querySelectorAll('[data-category]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
 }
