@@ -38,17 +38,54 @@ export class DrawingSession {
   undo() { if (!this.past.length) return false; this.future.push(this.art); this.art = this.past.pop(); return true; }
   redo() { if (!this.future.length) return false; this.past.push(this.art); this.art = this.future.pop(); return true; }
 }
-export function dotPoints(pageId, count) {
+/** Numbered checkpoints share one authored contour; retain every bend between them. */
+export function dotRoute(pageId, count) {
   if (![10,15,20].includes(count)) throw new RangeError('Choose 10, 15 or 20 dots.');
-  const source = getScene(pageId).dots;
-  const lengths = source.map((point,i)=>Math.hypot(point[0]-source[(i+1)%source.length][0],point[1]-source[(i+1)%source.length][1]));
-  const total = lengths.reduce((sum,value)=>sum+value,0);
-  return Array.from({length:count},(_,i)=>{
-    let distance = total*i/count, edge = 0;
-    while (edge < lengths.length-1 && distance >= lengths[edge]) { distance -= lengths[edge]; edge++; }
-    const ratio = distance/lengths[edge], a=source[edge], b=source[(edge+1)%source.length];
-    return [clamp(a[0]+(b[0]-a[0])*ratio,600),clamp(a[1]+(b[1]-a[1])*ratio,440)];
+  const source=getScene(pageId).dots,vertices=[{point:source[0],distance:0}];
+  for(let i=0;i<source.length;i++){
+    const a=source[i],b=source[(i+1)%source.length];
+    vertices.push({point:b,distance:vertices.at(-1).distance+Math.hypot(b[0]-a[0],b[1]-a[1])});
+  }
+  const total=vertices.at(-1).distance;
+  const pointAt=distance=>{
+    if(distance>=total)return [...source[0]];
+    const edge=vertices.findIndex((vertex,i)=>i<source.length&&vertices[i+1].distance>distance);
+    const a=vertices[edge],b=vertices[edge+1],ratio=(distance-a.distance)/(b.distance-a.distance);
+    return a.point.map((value,i)=>clamp(value+(b.point[i]-value)*ratio,i?440:600));
+  };
+  const points=Array.from({length:count},(_,i)=>pointAt(total*i/count));
+  const segments=points.map((point,i)=>{
+    const start=total*i/count,end=total*(i+1)/count;
+    return vertices.filter(vertex=>vertex.distance>start+1e-6&&vertex.distance<end-1e-6).map(vertex=>[...vertex.point]).concat([points[(i+1)%count]]);
   });
+  return {points,segments};
+}
+export const dotPoints=(pageId,count)=>dotRoute(pageId,count).points;
+
+/** Disjoint targets prevent a neighbouring dot from stealing a tap. */
+export function dotTargetRadius(points,index){
+  return Math.min(23,...points.filter((_,i)=>i!==index).map(point=>Math.hypot(point[0]-points[index][0],point[1]-points[index][1])*.44));
+}
+
+/** Put numbers beside dots, keeping them away from other dots and numbers. */
+export function dotLabels(points){
+  const labels=[];
+  const centre=points.reduce((sum,[x,y])=>[sum[0]+x/points.length,sum[1]+y/points.length],[0,0]);
+  for(const [x,y] of points){
+    const outward=Math.atan2(y-centre[1],x-centre[0]);
+    const candidates=[25,36,47].flatMap(distance=>Array.from({length:16},(_,i)=>{
+      const angle=outward+(i%2?1:-1)*Math.ceil(i/2)*Math.PI/8;
+      return [x+Math.cos(angle)*distance,y+Math.sin(angle)*distance];
+    }));
+    const score=([lx,ly])=>{
+      let penalty=lx<18||lx>582||ly<18||ly>422?10000:0;
+      for(const [px,py] of points)if(Math.abs(lx-px)<23&&Math.abs(ly-py)<22)penalty+=1000;
+      for(const [px,py] of labels)if(Math.abs(lx-px)<29&&Math.abs(ly-py)<25)penalty+=1000;
+      return penalty;
+    };
+    labels.push(candidates.reduce((best,candidate)=>score(candidate)<score(best)?candidate:best));
+  }
+  return labels;
 }
 class ReversibleSession {
   constructor(){this.past=[];this.future=[];}
@@ -57,15 +94,30 @@ class ReversibleSession {
   redo(){if(!this.future.length)return false;this.past.push(this.snapshot());this.restore(this.future.pop());return true;}
 }
 export class DotSession extends ReversibleSession {
-  constructor(pageId, count=10) { super();this.pageId=getScene(pageId).id; this.points=dotPoints(this.pageId,count); this.connected=0; }
-  snapshot(){return this.connected;}
-  restore(connected){this.connected=connected;}
-  reset(){if(!this.connected)return false;this.remember();this.connected=0;return true;}
-  get complete() { return this.connected === this.points.length; }
+  constructor(pageId, count=10) {
+    super();this.pageId=getScene(pageId).id;
+    const route=dotRoute(this.pageId,count);this.points=route.points;this.segments=route.segments;
+    this.connected=0;this.closed=false;
+  }
+  snapshot(){return {connected:this.connected,closed:this.closed};}
+  restore({connected,closed}){this.connected=connected;this.closed=closed;}
+  reset(){if(!this.connected)return false;this.remember();this.connected=0;this.closed=false;return true;}
+  get closing(){return this.connected===this.points.length&&!this.closed;}
+  get complete(){return this.closed;}
+  get next(){return this.closing?1:this.connected+1;}
+  get trace(){
+    if(!this.connected)return [];
+    return [this.points[0],...this.segments.slice(0,this.connected-1+(this.closed?1:0)).flat()];
+  }
   connect(number) {
-    if (this.complete || !Number.isInteger(number) || number < 1 || number > this.points.length || number <= this.connected) return 'ignored';
-    if (number !== this.connected+1) return 'retry';
-    this.remember();this.connected++; return this.complete ? 'complete' : 'connected';
+    if(this.complete||!Number.isInteger(number)||number<1||number>this.points.length)return 'ignored';
+    if(this.closing){
+      if(number!==1)return 'ignored';
+      this.remember();this.closed=true;return 'complete';
+    }
+    if(number<=this.connected)return 'ignored';
+    if(number!==this.next)return 'retry';
+    this.remember();this.connected++;return this.closing?'close':'connected';
   }
 }
 const shuffle = (items,random) => {

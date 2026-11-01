@@ -125,9 +125,10 @@ test('dot-to-dot requires every dot in order and ignores repeated connections',(
     assert.equal(session.connect(4),'retry');assert.equal(session.connected,0);
     for(const invalid of [-1,0,1.5,99,'1'])assert.equal(session.connect(invalid),'ignored');
     for(let number=1;number<=count;number++){
-      assert.equal(session.connect(number),number===count?'complete':'connected');
+      assert.equal(session.connect(number),number===count?'close':'connected');
       assert.equal(session.connect(number),'ignored');
     }
+    assert.equal(session.complete,false);assert.equal(session.connect(1),'complete');
     assert.equal(session.complete,true);assert.equal(session.connect(1),'ignored');
   }
 });
@@ -145,7 +146,7 @@ test('dots can undo, redo and undo a reset without changing the mystery or dot p
     assert.equal(session.reset(),false); // An empty reset must not erase recovery history.
     session.undo();session.undo();session.connect(2);assert.equal(session.redo(),false);
     for(let n=3;n<=count;n++)session.connect(n);
-    session.undo();assert.equal(session.complete,false);assert.equal(session.connected,count-1);
+    session.connect(1);session.undo();assert.equal(session.complete,false);assert.equal(session.connected,count);
     session.redo();assert.equal(session.complete,true);
     session.reset();session.undo();assert.equal(session.complete,true);
     assert.equal(session.pageId,'cat');assert.equal(JSON.stringify(session.points),points);

@@ -85,3 +85,11 @@ A play session with Dhruva is the best next check of reading load, voice, pace a
 - An old `activity.html?game=book` URL now opens Colouring Studio. The earlier gallery checks above are historical; that feature is no longer available.
 - The current-picture PNG download and print actions remain. Existing gallery storage is left untouched and is no longer read or written.
 - All 75 remaining automated tests and the static build pass.
+
+## Dot-to-dot outline and completion correction
+
+- All 36 finished dot pictures were visually reviewed together. At 10, 15 and 20 dots, the trace now follows each picture’s full authored contour rather than drawing straight shortcuts between sampled points. Interior clues use that picture’s existing art.
+- In the built site, the excavator stays on the drawing board at 9/10, at 10/10 awaiting closure, and after tapping 1 to close the final line. Clicking blank space near dot 10 leaves it at 9/10. Extra Enter after completion does not start a new picture.
+- Checked completion Undo/Redo, Reset and undoing Reset. A held Enter on the 20-dot robot connects only one dot. No timer changes the finished picture.
+- Desktop drawing and controls are arranged alongside one another. Completion retains the trace and numbered dots rather than replacing them with a colouring-page screen.
+- All 80 automated tests and the static build pass. Regression checks cover retained contour corners, explicit closure, reversible completion, label spacing, disjoint targets, and consistent release versions across the published module graph.

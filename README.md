@@ -63,7 +63,7 @@ Colouring and puzzle pickers have theme filters, name search and pages of 12 pre
 
 - Colouring: choose a colour and tap a shape with **Fill**. Use **Brush** for freehand strokes, or tap to add star, heart and flower stamps. Undo/redo applies to fills, brushwork, stamps and clearing. Keyboard users can fill focused shapes with Enter; in Brush/Stamp mode arrows move a drawing cursor, Enter adds a mark, and Shift+arrows draw a line.
 - The current colouring page resumes after a refresh when browser storage is available. There is no saved artwork collection. Download the current picture as a 1200 × 880 PNG or print it to keep a copy; choosing another picture starts a fresh page.
-- Dot-to-dot: choose a world (or all pictures), select 10, 15 or 20 dots and connect them in order. Each world uses a shuffled deck so every picture appears before repeats within that world during a visit. A hint highlights the next dot. The revealed picture links directly to its colouring page.
+- Dot-to-dot: choose a world (or all pictures), select 10, 15 or 20 dots and connect them in order. Each world uses a shuffled deck so every picture appears before repeats within that world during a visit. A hint highlights the next dot. Join every number and tap 1 again to close the outline. All three dot counts preserve every bend of the authored contour; interior picture details are preprinted clues. The finished drawing stays on the same board, with optional colouring or another picture. Blank-space taps and held keys cannot advance it.
 - Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
 
 - **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
@@ -116,7 +116,7 @@ node scripts/serve.mjs --dist
 
 The automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, blocked storage and the automatic-transition clock (delay, pause/resume, multiple blockers, audio waiting and stale callback cancellation).
 
-The build copies the five HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
+The build copies the five HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access. Published stylesheets, entry scripts and every dependency import share a content-based release version so browsers load compatible files after updates.
 
 ## GitHub Pages
 
@@ -135,7 +135,8 @@ No environment variables or backend are required. Other static hosts can serve t
 - `activity.html`, `activity.css`, `src/club/activity.js`: the three creative games, pointer controls, PNG export and print layouts.
 - `src/club/activity-scenes.js`, `src/club/activity-extra-scenes.js`, `src/club/activity-card-art.js`: original colourable scenes, silhouettes and card illustrations.
 - `src/club/activity-library.js`, `src/club/activity-picker.js`: themes, searchable/paginated picture libraries and shuffled mystery decks.
-- `src/club/activity-model.js`: drawing history, numbered-dot progression and jigsaw geometry/matching.
+- `src/club/activity-model.js`: drawing history, contour-preserving dot routes, explicit outline closure and jigsaw geometry/matching.
+- `src/club/dot-view.js`: printed picture details, number placement and the persistent dot drawing board.
 - `src/club/colouring-draft.js`: validated recovery of the current colouring page after refresh.
 - `src/club/catalog.js`: the eleven offerings and their navigation.
 - `language.html`, `language.css`, `src/club/language.js`: the two language games and their four activities, libraries and passports.

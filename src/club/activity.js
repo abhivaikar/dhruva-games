@@ -2,6 +2,7 @@ import { revealWorkspace } from '../auto-advance.js';
 import { SCENES, PALETTE, STAMPS, getScene, artworkSVG, svgURL, escapeHTML } from './activity-scenes.js';
 import { THEMES, DOT_COUNTS, PIECE_COUNTS, MysteryDeck } from './activity-library.js';
 import { picturePicker, pickerResults } from './activity-picker.js';
+import { dotBoard } from './dot-view.js';
 import { DrawingSession, DotSession, PicturePuzzle, freshArtwork, piecePath, MAX_POINTS } from './activity-model.js';
 import { readDraft, writeDraft, openArtwork } from './colouring-draft.js';
 import { readClub, writeClub, recordCompletion } from './progress.js';
@@ -15,10 +16,10 @@ if(params.get('game')!==game||params.has('art')){params.set('game',game);params.
 const audio=new AudioGuide(readClub().sound),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const names={colouring:'Colouring Studio',dots:'Mystery Dot-to-Dot',puzzles:'Picture Puzzle Factory'};
 const subtitles={colouring:'A splash of colour. A sprinkle of you.',dots:'Follow the numbers. What could it be?',puzzles:'Little pieces. One brilliant picture.'};
-const instructions={colouring:'Pick a colour. With the paint bucket, tap a shape to fill it. Or choose the brush and draw. Add stamps, undo anything, and download or print your picture.',dots:'Connect the dots in number order, starting at one. A mystery picture will appear! Then you can colour it.',puzzles:'Pick a picture and choose how many pieces. Drag a piece to its place, or tap a piece and then tap a space. Undo takes back your last piece. Reset picture puts all the pieces back, and you can undo that too. Take your time!'};
+const instructions={colouring:'Pick a colour. With the paint bucket, tap a shape to fill it. Or choose the brush and draw. Add stamps, undo anything, and download or print your picture.',dots:'Tap each numbered dot in order, starting at one. After the last number, tap one again to close your picture. Your drawing stays here until you choose another activity.',puzzles:'Pick a picture and choose how many pieces. Drag a piece to its place, or tap a piece and then tap a space. Undo takes back your last piece. Reset picture puts all the pieces back, and you can undo that too. Take your time!'};
 let drawing=null,dirty=false,tool='fill',colour=PALETTE[0],brushSize=12,stampKind='star';
 let stroke=null,strokeSVG=null,preview=null,cursor=[300,220],drag=null,suppressClick=false;
-let dots=null,dotCount=10,dotHint=false,dotFeedback='',dotTheme='all',dotAwarded=false;
+let dots=null,dotCount=DOT_COUNTS.includes(Number(params.get('count')))?Number(params.get('count')):10,dotHint=false,dotFeedback='',dotTheme='all',dotAwarded=false;
 const mysteries=new MysteryDeck(),library={theme:'all',query:'',page:0};
 let puzzle=null,puzzleSource=null,puzzleCount=4,puzzleFeedback='',showGuide=false,puzzleAwarded=false;
 let toastTimer=null;
@@ -45,7 +46,7 @@ function renderColouring(){
   if(focusSelector){const target=root.querySelector(focusSelector);(target?.disabled?root.querySelector('[data-action=undo]:not(:disabled),[data-action=redo]:not(:disabled)'):target)?.focus({preventScroll:true});}
 }
 function pickPage(pageId){drawing=new DrawingSession(freshArtwork(pageId));dirty=false;params.delete('art');params.set('page',pageId);history.replaceState(null,'',`${location.pathname}?${params}`);writeDraft(drawing.art);renderColouring();revealWorkspace(root.querySelector('.activity-workbench'));}
-function startMystery(){dotAwarded=false;dots=new DotSession(mysteries.next(dotTheme),dotCount);dotHint=false;dotFeedback='Start at 1. What will your picture be?';renderDots();revealWorkspace(root.querySelector('.dot-workspace'));say(`Find number 1. Connect ${dotCount} dots to reveal your mystery picture.`,true);}
+function startMystery(pageId){audio.stop();dotAwarded=false;dots=new DotSession(pageId||mysteries.next(dotTheme),dotCount);dotHint=false;dotFeedback='Start at 1. What will your picture be?';renderDots();revealWorkspace(root.querySelector('.dot-workspace'));say(`Find number 1. Join ${dotCount} dots, then come back to 1 to close your picture.`,true);}
 function recoveryControls(session,kind){
   return `<div class="activity-recovery" role="group" aria-label="${kind==='puzzle'?'Puzzle':'Dot picture'} undo and reset controls"><button type="button" class="activity-secondary" data-action="${kind}-undo" ${session.past.length?'':'disabled'}>↶ Undo</button><button type="button" class="activity-secondary" data-action="${kind}-redo" ${session.future.length?'':'disabled'}>↷ Redo</button><button type="button" class="activity-secondary" data-action="${kind}-reset" ${(kind==='puzzle'?session.placed.size:session.connected)?'':'disabled'}>↺ Reset picture</button><small>Same picture. Fresh start. You can undo a reset too.</small></div>`;
 }
@@ -60,11 +61,21 @@ function recoverActivity(kind,operation){
 function renderDots(){
   document.body.classList.toggle('is-playing',Boolean(dots));
   if(!dots){root.innerHTML=`<section class="activity-welcome"><div class="mystery-preview" aria-hidden="true"><span>1</span><i></i><span>2</span><i></i><span>?</span><b>✏️</b></div><div><p class="eyebrow">A PICTURE HIDING IN PLAIN SIGHT</p><h2>A little line.<br>A big surprise!</h2><p>Connect the dots in order, then colour the picture you discover. <strong>${SCENES.length} mystery pictures. ${SCENES.length*DOT_COUNTS.length} dot challenges!</strong></p><label class="mystery-theme">Choose a world<select name="dot-theme"><option value="all" ${dotTheme==='all'?'selected':''}>🌈 Surprise me! All ${SCENES.length} pictures</option>${THEMES.map(theme=>`<option value="${theme.id}" ${dotTheme===theme.id?'selected':''}>${theme.icon} ${theme.name} · ${SCENES.filter(scene=>scene.theme===theme.id).length} pictures</option>`).join('')}</select></label><fieldset class="activity-levels"><legend>How many dots?</legend>${DOT_COUNTS.map(n=>`<label><input type="radio" name="dot-count" value="${n}" ${n===dotCount?'checked':''}><span>${n}<small>dots</small></span></label>`).join('')}</fieldset><button type="button" class="club-primary" data-action="start-dots">Find my mystery picture →</button><p class="activity-fineprint">Start with 10. A new picture every time until you’ve explored your whole world.</p></div></section>`;return;}
-  if(dots.complete){const scene=getScene(dots.pageId);root.innerHTML=`<section class="activity-complete"><div class="activity-reveal-picture">${artworkSVG(freshArtwork(scene.id))}<span class="reveal-sticker" aria-hidden="true">YOU DID IT! ★</span></div><div class="activity-complete-copy"><p class="eyebrow">MYSTERY SOLVED!</p><h2>You found<br>the ${escapeHTML(scene.short.toLowerCase())}!</h2><p>${dotCount} dots connected. A whole picture brought to life. Now make it colourful!</p><a class="club-primary" href="./activity.html?game=colouring&page=${scene.id}">🎨 Colour my picture</a><button type="button" class="activity-secondary" data-action="new-dots">Another mystery →</button><button type="button" class="activity-text-button" data-action="choose-dot-level">Choose a different dot count</button>${recoveryControls(dots,'dot')}</div></section>`;return;}
-  const next=dots.connected+1,points=dots.points,lines=points.slice(0,dots.connected).map(([x,y])=>`${x},${y}`).join(' ');
-  root.innerHTML=`<section class="dot-workspace"><div class="dot-topline"><span class="mystery-chip">✏️ MYSTERY PICTURE</span><span class="next-dot">Find <strong>${next}</strong></span><label class="inline-level">Dots<select name="live-dot-count" aria-label="Number of dots">${DOT_COUNTS.map(n=>`<option value="${n}" ${n===dotCount?'selected':''}>${n}</option>`).join('')}</select></label><span>${dots.connected} / ${points.length}</span></div><div class="dot-paper"><svg viewBox="0 0 600 440" data-dot-board="true" role="group" aria-label="Connect the numbered dots in order"><polyline points="${lines}" fill="none" stroke="#7443cd" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>${points.map(([x,y],i)=>`<g data-dot="${i+1}" role="button" tabindex="${i<dots.connected?-1:0}" aria-label="Dot ${i+1}${i<dots.connected?', connected':''}" aria-disabled="${i<dots.connected}" class="number-dot ${i<dots.connected?'connected':''} ${dotHint&&i+1===next?'hint-dot':''}"><circle cx="${x}" cy="${y}" r="23" fill="transparent"/><circle cx="${x}" cy="${y}" r="10"/><text x="${x}" y="${y-19}" text-anchor="middle">${i+1}</text></g>`).join('')}</svg></div><p class="activity-feedback">${dotFeedback}</p><div class="dot-progress" aria-label="${dots.connected} of ${points.length} dots connected"><span style="width:${dots.connected/points.length*100}%"></span></div><div class="dot-actions"><button type="button" class="activity-secondary" data-action="dot-hint">✦ Show me the next dot</button><button type="button" class="activity-text-button" data-action="choose-dot-level">Change world</button></div>${recoveryControls(dots,'dot')}</section>`;
+  const scene=getScene(dots.pageId),complete=dots.complete;
+  const feedback=complete?`You drew the ${scene.short.toLowerCase()}! Take a look at the outline you made.`:dots.closing?'Nearly there! Join the last dot back to 1 to close your picture.':dotFeedback;
+  root.innerHTML=`<section class="dot-workspace ${complete?'dot-finished':''}"><div class="dot-topline"><span class="mystery-chip">${complete?'★ PICTURE COMPLETE':'✏️ MYSTERY PICTURE'}</span><span class="next-dot">${complete?'You did it!':dots.closing?'Close at':'Find'} <strong>${complete?'✓':dots.next}</strong></span><label class="inline-level">Dots<select name="live-dot-count" aria-label="Number of dots">${DOT_COUNTS.map(n=>`<option value="${n}" ${n===dotCount?'selected':''}>${n}</option>`).join('')}</select></label><span>${dots.connected} / ${dots.points.length}</span></div><div class="dot-play-layout"><div class="dot-paper">${dotBoard(dots,{hint:dotHint})}</div><div class="dot-tools"><p class="activity-feedback" role="status" tabindex="-1">${escapeHTML(feedback)}</p><div class="dot-progress" aria-label="${dots.connected} of ${dots.points.length} dots connected; ${complete?'outline closed':dots.closing?'tap 1 to close the outline':'keep going'}"><span style="width:${(dots.connected+(complete?1:0))/(dots.points.length+1)*100}%"></span></div><div class="dot-actions">${complete?`<a class="club-primary" href="./activity.html?game=colouring&page=${scene.id}">🎨 Colour this picture</a><button type="button" class="activity-secondary" data-action="new-dots">Another picture →</button>`:`<button type="button" class="activity-secondary" data-action="dot-hint">✦ Show me the next dot</button>`}<button type="button" class="activity-text-button" data-action="choose-dot-level">Change world</button></div>${recoveryControls(dots,'dot')}</div></div></section>`;
 }
-function connectDot(number){const result=dots.connect(number);if(result==='ignored')return;if(result==='retry'){dotFeedback=`Good try! Look for ${dots.connected+1} next.`;dotHint=true;renderDots();say(dotFeedback,true);return;}dotHint=false;if(result==='complete'){if(!dotAwarded){celebrate('dots');dotAwarded=true;}say(`You found ${getScene(dots.pageId).short}! Now you can colour your picture.`,true);}else{dotFeedback=`Lovely line! Find ${dots.connected+1} next.`;say(String(dots.connected+1),true);}renderDots();}
+function connectDot(number){
+  const result=dots.connect(number);if(result==='ignored')return;
+  if(result==='retry'){dotFeedback=`Good try! Look for ${dots.next} next.`;dotHint=true;renderDots();say(dotFeedback,true);return;}
+  dotHint=false;
+  if(result==='complete'){
+    if(!dotAwarded){celebrate('dots');dotAwarded=true;}
+    say(`You drew the ${getScene(dots.pageId).short.toLowerCase()}! Your picture is complete.`,true);
+  }else if(result==='close')say('One last line! Tap 1 to close your picture.',true);
+  else{dotFeedback=`Lovely line! Find ${dots.next} next.`;say(String(dots.next),true);}
+  renderDots();
+}
 function sourceOptions(){return picturePicker(library,pickerOptions());}
 function puzzlePiece(id,placed=false){const piece=puzzle.piece(id),{col,row,width,height,pad}=piece,path=piecePath(piece);const prefix=`${placed?'board':'tray'}-${id}`;return `<svg viewBox="${-pad} ${-pad} ${width+pad*2} ${height+pad*2}" aria-hidden="true" style="--piece-pad-x:${pad/width*100}%;--piece-pad-y:${pad/height*100}%"><defs><clipPath id="${prefix}"><path d="${path}"/></clipPath></defs><g clip-path="url(#${prefix})"><image href="${svgURL(artworkSVG(puzzleSource.art,{coloured:true}))}" x="${-col*width}" y="${-row*height}" width="600" height="440"/></g><path d="${path}" fill="none" stroke="#34345d" stroke-width="${placed?1.5:2.4}" stroke-linejoin="round"/></svg>`;}
 function renderPuzzle(){
@@ -92,7 +103,7 @@ function action(name){
   else if(name==='print-current')window.print();
   else if(name==='start-dots'||name==='new-dots'){$('#activity-confetti').replaceChildren();startMystery();}
   else if(/^(puzzle|dot)-(undo|redo|reset)$/.test(name)){const [kind,operation]=name.split('-');recoverActivity(kind,operation);}
-  else if(name==='dot-hint'){dotHint=true;dotFeedback=`The glowing dot is ${dots.connected+1}. Tap it!`;renderDots();say(dotFeedback,true);}
+  else if(name==='dot-hint'){dotHint=true;dotFeedback=`The glowing dot is ${dots.next}. Tap it!`;renderDots();say(dotFeedback,true);}
   else if(name==='start-puzzle'||name==='remix-puzzle'){$('#activity-confetti').replaceChildren();startPuzzle();}
   else if(name==='choose-puzzle'){$('#activity-confetti').replaceChildren();puzzle=null;renderPuzzle();revealWorkspace(root.querySelector('.puzzle-setup'));}
   else if(name==='puzzle-guide'){showGuide=!showGuide;renderPuzzle();}
@@ -112,19 +123,18 @@ root.addEventListener('click',event=>{
   else if(button?.hasAttribute('data-colour')){colour=button.dataset.colour;renderColouring();}
   else if(button?.hasAttribute('data-size')){brushSize=Number(button.dataset.size);renderColouring();}
   else if(button?.hasAttribute('data-stamp')){stampKind=button.dataset.stamp;renderColouring();}
-  else if(button?.hasAttribute('data-dot'))connectDot(Number(button.dataset.dot));
+  else if(button?.hasAttribute('data-dot')){if(event.detail<2)connectDot(Number(button.dataset.dot));}
   else if(button?.hasAttribute('data-puzzle-scene')){puzzleSource={art:freshArtwork(button.dataset.puzzleScene)};startPuzzle();}
   else if(button?.hasAttribute('data-piece')){puzzle.select(Number(button.dataset.piece));puzzleFeedback='Now tap the space where this piece belongs.';renderPuzzle();if(event.detail===0)root.querySelector('[data-slot]:not(:disabled)')?.focus({preventScroll:true});}
   else if(button?.hasAttribute('data-slot')){if(puzzle.selected===null){puzzleFeedback='Choose a little piece first.';renderPuzzle();}else {placePiece(Number(button.dataset.slot));if(event.detail===0)root.querySelector('[data-piece], [data-action=remix-puzzle]')?.focus({preventScroll:true});}}
   else if(button?.dataset.action)action(button.dataset.action);
-  else if(game==='dots'&&dots&&!dots.complete&&event.target.closest('[data-dot-board]')){const point=pointAt(event,event.target.closest('[data-dot-board]'));if(!point)return;let nearest=-1,distance=55;dots.points.forEach(([x,y],i)=>{const d=Math.hypot(x-point[0],y-point[1]);if(d<distance){distance=d;nearest=i;}});if(nearest>=0)connectDot(nearest+1);}
 });
 root.addEventListener('input',event=>{if(event.target.hasAttribute('data-library-search')){library.query=event.target.value;library.page=0;renderLibraryResults();}});
 root.addEventListener('change',event=>{if(event.target.name==='dot-theme'){dotTheme=event.target.value;startMystery();}if(event.target.name==='dot-count'){dotCount=Number(event.target.value);startMystery();}if(event.target.name==='live-dot-count'){dotCount=Number(event.target.value);dots=new DotSession(dots.pageId,dotCount);dotAwarded=false;dotHint=false;dotFeedback='Start at 1. Same picture, a new dot challenge!';renderDots();say(`Connect ${dotCount} dots. Start at 1.`);root.querySelector('[name=live-dot-count]')?.focus({preventScroll:true});}if(event.target.name==='live-piece-count'){puzzleCount=Number(event.target.value);startPuzzle();}if(event.target.name==='piece-count')puzzleCount=Number(event.target.value);});
 root.addEventListener('keydown',event=>{
   const region=event.target.closest('[data-region]'),dot=event.target.closest('[data-dot]');
   if(['Enter',' '].includes(event.key)&&region&&tool==='fill'){event.preventDefault();if(drawing.fill(region.dataset.region,colour)){const id=region.dataset.region;changed();root.querySelector(`[data-region="${id}"]`)?.focus({preventScroll:true});}}
-  else if(['Enter',' '].includes(event.key)&&dot){event.preventDefault();connectDot(Number(dot.dataset.dot));root.querySelector(`[data-dot="${dots.connected+1}"]`)?.focus({preventScroll:true});}
+  else if(['Enter',' '].includes(event.key)&&dot){event.preventDefault();if(event.repeat)return;connectDot(Number(dot.dataset.dot));root.querySelector(dots.complete?'.activity-feedback':`[data-dot="${dots.next}"]`)?.focus({preventScroll:true});}
   else if(event.target.matches('[data-drawing]')&&tool!=='fill'){
     if(['ArrowUp','ArrowRight','ArrowDown','ArrowLeft'].includes(event.key)){event.preventDefault();const before=[...cursor];const [dx,dy]={ArrowUp:[0,-15],ArrowRight:[15,0],ArrowDown:[0,15],ArrowLeft:[-15,0]}[event.key];cursor=[Math.max(0,Math.min(600,cursor[0]+dx)),Math.max(0,Math.min(440,cursor[1]+dy))];if(tool==='brush'&&event.shiftKey){drawing.brush({colour,size:brushSize,points:[before,cursor]});changed();root.querySelector('[data-drawing]').focus({preventScroll:true});}say(`Drawing position ${Math.round(cursor[0])}, ${Math.round(cursor[1])}.`);}
     else if(['Enter',' '].includes(event.key)){event.preventDefault();if(tool==='stamp')stampAt(cursor);else if(drawing.brush({colour,size:brushSize,points:[[...cursor]]}))changed();root.querySelector('[data-drawing]').focus({preventScroll:true});}
@@ -157,5 +167,5 @@ soundButton();
 if(game==='colouring'){
   const opened=openArtwork({draft:readDraft(),pageId:params.get('page')});
   drawing=new DrawingSession(opened.art);dirty=opened.dirty;renderColouring();revealWorkspace(root.querySelector('.activity-workbench'));
-}else if(game==='dots'){if(params.get('setup')!=='1')startMystery();else renderDots();}
+}else if(game==='dots'){if(params.get('setup')!=='1')startMystery(SCENES.some(scene=>scene.id===params.get('page'))?params.get('page'):null);else renderDots();}
 else if(game==='puzzles'){puzzleSource={art:freshArtwork('train')};if(params.get('setup')!=='1')startPuzzle();else renderPuzzle();}

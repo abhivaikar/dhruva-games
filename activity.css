@@ -82,9 +82,15 @@
 .next-dot strong { font-size:26px; background:#efddff; border:2px solid #b591d5; border-radius:13px; width:48px; height:45px; display:grid; place-items:center; }
 .dot-paper { max-width:720px; margin:0 auto; background:#fff; border:2px solid #e4d7c8; border-radius:18px; }
 .dot-paper svg { width:100%; display:block; touch-action:manipulation; }
+.dot-details { fill:none; stroke:#796589; stroke-width:2.5px; stroke-linecap:round; stroke-linejoin:round; opacity:.58; }
+.dot-finished .dot-details { opacity:1; }
+.dot-finished .dot-paper { border-color:#b69bce; }
+.dot-finished .number-dot > text { opacity:.58; }
 .number-dot { cursor:pointer; }
+.number-dot[aria-disabled="true"] { cursor:default; }
+.next-dot-target > circle:nth-of-type(2) { fill:#624d8c; }
 .number-dot > circle:nth-of-type(2) { fill:#624d8c; stroke:#fff; stroke-width:3px; }
-.number-dot > text { fill:#514064; font-family:"Avenir Next","Trebuchet MS",sans-serif; font-size:26px; font-weight:800; pointer-events:none; paint-order:stroke; stroke:#fff; stroke-width:6px; stroke-linejoin:round; }
+.number-dot > text { fill:#514064; font-family:"Avenir Next","Trebuchet MS",sans-serif; font-size:22px; font-weight:800; pointer-events:auto; paint-order:stroke; stroke:#fff; stroke-width:6px; stroke-linejoin:round; }
 .number-dot.connected > circle:nth-of-type(2) { fill:#a98ad3; }
 .number-dot.connected > text { fill:#b8aacb; }
 .number-dot.hint-dot > circle:nth-of-type(2) { fill:#ef638e; stroke:#ffd357; stroke-width:10px; animation:dot-pulse 1.5s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
@@ -218,7 +224,7 @@
   .next-dot { font-size:10px; gap:6px; }
   .next-dot strong { font-size:24px; width:40px; height:40px; border-radius:11px; }
   .dot-paper { border-radius:11px; }
-  .number-dot > text { font-size:29px; }
+  .number-dot > text { font-size:22px; }
   .activity-feedback { font-size:10px; line-height:1.8; margin:13px 0 12px; }
   .dot-actions { gap:7px; }
   .dot-actions .activity-secondary { font-size:8px; padding:9px; flex:1; }
@@ -373,3 +379,16 @@
 @media print { .picture-library-dialog { display:none !important; } }
 @media(max-width:650px) { .book-local-note { font-size:9px; } }
 @media print { .book-local-note { display:none; } }
+
+/* Keep the drawing and its controls together, including after the final line. */
+.dot-tools { min-width:0; }
+@media(min-width:850px) {
+  .dot-play-layout { display:grid; grid-template-columns:minmax(0,1fr) 245px; align-items:center; gap:22px; }
+  .is-playing .dot-play-layout .dot-paper { width:min(100%,calc((100svh - 310px)*1.364)); }
+  .dot-tools .activity-feedback { font-size:14px; line-height:1.7; margin:0 0 18px; }
+  .dot-tools .dot-actions { flex-direction:column; align-items:stretch; }
+  .dot-tools .dot-actions > a { text-decoration:none; text-align:center; }
+  .dot-tools .activity-recovery { margin:20px 0 0; padding:10px; }
+  .dot-tools .activity-recovery small { font-size:9px; margin:4px 0 0; }
+  .dot-tools .dot-progress { margin-bottom:18px; }
+}
