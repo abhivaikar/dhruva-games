@@ -4,7 +4,7 @@ import { SCENES, artworkSVG } from '../src/club/activity-scenes.js';
 import { THEMES, libraryPage, MysteryDeck, DOT_COUNTS, PIECE_COUNTS } from '../src/club/activity-library.js';
 import { picturePicker, pickerResults } from '../src/club/activity-picker.js';
 import { DrawingSession, DotSession, dotPoints, PicturePuzzle, piecePath, normaliseArtwork, freshArtwork, MAX_STROKES, MAX_POINTS, MAX_STAMPS } from '../src/club/activity-model.js';
-import { readBook, savePage, removePage, restorePage, writeDraft, readDraft, BOOK_LIMIT, openArtwork } from '../src/club/activity-book.js';
+import { writeDraft, readDraft, openArtwork } from '../src/club/colouring-draft.js';
 const memory=()=>{const values=new Map();return {getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)};};
 
 test('36 distinct activity pictures have named, unique colourable regions and complete SVG documents',()=>{
@@ -62,15 +62,15 @@ test('mysteries explore every picture before repeating, including across shuffle
   for(let i=0;i<1000;i++){const theme=themes[Math.floor(i/3)%themes.length],id=switching.next(theme);assert.notEqual(id,last);last=id;}
 });
 
-test('picture picking safely renders search text, empty results and a child’s artwork as a puzzle source',()=>{
-  const options={selected:'dragon',attribute:'data-page',ownPages:[]};
+test('picture picking safely renders search text, empty results and selected templates',()=>{
+  const options={selected:'dragon',attribute:'data-page'};
   const markup=picturePicker({theme:'fantasy',query:'"<script>',page:0},options);
   assert.ok(markup.includes('&quot;&lt;script&gt;'));assert.ok(!markup.includes('<script>'));
   assert.ok(markup.includes('No pictures found'));
-  const drawings=[{id:'art-one',art:freshArtwork('dragon')}];
-  const own=pickerResults({theme:'book',query:'dragon',page:0},{...options,selected:'art-one',ownPages:drawings});
-  assert.ok(own.includes('data-puzzle-art="art-one"'));assert.ok(own.includes('My dragon picture'));assert.ok(own.includes('aria-pressed="true"'));
-  assert.ok(!own.includes('data-page="dragon"'));
+  const selected=pickerResults({theme:'fantasy',query:'dragon',page:0},options);
+  assert.ok(selected.includes('data-page="dragon"'));
+  assert.ok(selected.includes('aria-pressed="true"'));
+  assert.ok(!markup.includes('My artwork'));
 });
 
 test('colour fills, brush drawing and stamps support true undo/redo and clearing can be undone',()=>{
@@ -203,50 +203,20 @@ test('jigsaw placement requires the selected piece, allows retries, and complete
   }
 });
 
-test('the activity book saves artwork, updates the same page, and preserves unrelated pages',()=>{
-  const storage=memory();const art=freshArtwork('train');art.fills.carriage='#ff0000';
-  const first=savePage(art,null,storage);assert.equal(first.ok,true);
-  const second=savePage(freshArtwork('rocket'),null,storage);assert.equal(second.ok,true);
-  art.fills.engine='#00ff00';assert.equal(savePage(art,first.page.id,storage).ok,true);
-  const pages=readBook(storage);assert.equal(pages.length,2);assert.equal(pages[0].id,second.page.id);
-  assert.equal(pages[1].art.fills.engine,'#00ff00');
-  const removed=removePage(first.page.id,storage);assert.equal(removed.ok,true);assert.equal(readBook(storage).length,1);
-  assert.equal(restorePage(removed.page,storage),true);assert.equal(readBook(storage).length,2);
-  assert.equal(restorePage(removed.page,storage),true);assert.equal(readBook(storage).length,2);
-});
-
-test('a full activity book keeps all existing pictures and still allows edits',()=>{
-  const storage=memory();let first;
-  for(let i=0;i<BOOK_LIMIT;i++){const result=savePage(freshArtwork('train'),null,storage);assert.equal(result.ok,true);first ||= result.page;}
-  assert.equal(savePage(freshArtwork('robot'),null,storage).reason,'full');assert.equal(readBook(storage).length,BOOK_LIMIT);
-  assert.equal(savePage(freshArtwork('rocket'),first.id,storage).ok,true);assert.equal(readBook(storage).length,BOOK_LIMIT);
-});
-
-test('blocked or corrupt browser storage reports failed saves and draft loading stays safe',()=>{
+test('colouring draft recovery tolerates blocked or corrupt storage and accepts existing draft format',()=>{
   const blocked={getItem:()=>{throw Error('blocked');},setItem:()=>{throw Error('blocked');}};
-  assert.deepEqual(readBook(blocked),[]);assert.equal(savePage(freshArtwork(),null,blocked).reason,'storage');
-  assert.equal(readDraft(blocked),null);assert.equal(writeDraft(freshArtwork(),null,blocked),false);
-  const corrupt={getItem:()=>'{oops',setItem:()=>{}};assert.deepEqual(readBook(corrupt),[]);assert.equal(readDraft(corrupt),null);
-  const storage=memory();writeDraft(freshArtwork('butterfly'),'my-page',storage);assert.equal(readDraft(storage).art.pageId,'butterfly');assert.equal(readDraft(storage).id,'my-page');
+  assert.equal(readDraft(blocked),null);assert.equal(writeDraft(freshArtwork(),blocked),false);
+  const corrupt={getItem:()=>'{oops',setItem:()=>{}};assert.equal(readDraft(corrupt),null);
+  const storage=memory();writeDraft(freshArtwork('butterfly'),storage);assert.equal(readDraft(storage).art.pageId,'butterfly');
+  storage.setItem('dhruva-colouring-draft-v1',JSON.stringify({art:freshArtwork('cat'),id:'legacy-saved-id'}));
+  assert.deepEqual(readDraft(storage),{art:freshArtwork('cat')});
 });
 
-test('a child’s saved colouring remains intact when reused as a jigsaw picture',()=>{
-  const storage=memory(),session=new DrawingSession(freshArtwork('dinosaur'));
-  session.fill('body','#f183b5');session.brush({colour:'#6655c7',size:12,points:[[170,240],[220,250]]});session.stamp({kind:'star',colour:'#ffcf43',size:28,x:440,y:90});
-  const saved=savePage(session.art,null,storage);const fromBook=readBook(storage).find(page=>page.id===saved.page.id);
-  const before=artworkSVG(fromBook.art);const puzzle=new PicturePuzzle(6);for(let id=0;id<6;id++){puzzle.select(id);puzzle.place(id);}
-  assert.equal(puzzle.complete,true);assert.equal(artworkSVG(fromBook.art),before);
-  assert.ok(before.includes('#f183b5')&&before.includes('#6655c7')&&before.includes('translate(440 90)'));
-});
-
-test('refreshing a colouring page resumes the matching draft and never replaces a different saved picture',()=>{
-  const old=freshArtwork('robot');old.fills.head='#ff0000';
-  const changed=freshArtwork('robot');changed.fills.head='#00ff00';
-  const pages=[{id:'robot-page',art:old},{id:'train-page',art:freshArtwork('train')}];
-  const draft={id:'robot-page',art:changed};
-  const explicit=openArtwork({pages,draft,pageId:'robot'});
-  assert.equal(explicit.art.fills.head,'#00ff00');assert.equal(explicit.id,'robot-page');assert.equal(explicit.dirty,true);
-  const edited=openArtwork({pages,draft,artId:'robot-page'});assert.equal(edited.art.fills.head,'#00ff00');
-  const other=openArtwork({pages,draft,artId:'train-page'});assert.equal(other.art.pageId,'train');assert.equal(other.id,'train-page');assert.equal(other.dirty,false);
-  const newPage=openArtwork({pages,draft,pageId:'butterfly'});assert.deepEqual(newPage.art,freshArtwork('butterfly'));assert.equal(newPage.id,null);
+test('refreshing colouring resumes the current draft without overriding another picture selection',()=>{
+  const art=freshArtwork('robot');art.fills.head='#00ff00';
+  const draft={art};
+  const current=openArtwork({draft});assert.equal(current.art.fills.head,'#00ff00');assert.equal(current.dirty,true);
+  const explicit=openArtwork({draft,pageId:'robot'});assert.equal(explicit.art.fills.head,'#00ff00');
+  const newPage=openArtwork({draft,pageId:'butterfly'});assert.deepEqual(newPage.art,freshArtwork('butterfly'));assert.equal(newPage.dirty,false);
+  assert.deepEqual(openArtwork().art,freshArtwork('train'));
 });

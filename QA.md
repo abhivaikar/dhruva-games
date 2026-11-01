@@ -77,3 +77,11 @@ Reduced-motion CSS is implemented; the operating system’s motion preference wa
 The earlier GitHub Pages deployment at commit `e86256f` succeeded. Pages uses the GitHub Actions publishing source at `https://abhivaikar.github.io/dhruva-games/`; check the new commit’s workflow when publishing this update.
 
 A play session with Dhruva is the best next check of reading load, voice, pace and difficulty.
+
+## Saved activity-book removal
+
+- Removed the homepage collection banner, header/navigation links, gallery, save-to-book actions and saved-art puzzle sources. The three creative games remain available under **Creative games**.
+- Verified in the local browser: colouring changes survive refresh; reset can be undone; a four-piece puzzle completes; all ten dots complete with a link to colouring; template choices show all 36 pictures without a saved-artwork tab.
+- An old `activity.html?game=book` URL now opens Colouring Studio. The earlier gallery checks above are historical; that feature is no longer available.
+- The current-picture PNG download and print actions remain. Existing gallery storage is left untouched and is no longer read or written.
+- All 75 remaining automated tests and the static build pass.

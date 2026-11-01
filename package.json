@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "Playful Singapore transport, primary maths, maps, flags, Chinese, Marathi and creative activity-book games.",
+  "description": "Playful Singapore transport, primary maths, maps, flags, Chinese, Marathi and creative games.",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",

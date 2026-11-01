@@ -24,7 +24,7 @@ Requires Node.js 22 or later. No packages to install.
 npm run dev
 ```
 
-Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps, Flags, Activity Book and Languages. Every game has an **All games** link.
+Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps, Flags, Creative games and Languages. Every game has an **All games** link.
 
 The original game is now at `mrt-adventure.html`. Its 17-stop route, train colours, speech, tap-to-count objects, difficulty settings and automatic station progression remain available.
 
@@ -43,10 +43,10 @@ Automatic feedback pauses in hidden tabs and open dialogs. Restart, mode changes
 - In Treasure Trails, tap any walkable map square to have Captain Dhruva follow a path there, or use compass buttons / keyboard arrows one step at a time. Match the coordinate clue and **Dig for treasure**. **Parrot, help!** highlights one useful step. Collect three map pieces and shape keys, then match the shuffled key order to open the Sunstone vault. Five sparkle shells and Tilly’s rescue are optional discoveries. Every replay shuffles the hiding places.
 - **Hear again** repeats a spoken prompt and enables sound if muted. **A little clue** provides an untimed hint. Browser speech availability and voice quality vary; all prompts are also visible.
 - **Voice** in the header opens a narrator preview shared by all games. Google US English (en-US) is the default narrator. If it is unavailable, the automatic choice prefers natural/enhanced English voices and excludes novelty voices. Choose a different voice and a natural or gentler pace; the browser remembers the choice. Previews work even when game sounds are muted and do not turn game sound back on. Available voices and their quality depend on the device/browser; the website does not bundle studio narration.
-- Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Quiz and treasure refreshes start fresh sessions. Colouring resumes its matching saved page or draft; completed badges remain when browser storage is available.
+- Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Quiz and treasure refreshes start fresh sessions. Colouring resumes its current draft; completed badges remain when browser storage is available.
 - Reduced-motion preferences suppress celebration motion. Sound starts after user interaction to respect browser autoplay rules.
 
-## Creative activity book
+## Creative games
 
 Each activity offers 36 distinct SVG pictures across six worlds. These are individual drawings and silhouettes, rather than colour variants of the same templates.
 
@@ -59,13 +59,12 @@ Each activity offers 36 distinct SVG pictures across six worlds. These are indiv
 | Space & make-believe | Rocket, robot, flying saucer, castle, dragon, astronaut |
 | Happy days | Ice cream, cupcake, hot-air balloon, kite, cosy house, treasure chest |
 
-Colouring and puzzle pickers have theme filters, name search and pages of 12 previews. The puzzle picker also has a **My artwork** filter for saved drawings. Existing saved pictures retain their original region IDs and colours.
+Colouring and puzzle pickers have theme filters, name search and pages of 12 previews.
 
 - Colouring: choose a colour and tap a shape with **Fill**. Use **Brush** for freehand strokes, or tap to add star, heart and flower stamps. Undo/redo applies to fills, brushwork, stamps and clearing. Keyboard users can fill focused shapes with Enter; in Brush/Stamp mode arrows move a drawing cursor, Enter adds a mark, and Shift+arrows draw a line.
-- Colouring drafts persist after each change. Changing pictures or leaving an edited page also keeps its work in the activity book when storage is available. **Save in my book** explicitly saves or updates the current page.
+- The current colouring page resumes after a refresh when browser storage is available. There is no saved artwork collection. Download the current picture as a 1200 × 880 PNG or print it to keep a copy; choosing another picture starts a fresh page.
 - Dot-to-dot: choose a world (or all pictures), select 10, 15 or 20 dots and connect them in order. Each world uses a shuffled deck so every picture appears before repeats within that world during a visit. A hint highlights the next dot. The revealed picture links directly to its colouring page.
 - Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
-- **My book** keeps up to 18 pages in this browser. Saved artwork appears in the puzzle picker. Pages can be edited, downloaded as 1200 × 880 PNGs, or printed one per sheet. Removal offers Undo. Browser storage availability and capacity determine whether saves succeed; failures are shown without silently discarding existing pages.
 
 - **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
 
@@ -115,7 +114,7 @@ npm run build
 node scripts/serve.mjs --dist
 ```
 
-The 78 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, gallery updates, blocked storage and the automatic-transition clock (delay, pause/resume, multiple blockers, audio waiting and stale callback cancellation).
+The automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, blocked storage and the automatic-transition clock (delay, pause/resume, multiple blockers, audio waiting and stale callback cancellation).
 
 The build copies the five HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
 
@@ -133,11 +132,11 @@ No environment variables or backend are required. Other static hosts can serve t
 
 - `index.html`, `club.css`, `src/club/hub.js`: the game hub and category filters.
 - `play.html`, `src/club/play.js`: new game presentation, touch/keyboard controls, voice, and celebrations.
-- `activity.html`, `activity.css`, `src/club/activity.js`: the three creative games, gallery, pointer controls, PNG export and print layouts.
+- `activity.html`, `activity.css`, `src/club/activity.js`: the three creative games, pointer controls, PNG export and print layouts.
 - `src/club/activity-scenes.js`, `src/club/activity-extra-scenes.js`, `src/club/activity-card-art.js`: original colourable scenes, silhouettes and card illustrations.
 - `src/club/activity-library.js`, `src/club/activity-picker.js`: themes, searchable/paginated picture libraries and shuffled mystery decks.
 - `src/club/activity-model.js`: drawing history, numbered-dot progression and jigsaw geometry/matching.
-- `src/club/activity-book.js`: validated browser-local gallery, drafts and restoration.
+- `src/club/colouring-draft.js`: validated recovery of the current colouring page after refresh.
 - `src/club/catalog.js`: the eleven offerings and their navigation.
 - `language.html`, `language.css`, `src/club/language.js`: the two language games and their four activities, libraries and passports.
 - `src/club/language-data.js`, `language-model.js`, `language-art.js`: original vocabulary/phrases, guarded rounds, sentence tiles, progress and illustrations.

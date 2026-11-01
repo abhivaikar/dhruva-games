@@ -2,7 +2,7 @@
 
 Status: the first release is implemented as **two dedicated games**, Pip’s Chinese Adventure (`language.html?lang=chinese`) and Pip’s Marathi Adventure (`language.html?lang=marathi`). Each contains Listen & find, Word detective, My speaking turn and Sentence puzzles, plus a searchable word/phrase book and its own passport. Each offers 84 words, 40 phrases, 10 worlds and bundled audio. The additional story ideas below remain future work.
 
-The activity-book expansion is complete and published: 36 original pictures, 108 dot-to-dot challenges and 144 picture/size puzzle combinations. The language games connect transport, picture matching and sentence puzzles to everyday language. Word-book entries with a corresponding activity template link to colouring; a full talking gallery of a child’s own drawings and the story collections remain planned.
+The activity-book expansion is complete and published: 36 original pictures, 108 dot-to-dot challenges and 144 picture/size puzzle combinations. The language games connect transport, picture matching and sentence puzzles to everyday language. Word-book entries with a corresponding activity template link to colouring; story collections remain planned. The saved artwork collection was removed at the user’s request; future activities should work as standalone games.
 
 ## What we want Dhruva to be able to do
 
@@ -20,7 +20,6 @@ Confirmed starting point: Dhruva is in **Kindergarten K1**; his parent describes
 | Game | What happens | Main purpose | Proposed content bank |
 | --- | --- | --- | --- |
 | **Pip’s Marathi Missions** | Help Pip pack a bag, find objects, serve a snack, or board the right train. Hear a short instruction, act on it, then hear and try a useful reply. | Listening that leads into speaking | 10 everyday theme packs; 80–100 useful words; 40 short model phrases |
-| **My Talking Picture Book** | Reuse activity-book art. Tap an object to hear its Marathi name, hear a sentence about the picture, then describe or tell a story about it. Optional record-and-replay lets him hear his own version. | Naming, describing and speaking with a purpose | At least 24 reviewed picture prompts initially; 3 prompts per picture; draw from the existing 36-template library where suitable |
 | **Akshar Adventure** | Hear a familiar word, find its picture, discover its written form, and solve a small letter/vowel-sign puzzle. Progress from small sound families to words he already knows aloud. | Connecting speech to Devanagari reading | At least 60 reviewed word cards across progressive packs; reusable listen, match, build and read-aloud activities |
 | **Little Marathi Story Club** | Arrange picture panels, hear an original short story, choose what happens next, and retell it. Gradually reveal short written sentences with word-level audio help. | Connected speech and reading with understanding | 12 original stories initially, each with 3–4 panels and several retelling prompts |
 
@@ -76,7 +75,6 @@ Use familiar Singapore situations and school vocabulary where provided. Offer Pi
 
 1. **K1 foundation implemented.** Unfamiliar words get a picture/audio introduction before matching. Optional reading modes and hideable sentence models offer more challenge. The first release uses original content and generated Mandarin/Marathi audio; no independent human educator review is claimed. Adapt future packs to Dhruva’s demonstrated language and script knowledge and invite fluent-speaker feedback.
 2. **First playable release implemented inside two games:** 84 words and 40 phrases per language, all with included audio. Speaking acknowledgement records an attempt, not verified pronunciation. Sentence puzzles use authored Chinese word groups and whole Marathi words. Automated checks cover all content/audio pairings, rounds, progress separation and audio/recording lifecycle.
-3. **Connect to the activity book:** My Talking Picture Book, beginning with Marathi. Add picture-led prompts and optional local record/replay, then a Chinese mode after its content is reviewed.
 4. **Build the reading paths:** Akshar Adventure and Character Detectives, with the learner’s script knowledge guiding the starting tier.
 5. **Extend conversation and stories:** Marathi Story Club, Little Singapore Stories, and Tone Coaster where appropriate. Expand each content bank with reviewed theme packs rather than releasing many nearly empty games.
 
