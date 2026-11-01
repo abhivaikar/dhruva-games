@@ -2,6 +2,7 @@ import { Journey } from './game.js';
 import { ROUTE, LEVELS, JOURNEY_START, JOURNEY_END } from './route.js';
 import { WORLDS, TRAIN_COLOURS, CountingHelper, activityQuestion, activityHint, objectArt, conductor, stationArt } from './adventure.js';
 import { AudioGuide } from './audio.js';
+import { mountVoiceSettings } from './voice-settings.js';
 import { loadPreferences, savePreferences } from './preferences.js';
 import { shortcutAction } from './input.js';
 import { recordCompletion } from './club/progress.js';
@@ -28,7 +29,7 @@ function announce(text) { $('#announcement').textContent = text; }
 function schedule(callback, delay) {
   clearTimeout(pending?.id);
   pending = { callback, remaining: delay, started: performance.now(), id: null };
-  if (!$('#settings').open) {
+  if (!$('#settings').open && !document.querySelector('.voice-dialog[open]')) {
     pending.id = setTimeout(() => {
       const run = pending.callback;
       pending = null;
@@ -263,7 +264,7 @@ document.addEventListener('pointerdown', () => {
 
 document.addEventListener('keydown', event => {
   const target = event.target;
-  const allowed = !$('#settings').open && (target === document.body || target.classList.contains('answer'));
+  const allowed = !$('#settings').open && !document.querySelector('.voice-dialog[open]') && (target === document.body || target.classList.contains('answer'));
   if (allowed && event.repeat && ['ArrowLeft', 'ArrowRight', ' ', 'Spacebar'].includes(event.key)) {
     event.preventDefault();
     return;
@@ -322,9 +323,10 @@ $('#settings').addEventListener('close', resume);
 document.addEventListener('visibilitychange', () => { if (document.hidden) audio.stop(); });
 window.addEventListener('pagehide', () => { pause(); clearTimeout(bellTimer); });
 window.addEventListener('pageshow', event => {
-  if (event.persisted && !$('#settings').open) resume();
+  if (event.persisted && !$('#settings').open && !document.querySelector('.voice-dialog[open]')) resume();
 });
 
+mountVoiceSettings(audio,{anchor:$('#sound'),onOpen:pause,onClose:resume});
 applyTrainColour();
 renderSound();
 render();

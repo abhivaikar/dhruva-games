@@ -11,7 +11,9 @@ The activity-book expansion is complete and published: 36 original pictures, 108
 - Give Marathi and Chinese separate progress and difficulty choices. Strength in one language should not raise the other language’s difficulty.
 - Celebrate attempts, discoveries and useful communication. The child-facing experience should be welcoming and should never label him as weak at a language.
 
-Age, school year, present comprehension/reading ability, and the availability of family recordings are still to be confirmed. Do not assume he can already read either script. The tiers below are ability-based proposals, not a placement assessment.
+Confirmed starting point: Dhruva is in **Kindergarten K1**; his parent describes his ability to grasp ideas as comparable to P1. Begin with K1-friendly, picture-led listening and speaking, with optional P1-style challenges. His current Chinese and Marathi comprehension and script-reading levels are still to be confirmed; strong reasoning should not automatically place him in a harder reading tier. Do not assume he can already read either script.
+
+**Built-in audio is preferred initially.** Family recordings are not part of the first release. Offer original game audio that works without anyone at home needing to record phrases; fluent-speaker review remains necessary for learning material.
 
 ## Marathi collection
 
@@ -54,7 +56,7 @@ Use familiar Singapore situations and school vocabulary where provided. Offer Pi
 
 ## A shared, playful learning loop
 
-- Short optional sessions, roughly 5–8 minutes, with 5–8 targets rather than the whole content bank at once.
+- Short optional sessions, initially roughly 3–5 minutes for K1, with 4–6 targets rather than the whole content bank at once. Offer longer sessions and P1-style challenges when he wants them.
 - Begin with a tiny story goal: help Pip, make a snack, decorate a picture, deliver a parcel or finish a picture book.
 - Use listening, acting, speaking and reading together, with the balance adjusted for each language and skill tier.
 - Revisit familiar words in new situations. Track recognition, supported speech, independent use and reading separately; a correct picture tap should not automatically mean a word is mastered.
@@ -72,7 +74,7 @@ Use familiar Singapore situations and school vocabulary where provided. Offer Pi
 
 ## Recommended build order
 
-1. **Confirm the starting point and review a small content sample.** Use age/year, what he understands in each language, his script knowledge, and a few current Chinese school topics. Have fluent speakers check model phrases and audio. This is needed before calling a pack ready for a child to learn from.
+1. **Review a small content sample at the confirmed K1 starting point.** Establish what he understands in each language, his script knowledge, and a few current kindergarten Chinese topics. Offer optional P1-style extensions. Use built-in game audio first and have fluent speakers check model phrases and audio. This is needed before calling a pack ready for a child to learn from.
 2. **First playable release:** Pip’s Marathi Missions and Pip’s Mandarin MRT Missions. Make the speaking response part of the play loop, alongside accessible listen-and-act activities. Publish only the reviewed packs, with their actual available counts.
 3. **Connect to the activity book:** My Talking Picture Book, beginning with Marathi. Add picture-led prompts and optional local record/replay, then a Chinese mode after its content is reviewed.
 4. **Build the reading paths:** Akshar Adventure and Character Detectives, with the learner’s script knowledge guiding the starting tier.

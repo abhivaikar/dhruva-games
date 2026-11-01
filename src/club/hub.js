@@ -1,3 +1,5 @@
+import { AudioGuide } from '../audio.js';
+import { mountVoiceSettings } from '../voice-settings.js';
 import { GAMES, CATEGORIES } from './catalog.js';
 import { illustration, heroArt, clubMark } from './art.js';
 import { readClub } from './progress.js';
@@ -28,3 +30,7 @@ $('#categories').addEventListener('click', event => {
 $('#grownups-open').addEventListener('click', () => $('#grownups').showModal());
 window.addEventListener('pageshow', renderGames);
 renderGames();
+
+const narrator=new AudioGuide(readClub().sound);
+mountVoiceSettings(narrator,{anchor:$('#grownups-open')});
+window.addEventListener('pagehide',()=>narrator.stop());

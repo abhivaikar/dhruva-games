@@ -5,6 +5,7 @@ import { DrawingSession, DotSession, PicturePuzzle, freshArtwork, piecePath, MAX
 import { readBook, savePage, removePage, restorePage, readDraft, writeDraft, openArtwork } from './activity-book.js';
 import { readClub, writeClub, recordCompletion } from './progress.js';
 import { AudioGuide } from '../audio.js';
+import { mountVoiceSettings } from '../voice-settings.js';
 
 const $ = selector => document.querySelector(selector);
 const root=$('#activity-root'),params=new URLSearchParams(location.search);
@@ -152,6 +153,7 @@ window.addEventListener('pagehide',()=>{audio.stop();if(drawing){if(dirty)saveDr
 document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.stop();});
 $('#activity-title').textContent=names[game];$('#activity-subtitle').textContent=subtitles[game];document.title=`${names[game]} · Dhruva’s Discovery Club`;
 document.querySelectorAll('.activity-nav a').forEach(link=>{if(new URL(link.href).searchParams.get('game')===game)link.setAttribute('aria-current','page');});
+mountVoiceSettings(audio,{anchor:$('#activity-sound')});
 soundButton();updateBookCount();
 if(game==='colouring'){
   const opened=openArtwork({pages:readBook(),draft:readDraft(),artId:params.get('art'),pageId:params.get('page')});

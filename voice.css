@@ -1,0 +1,40 @@
+.voice-open { display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:44px; flex-shrink:0; padding:8px 11px; border:1px solid #cfbce7; border-radius:13px; background:#f4ebff; color:#674389; font:700 11px "Avenir Next","Trebuchet MS",sans-serif; cursor:pointer; }
+.voice-open > span:first-child { font-size:20px; }
+.voice-dialog { box-sizing:border-box; width:470px; max-width:calc(100% - 24px); max-height:92dvh; padding:27px; border:2px solid #b99bd4; border-radius:25px; background:#fffaf1; color:#523569; box-shadow:0 15px 65px #35204755; font-family:"Avenir Next","Trebuchet MS",sans-serif; }
+.voice-dialog::backdrop { background:#352547a8; backdrop-filter:blur(4px); }
+.voice-dialog * { box-sizing:border-box; }
+.voice-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.voice-heading p { margin:0 0 8px; color:#a37347; font-size:8px; font-weight:800; letter-spacing:1px; }
+.voice-heading h2 { margin:0; font-size:29px; letter-spacing:-1px; }
+.voice-close { width:44px; min-height:44px; padding:0; flex-shrink:0; border:1px solid #dfc9df; border-radius:50%; background:white; color:#8b6d95; font-size:24px; cursor:pointer; }
+.voice-intro { color:#8c7386; font-size:12px; line-height:1.7; margin:16px 0 23px; }
+.voice-label,.voice-paces legend { font-size:12px; font-weight:750; display:block; margin-bottom:9px; }
+.voice-dialog select { width:100%; min-height:48px; font:inherit; font-size:12px; color:#664779; border:2px solid #d8c2e5; background:white; border-radius:12px; padding:10px; }
+.voice-choice-note { min-height:32px; font-size:10px; line-height:1.7; color:#987b91; margin:9px 0 17px; }
+.voice-paces { padding:0; border:0; margin:0 0 19px; display:flex; gap:10px; }
+.voice-paces label { flex:1; position:relative; }
+.voice-paces input { position:absolute; opacity:0; }
+.voice-paces label span { display:flex; min-height:48px; align-items:center; justify-content:center; text-align:center; border:2px solid #e1cee9; padding:9px; border-radius:12px; color:#8d6597; background:white; font-size:11px; font-weight:750; }
+.voice-paces input:checked + span { border-color:#bd7eb4; background:#ffe3ed; color:#954167; box-shadow:0 2px 0 #e0b2ce; }
+.voice-paces input:focus-visible + span,.voice-dialog button:focus-visible,.voice-dialog select:focus-visible { outline:3px solid #6951bd; outline-offset:3px; }
+.voice-demo { display:flex; align-items:start; gap:12px; padding:15px; border:1px dashed #dcc187; border-radius:14px; background:#fff1c4; }
+.voice-demo > span { color:#bd8c2d; font-size:28px; }
+.voice-demo p { margin:0; font-size:12px; line-height:1.8; color:#96724e; }
+.voice-actions { display:flex; gap:10px; margin-top:19px; }
+.voice-actions button,.voice-done { min-height:48px; padding:10px 16px; border-radius:12px; font:750 12px "Avenir Next","Trebuchet MS",sans-serif; cursor:pointer; }
+.voice-preview { flex:1; background:#c53e7b; border:1px solid #a02b61; border-bottom:4px solid #a02b61; color:white; }
+.voice-stop { background:white; border:1px solid #dac7df; border-bottom:3px solid #dac7df; color:#8c6b94; }
+.voice-preview:disabled { opacity:.4; }
+#voice-status { min-height:34px; margin:12px 0 7px; font-size:11px; line-height:1.7; color:#90617e; }
+.voice-device-note { font-size:10px; line-height:1.7; color:#a18a98; margin:0 0 19px; }
+.voice-done { width:100%; background:#eee2fa; border:1px solid #cbb1df; color:#7a5295; }
+@media(max-width:650px) {
+  .voice-open { width:44px; padding:7px; }
+  .voice-open > span:last-child { display:none; }
+  .voice-dialog { padding:21px 17px; }
+  .voice-heading h2 { font-size:25px; }
+  .voice-heading p { font-size:7px; letter-spacing:.5px; }
+  .voice-paces { gap:7px; }
+  .voice-paces label span { font-size:10px; padding:7px; }
+}
+@media print { .voice-open,.voice-dialog { display:none !important; } }

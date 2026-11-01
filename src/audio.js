@@ -1,8 +1,12 @@
+import { chooseNarrator, readVoice, PACES } from './voice-preferences.js';
+
 export class AudioGuide {
   constructor(enabled = true) {
     this.enabled = enabled;
     this.context = null;
     this.lastBell = -Infinity;
+    this.pendingVoice = null;
+    this.utterance = null;
   }
 
   unlock() {
@@ -15,21 +19,44 @@ export class AudioGuide {
   }
 
   stop() {
+    this.pendingVoice?.();
+    this.pendingVoice = null;
+    this.utterance = null;
     try { window.speechSynthesis?.cancel(); } catch { /* Optional browser feature. */ }
   }
 
-  speak(text) {
-    if (!this.enabled || !window.speechSynthesis || !window.SpeechSynthesisUtterance) return;
+  speak(text, {preview = false, onStatus = () => {}} = {}) {
+    if ((!this.enabled && !preview) || !window.speechSynthesis || !window.SpeechSynthesisUtterance) {onStatus('unavailable');return false;}
     try {
       this.stop();
-      const words = new SpeechSynthesisUtterance(text);
-      words.lang = 'en-SG';
-      words.rate = 0.85;
-      const voices = window.speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === 'en-SG') || voices.find(v => v.lang.startsWith('en-'));
-      if (voice) words.voice = voice;
-      window.speechSynthesis.speak(words);
-    } catch { /* Speech is an enhancement, never a requirement to play. */ }
+      const synth=window.speechSynthesis;
+      const speakWithVoices=()=>{
+        const preference=this.voicePreference||readVoice(),voice=chooseNarrator(synth.getVoices(),preference);
+        const words=new window.SpeechSynthesisUtterance(text);
+        words.lang=voice?.lang||'en-GB';
+        words.rate=PACES[preference.pace].rate;
+        words.pitch=1;
+        if(voice)words.voice=voice;
+        words.onstart=()=>onStatus('speaking');
+        words.onend=()=>{if(this.utterance===words)this.utterance=null;onStatus('finished');};
+        words.onerror=event=>{if(this.utterance===words)this.utterance=null;onStatus(['canceled','interrupted'].includes(event.error)?'stopped':'error');};
+        this.utterance=words;
+        synth.speak(words);
+      };
+      if(synth.getVoices().length){speakWithVoices();}
+      else{
+        let timer;
+        const cleanup=()=>{clearTimeout(timer);synth.removeEventListener?.('voiceschanged',ready);};
+        const ready=()=>{
+          if(!synth.getVoices().length)return;
+          cleanup();this.pendingVoice=null;try{speakWithVoices();}catch{onStatus('error');}
+        };
+        this.pendingVoice=cleanup;
+        synth.addEventListener?.('voiceschanged',ready);
+        timer=setTimeout(()=>{cleanup();this.pendingVoice=null;try{speakWithVoices();}catch{onStatus('error');}},1200);
+      }
+      return true;
+    } catch { onStatus('error');return false; /* Speech is an enhancement, never a requirement to play. */ }
   }
 
   celebrate(final = false) {

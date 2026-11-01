@@ -10,6 +10,7 @@ import { TreasureTrail, DIRECTIONS, islandPath } from './treasure.js';
 import { trailGame, trailClue, treasureSceneArt } from './treasure-view.js';
 import { ROUTE } from '../route.js';
 import { AudioGuide } from '../audio.js';
+import { mountVoiceSettings } from '../voice-settings.js';
 
 const $ = selector => document.querySelector(selector);
 const root = $('#play-root');
@@ -290,7 +291,7 @@ root.addEventListener('focusin', event => {
 });
 document.addEventListener('pointerdown', () => { keyboardMode = false; document.querySelectorAll('.keyboard-selected').forEach(button => button.classList.remove('keyboard-selected')); });
 document.addEventListener('keydown', event => {
-  if (event.altKey || event.ctrlKey || event.metaKey || !game) return;
+  if (event.altKey || event.ctrlKey || event.metaKey || !game || document.querySelector('.voice-dialog[open]')) return;
   if (event.key === 'Tab') keyboardMode = true;
   const mapButton = event.target.closest('[data-map-answer]');
   if (mapButton && ['Enter', ' '].includes(event.key)) {
@@ -325,6 +326,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) audio
 window.addEventListener('pagehide', () => { audio.stop(); voyageVersion++; trailWalking = false; });
 window.addEventListener('pageshow', event => { if (event.persisted && trail) renderTrail(); });
 
+mountVoiceSettings(audio,{anchor:$('#club-sound'),onOpen:()=>{if(trailWalking){voyageVersion++;trailWalking=false;renderTrail();}}});
 soundButton();
 if (game) {
   document.body.classList.toggle('treasure-page', id === 'treasure-map');
