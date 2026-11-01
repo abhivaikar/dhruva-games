@@ -14,7 +14,7 @@ import { AudioGuide } from '../audio.js';
 const $ = selector => document.querySelector(selector);
 const root = $('#play-root');
 const id = new URLSearchParams(location.search).get('game');
-const game = GAMES.find(item => item.id === id && id !== 'mrt-adventure');
+const game = GAMES.find(item => item.id === id && item.href.startsWith('./play.html?'));
 const settings = readClub();
 const audio = new AudioGuide(settings.sound);
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

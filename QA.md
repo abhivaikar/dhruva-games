@@ -1,8 +1,8 @@
-# Verification — 31 October 2026
+# Verification — 1 November 2026
 
 ## Automated
 
-`npm test`: 30 tests passed. Coverage includes:
+`npm test`: 43 tests passed. Coverage includes:
 
 - 6,000 original MRT questions and 9,000 new primary maths questions, with independently checked arithmetic and distinct-valued distractors.
 - Three primary stages, including exact division, reduced fractions, integer-based decimal arithmetic, percentages, ratios and place value.
@@ -13,14 +13,18 @@
 - All 20 local flag SVGs, their licence, and more than 150 map outlines.
 - 500 generated pirate voyages: reachable, separated mission locations; shortest routes; mountain/edge handling; guarded map/key progression; one-time shell collection and turtle rescue; fog discovery and coordinate conversions.
 - Local entry points, bounded completion badges and corrupt/blocked storage.
+- Drawing region/colour validation, brush and stamp bounds, undo/redo and clear recovery.
+- All six original activity scenes at 10/15/20 dots, ordered connection and completion guards.
+- Interlocking puzzle seams, flat outer borders and guarded placement at 4/6/9/12 pieces.
+- Browser-local gallery updates, full/blocked storage, removal/restoration, matching draft recovery and artwork preservation when reused as a puzzle.
 
-`npm run build`: passed. The static output is approximately 508 KB and includes all six offerings. No package installation or runtime framework is required. Local source syntax checks passed.
+`npm run build`: passed. The static output is approximately 612 KB and includes all nine offerings. No package installation or runtime framework is required. Local source syntax checks passed.
 
 ## Browser playthroughs
 
 Checked in the Codex in-app browser at desktop 1280 × 900 and phone 390 × 844:
 
-- Homepage: all six links, category filters, grown-up information dialog, and completed-game badges.
+- Homepage: all nine links, category filters, grown-up information dialog, and completed-game badges.
 - World Explorer: all eight countries found, a wrong choice followed by retry, direct SVG marker interaction, and Space-key activation of a map marker.
 - Flag Detective: all eight rounds, both “name the country” and “find the flag” modes, clues, arrow-key selection and Space confirmation. All eight collected flag images loaded.
 - Transport Dispatcher: all eight missions, including actual station neighbours towards both termini, line-colour identification, destination direction and the road-bus question.
@@ -30,10 +34,10 @@ Checked in the Codex in-app browser at desktop 1280 × 900 and phone 390 × 844:
 
 ## Additional small-screen and deployment checks
 
-- At 320 × 568 the homepage retains all six cards with no horizontal overflow. Flag Detective also has no horizontal overflow, and its answer buttons measure 239 × 58 px.
+- At 320 × 568 the homepage retains all nine cards with no horizontal overflow. Flag Detective also has no horizontal overflow, and its answer buttons measure 239 × 58 px.
 - Treasure Trails at 320 × 568 keeps the coordinate clue, map, 60 × 44 px compass controls and 255 × 46 px Dig action in one play area. At 390 px the arrow buttons measure approximately 74 × 47 px and Dig measures 307 × 48 px. No horizontal overflow was observed.
 - MRT Adventure’s hub link loads the preserved game at Punggol Coast. Answering its first question advances to Punggol with progress 1 of 17; its return link opens the hub.
-- The built hub under `/dist/` exposes all six relative links. Its Flag Detective link opens `/dist/play.html?game=flags`, loads its local flag and presents working answer controls.
+- The built hub under `/dist/` exposes all nine relative links. Its Flag Detective link opens `/dist/play.html?game=flags`, loads its local flag and presents working answer controls.
 - The built MRT entry point also opens correctly from the hub. An unknown game identifier offers a working “See all games” return link.
 - Final browser checks recorded no console warnings or errors. Sound was restored before handing back the hub.
 
@@ -42,7 +46,7 @@ All application URLs are relative and static.
 ## Brighter theme refresh
 
 - Reworked the hub with a purple/yellow hero, original animated SVG artwork, numbered colour-coded cards, and clear Play actions. Added the shared dotted background and tactile controls to all six games.
-- Rechecked the hub at 1280 × 900, 390 × 844 and 320 × 568. All six offerings, Maps filtering and the grown-up dialog work; no horizontal overflow was observed at 320 px.
+- Rechecked the hub at 1280 × 900, 390 × 844 and 320 × 568. The original six offerings, Maps filtering and the grown-up dialog work; no horizontal overflow was observed at 320 px.
 - Checked the five new game entry screens and active rounds. Answered a maths question and collected the first treasure using phone movement controls. The original MRT All aboard action starts its journey.
 - Re-ran all 28 tests and the static build. Browser checks recorded no warnings or errors. New floating hero illustrations are covered by the existing reduced-motion rule; the OS setting was not changed.
 
@@ -55,12 +59,21 @@ All application URLs are relative and static.
 - The captain, parrot, keys, map fragment and closed/open chest use original local SVG artwork. The static build includes the separate treasure stylesheet and modules.
 - Reduced-motion CSS suppresses new ambient effects, and tap-to-walk skips its timed steps when the browser reports reduced motion. The operating system preference was not changed during QA.
 
+## Creative activity book
+
+- Desktop 1280 × 900: filled train regions, made a real pointer-drag brush stroke, added a heart stamp, and verified undo/redo. Saved the picture, downloaded its 1200 × 880 PNG, reopened it in My Book and used the same colours, brushwork and stamp in a jigsaw.
+- Completed the four-piece artwork jigsaw with wrong-placement retry, real pointer dragging, tap-to-place and keyboard Enter. Completed 6-, 9- and 12-piece puzzles in the phone viewport.
+- Completed 10-, 15- and 20-dot mysteries; checked wrong-order hints, keyboard activation, picture reveals and the link into Colouring Studio.
+- At 390 × 844 and 320 × 568: checked colouring, puzzle selection and the new hub category without horizontal overflow. The smallest phone’s colour buttons measure 44 × 44 px.
+- Removed and restored a saved page through My Book’s Undo action. Saved-page editing, unsaved-colour refresh recovery and picture selection after refresh were checked in the browser; a regression test covers draft selection.
+- Verified all nine hub cards and the Activity Book filter’s three offerings. Print CSS is included for the current picture and one gallery page per sheet; a physical printer session has not been tested.
+
 ## Limits
 
 Physical iPhone/Android and desktop Safari sessions have not been tested. Browser voice quality and audible playback should be checked on the family’s devices. Missing speech APIs and blocked storage have automated fallback coverage; all prompts remain visible.
 
 Reduced-motion CSS is implemented; the operating system’s motion preference was not changed during QA. The maths offering covers selected skills rather than an entire primary syllabus. Map outlines are generalised educational data; small locations use locator dots.
 
-No successful GitHub Pages deployment has been verified. The repository is linked to `abhivaikar/dhruva-games`; enable GitHub Actions as the Pages source after pushing the game.
+The earlier GitHub Pages deployment at commit `e86256f` succeeded. Pages uses the GitHub Actions publishing source at `https://abhivaikar.github.io/dhruva-games/`; check the new commit’s workflow when publishing this update.
 
 A play session with Dhruva is the best next check of reading load, voice, pace and difficulty.

@@ -1,6 +1,6 @@
 # Dhruva’s Discovery Club
 
-A family website with six playful learning games. Built with static HTML, CSS, original SVG illustrations and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
+A family website with nine playful learning games. Built with static HTML, CSS, original SVG illustrations and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
 
 | Game | What children do |
 | --- | --- |
@@ -10,6 +10,9 @@ A family website with six playful learning games. Built with static HTML, CSS, o
 | World Explorer | Find eight countries on an actual world map using highlighted outlines, locator dots, and A/B/C controls. |
 | Treasure Trails | Become Captain Dhruva: explore a misty island, find three map pieces and shape keys, collect shells, rescue Tilly and unlock the lost Sunstone. |
 | Flag Detective | Match countries to flags and flags to countries, drawing from 20 locally bundled flag images. |
+| Colouring Studio | Colour six original pictures with fill colours, freehand brushes and stamps; save, download or print the artwork. |
+| Mystery Dot-to-Dot | Connect 10, 15 or 20 numbered dots, reveal a surprise picture, then open it in Colouring Studio. |
+| Picture Puzzle Factory | Assemble 4, 6, 9 or 12 interlocking pieces by dragging or tapping; use original pictures or saved artwork. |
 
 ## Play locally
 
@@ -19,7 +22,7 @@ Requires Node.js 22 or later. No packages to install.
 npm run dev
 ```
 
-Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps and Flags. Every game has an **All games** link.
+Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps, Flags and Activity Book. Every game has an **All games** link.
 
 The original game is now at `mrt-adventure.html`. Its 17-stop route, train colours, speech, tap-to-count objects, difficulty settings and automatic station progression remain available.
 
@@ -29,8 +32,19 @@ The original game is now at `mrt-adventure.html`. Its 17-stop route, train colou
 - For quiz answers, **← / →** changes selection and **Space** confirms. Tab and Enter also work. World-map markers support Enter and Space.
 - In Treasure Trails, tap any walkable map square to have Captain Dhruva follow a path there, or use compass buttons / keyboard arrows one step at a time. Match the coordinate clue and **Dig for treasure**. **Parrot, help!** highlights one useful step. Collect three map pieces and shape keys, then match the shuffled key order to open the Sunstone vault. Five sparkle shells and Tilly’s rescue are optional discoveries. Every replay shuffles the hiding places.
 - **Hear again** repeats a spoken prompt and enables sound if muted. **A little clue** provides an untimed hint. Browser speech availability and voice quality vary; all prompts are also visible.
-- Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Refresh starts a fresh session; completed badges remain when browser storage is available.
+- Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Quiz and treasure refreshes start fresh sessions. Colouring resumes its matching saved page or draft; completed badges remain when browser storage is available.
 - Reduced-motion preferences suppress celebration motion. Sound starts after user interaction to respect browser autoplay rules.
+
+## Creative activity book
+
+The three new games share six original SVG scenes: train, dinosaur, rocket, turtle, butterfly and robot.
+
+- Colouring: choose a colour and tap a shape with **Fill**. Use **Brush** for freehand strokes, or tap to add star, heart and flower stamps. Undo/redo applies to fills, brushwork, stamps and clearing. Keyboard users can fill focused shapes with Enter; in Brush/Stamp mode arrows move a drawing cursor, Enter adds a mark, and Shift+arrows draw a line.
+- Colouring drafts persist after each change. Changing pictures or leaving an edited page also keeps its work in the activity book when storage is available. **Save in my book** explicitly saves or updates the current page.
+- Dot-to-dot: select 10, 15 or 20 dots and connect them in order. A hint highlights the next dot. The revealed picture links directly to its colouring page.
+- Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
+- **My book** keeps up to 18 pages in this browser. Saved artwork appears in the puzzle picker. Pages can be edited, downloaded as 1200 × 880 PNGs, or printed one per sheet. Removal offers Undo. Browser storage availability and capacity determine whether saves succeed; failures are shown without silently discarding existing pages.
+- **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
 
 ## Primary maths practice
 
@@ -52,13 +66,13 @@ npm run build
 node scripts/serve.mjs --dist
 ```
 
-The 30 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection and blocked storage.
+The 43 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, gallery updates and blocked storage.
 
-The build copies the three HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
+The build copies the four HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
 
 ## GitHub Pages
 
-The local repository is connected to [abhivaikar/dhruva-games](https://github.com/abhivaikar/dhruva-games). No public deployment has been made from this workspace.
+The local repository is connected to [abhivaikar/dhruva-games](https://github.com/abhivaikar/dhruva-games). GitHub Pages is configured to deploy through GitHub Actions at [abhivaikar.github.io/dhruva-games](https://abhivaikar.github.io/dhruva-games/).
 
 1. Push the project to the repository’s `main` branch.
 2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions**.
@@ -70,7 +84,11 @@ No environment variables or backend are required. Other static hosts can serve t
 
 - `index.html`, `club.css`, `src/club/hub.js`: the game hub and category filters.
 - `play.html`, `src/club/play.js`: new game presentation, touch/keyboard controls, voice, and celebrations.
-- `src/club/catalog.js`: the six offerings and their navigation.
+- `activity.html`, `activity.css`, `src/club/activity.js`: the three creative games, gallery, pointer controls, PNG export and print layouts.
+- `src/club/activity-scenes.js`, `src/club/activity-card-art.js`: original colourable scenes and card illustrations.
+- `src/club/activity-model.js`: drawing history, numbered-dot progression and jigsaw geometry/matching.
+- `src/club/activity-book.js`: validated browser-local gallery, drafts and restoration.
+- `src/club/catalog.js`: the nine offerings and their navigation.
 - `src/club/rounds.js`: guarded quiz sessions and answer selection.
 - `src/club/decks.js`: transport, flag and world-map missions.
 - `src/club/maths.js`: primary maths questions and exact answer formatting.

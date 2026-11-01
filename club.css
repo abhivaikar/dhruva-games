@@ -364,3 +364,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   *, *:before, *:after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .club-confetti { display: none; }
 }
+
+/* A shared home for the creative activity-book games. */
+.hub-book-link { display:inline-flex; align-items:center; gap:6px; color:#a2376a; min-height:44px; }
+#hub-book-count { border:1px solid #dfb55c; background:#fff0b8; border-radius:20px; padding:2px 6px; font-size:9px; color:#8e642a; }
+.hub-activity-book { display:flex; align-items:center; gap:23px; padding:28px; margin-top:34px; background:#ffdeea; border:2px solid #d988ac; border-radius:23px; box-shadow:0 5px 0 #e4b7ce; }
+.hub-book-icon { font-size:53px; rotate:-12deg; flex-shrink:0; }
+.hub-activity-book .eyebrow { color:#a34d75; font-size:8px; margin-bottom:9px; }
+.hub-activity-book h2 { color:#8b315f; font-size:27px; letter-spacing:-.8px; margin:0 0 9px; }
+.hub-activity-book p:not(.eyebrow) { color:#9d5f80; font-size:12px; line-height:1.8; margin:0; }
+.hub-activity-book .club-primary { flex-shrink:0; margin-left:auto; background:#c13779; border-color:#98265b; box-shadow:0 4px 0 #98265b; font-size:11px; padding:12px 17px; }
+@media(max-width:800px) { .hub-activity-book { flex-wrap:wrap; } .hub-activity-book .club-primary { margin-left:76px; } }
+@media(max-width:650px) {
+  .hub-book-link { font-size:9px!important; margin-right:12px; }
+  #hub-book-count { display:none; }
+  .hub-activity-book { gap:13px; padding:22px 18px; margin-top:27px; }
+  .hub-book-icon { font-size:35px; }
+  .hub-activity-book > div:nth-child(2) { flex:1; }
+  .hub-activity-book h2 { font-size:23px; }
+  .hub-activity-book .eyebrow { font-size:6px; letter-spacing:1px; line-height:1.7; }
+  .hub-activity-book p:not(.eyebrow) { font-size:10px; }
+  .hub-activity-book .club-primary { width:100%; margin-left:0; }
+}
+@media(max-width:360px) { .hub-book-link { margin-right:7px; font-size:8px!important; } }
