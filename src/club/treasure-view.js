@@ -1,3 +1,4 @@
+import { transitionControls } from '../auto-advance.js';
 import { KEYS, ROCKS, DIRECTIONS, coordinate } from './treasure.js';
 import { captainArt, parrotArt, keyArt, chestArt, landmarkArt, treasureSceneArt } from './treasure-art.js';
 
@@ -54,7 +55,7 @@ export function trailGame(trail, { feedback = '', hint = false, walking = false 
 
 function discovery(trail) {
   const mission = trail.missions[trail.completed - 1], key = KEYS[trail.completed - 1];
-  return `<section class="quest-discovery" id="game-board" aria-labelledby="discovery-title"><div class="quest-discovery-art"><span class="quest-spark s1" aria-hidden="true">✦</span><span class="quest-spark s2" aria-hidden="true">✦</span><div class="quest-found-key">${keyArt(key)}</div><div class="quest-map-fragment" aria-hidden="true"><span>SECRET MAP</span><b>${trail.completed} / 3</b><i>✕ · · · ✕</i></div><div class="quest-discovery-captain">${captainArt()}</div></div><div class="quest-discovery-copy"><p class="eyebrow">DISCOVERY AT ${mission.name.toUpperCase()}</p><h2 id="discovery-title">You found the ${key.name.toLowerCase()}!</h2><p>${mission.found}</p><p>${key.message}</p>${keyRing(trail)}<button class="club-primary" type="button" data-trail-action="continue">${trail.completed === 3 ? 'Reveal the vault’s location' : 'Keep my key & sail on'} <span aria-hidden="true">→</span></button></div></section>${inventory(trail)}`;
+  return `<section class="quest-discovery" id="game-board" aria-labelledby="discovery-title"><div class="quest-discovery-art"><span class="quest-spark s1" aria-hidden="true">✦</span><span class="quest-spark s2" aria-hidden="true">✦</span><div class="quest-found-key">${keyArt(key)}</div><div class="quest-map-fragment" aria-hidden="true"><span>SECRET MAP</span><b>${trail.completed} / 3</b><i>✕ · · · ✕</i></div><div class="quest-discovery-captain">${captainArt()}</div></div><div class="quest-discovery-copy"><p class="eyebrow">DISCOVERY AT ${mission.name.toUpperCase()}</p><h2 id="discovery-title">You found the ${key.name.toLowerCase()}!</h2><p>${mission.found}</p><p>${key.message}</p>${keyRing(trail)}${transitionControls(trail.completed===3?'The vault’s location':'Your next island clue')}</div></section>${inventory(trail)}`;
 }
 function vault(trail, feedback) {
   const order = trail.lockOrder.map(keyFor);

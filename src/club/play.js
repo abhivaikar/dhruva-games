@@ -1,3 +1,4 @@
+import { mountAutoAdvance, transitionControls, revealWorkspace } from '../auto-advance.js';
 import { GAMES } from './catalog.js';
 import { illustration, rocketArt } from './art.js';
 import { readClub, writeClub, recordCompletion } from './progress.js';
@@ -29,12 +30,13 @@ let recorded = false;
 let trailHint = false;
 let trailWalking = false;
 let voyageVersion = 0;
+const flow=mountAutoAdvance({ready:()=>!audio.utterance&&!audio.pendingVoice});
 const restart=mountRestart({
   detail:'Return to the beginning of this adventure with the same challenges. Your saved discoveries will stay.',
-  onOpen(){audio.stop();voyageVersion++;if(trailWalking){trailWalking=false;renderTrail();}},
-  onCancel(){root.querySelector('[data-action="restart"]')?.focus({preventScroll:true});},
+  onOpen(){flow.block('restart',true);audio.stop();voyageVersion++;if(trailWalking){trailWalking=false;renderTrail();}},
+  onCancel(){flow.block('restart',false);root.querySelector('[data-action="restart"]')?.focus({preventScroll:true});},
   onRestart(){
-    feedback='';keyboardMode=false;trailHint=false;$('#club-confetti').replaceChildren();
+    flow.cancel();flow.block('restart',false);feedback='';keyboardMode=false;trailHint=false;$('#club-confetti').replaceChildren();
     if(trail){trail.restart();renderTrail();announce(trailClue(trail));}else{session.restart();renderRound();speakQuestion();}
     root.querySelector('[data-choice]:not(:disabled),[data-trail-action="dig"]')?.focus({preventScroll:true});scrollToBoard();
   },
@@ -62,11 +64,11 @@ function soundButton() {
 }
 
 function intro(status = 'A little adventure awaits') {
-  return `<div class="play-intro"><div><p class="eyebrow">${game.badge}</p><h1>${game.title}</h1><p>${game.detail}</p></div><div class="play-status-tools"><span class="round-status">${status}</span>${(session||trail)&&((session||trail).phase!=='complete')?'<button type="button" class="soft-button" data-action="restart">↺ Restart adventure</button>':''}</div></div>`;
+  return `<div class="play-intro"><div><p class="eyebrow">${game.badge}</p><h1>${game.title}</h1><p>${game.detail}</p></div><div class="play-status-tools"><span class="round-status">${status}</span>${id==='maths'?`<label class="inline-level">Level<select name="math-level" aria-label="Maths level">${Object.entries(MATH_LEVELS).map(([value,level])=>`<option value="${value}" ${mathLevel===value?'selected':''}>${level.label}</option>`).join('')}</select></label>`:''}${(session||trail)&&((session||trail).phase!=='complete')?'<button type="button" class="soft-button" data-action="restart">↺ Restart adventure</button>':''}</div></div>`;
 }
 
 function setup() {
-  audio.stop();
+  flow.cancel();audio.stop();
   $('#club-confetti').replaceChildren();
   voyageVersion++;
   trailWalking = false;
@@ -75,12 +77,12 @@ function setup() {
   trail = null;
   feedback = '';
   keyboardMode = false;
-  const description = DESCRIPTIONS[id];
-  root.innerHTML = `${intro()}<div class="play-arena" id="game-board"><div class="play-scene">${id === 'treasure-map' ? treasureSceneArt() : illustration(game.art)}</div><section class="play-panel" aria-labelledby="setup-title"><div class="setup-symbol" aria-hidden="true">${description.symbol}</div><p class="eyebrow">${description.eyebrow}</p><h2 id="setup-title">${description.title}</h2><p class="panel-copy">${description.text}</p>${id === 'maths' ? `<fieldset class="level-picker"><legend>Choose a little challenge</legend>${Object.entries(MATH_LEVELS).map(([value, level]) => `<label class="level-choice"><input type="radio" name="math-level" value="${value}" ${mathLevel === value ? 'checked' : ''}><span><strong>${level.label} · ${level.title}</strong><small>${level.description}</small></span></label>`).join('')}</fieldset>` : ''}<button class="club-primary" type="button" data-action="start">${description.button} <span aria-hidden="true">→</span></button><p class="setup-note">No rush. Every try helps you learn.</p></section></div>`;
+  root.replaceChildren();
 }
 
 function start() {
   if (session || trail) return;
+  document.body.classList.add('is-playing');
   recorded = false;
   feedback = '';
   keyboardMode = false;
@@ -98,7 +100,7 @@ function start() {
 }
 
 function scrollToBoard() {
-  if (window.matchMedia('(max-width: 650px)').matches) $('#game-board')?.scrollIntoView({ block: 'start', behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+  revealWorkspace($('#game-board'))
 }
 
 function speakQuestion() {
@@ -136,7 +138,7 @@ function mathsVisual(q) {
 function scene(q) {
   if (id === 'world-map') return `<section class="play-scene world-scene" aria-label="World map">${mapScene(q)}</section>`;
   if (id === 'maths') return `<section class="play-scene maths-scene" aria-label="Your rocket workshop">${rocketArt(session.completed)}${mathsVisual(q)}</section>`;
-  if (id === 'transport') return `<section class="play-scene transport-display" aria-label="Your transport mission">${transportScene(q)}</section>`;
+  if (id === 'transport') return `<section class="play-scene transport-display" data-kind="${q.kind}" aria-label="Your transport mission">${transportScene(q)}</section>`;
   return `<section class="play-scene flag-display" aria-label="Your flag discovery">${q.mode === 'name' ? `<img src="./assets/flags/${q.country.id}.svg" alt="${q.country.description}"><p class="scene-eyebrow">A POSTCARD FROM SOMEWHERE WONDERFUL</p>` : `<div class="setup-symbol" aria-hidden="true">🌍</div><p class="country-postcard">${q.country.name}</p><p class="panel-copy">Which flag shall we pack?</p>`}</section>`;
 }
 
@@ -149,7 +151,7 @@ function renderRound() {
   const q = session.current;
   const correct = session.phase === 'feedback';
   const choicesClass = id === 'maths' || id === 'world-map' ? 'numeric-choices' : id === 'flags' && q.mode === 'find' ? 'flag-choices' : '';
-  root.innerHTML = `${intro(`Discovery ${session.index + 1} of ${session.questions.length}`)}<div class="play-arena" id="game-board">${scene(q)}<section class="play-panel" aria-labelledby="question-title"><p class="eyebrow">${correct ? 'YOU DID IT, EXPLORER!' : id === 'maths' ? MATH_LEVELS[mathLevel].label.toUpperCase() : 'A LITTLE CLUE. A LITTLE DISCOVERY.'}</p><h2 id="question-title" class="${id === 'maths' ? `maths-prompt ${q.prompt.length < 25 ? 'short' : 'long'}` : ''}">${q.prompt}</h2><div class="choice-list ${choicesClass}" role="group" aria-label="Choose your answer">${q.choices.map((choice, i) => `<button class="choice-button ${correct && choice.id === q.answerId ? 'correct' : ''} ${keyboardMode && session.selected === i && !correct ? 'keyboard-selected' : ''}" type="button" data-choice="${choice.id}" ${id === 'world-map' ? `aria-label="${choice.label}"` : ''} ${correct || session.tried.has(choice.id) ? 'disabled' : ''}>${choice.flag ? `<img src="./assets/flags/${choice.flag}.svg" alt="${choice.label}"><span class="flag-option-label">Option ${i + 1}</span>` : `${choice.icon ? `<span class="choice-icon" aria-hidden="true">${choice.icon}</span>` : ''}<span>${id === 'world-map' ? `${choice.label.replace('Location ', '')}<small>LOCATION</small>` : choice.label}${choice.small ? `<small>${choice.small}</small>` : ''}</span>`}</button>`).join('')}</div><p class="round-feedback ${correct ? 'success' : ''}">${correct ? `★ ${q.explanation}` : feedback || (id === 'world-map' ? 'Follow the clue. Choose location A, B or C.' : 'Take your time. You can try again.')}</p>${correct ? `<button type="button" class="club-primary" data-action="next">${session.completed === session.questions.length ? 'See my discoveries' : 'Next discovery'} <span aria-hidden="true">→</span></button>` : '<div class="next-placeholder">A little thinking space. No rush.</div>'}${!correct ? '<div class="play-tools"><button type="button" class="soft-button" data-action="repeat">♪ Hear again</button><button type="button" class="soft-button" data-action="hint">✧ A little clue</button></div>' : ''}</section></div>${progress(session.completed, session.questions.length, id === 'maths' ? 'Every puzzle adds a rocket spark.' : 'A little discovery at every step.')}`;
+  root.innerHTML = `${intro(`Discovery ${session.index + 1} of ${session.questions.length}`)}<div class="play-arena" id="game-board">${scene(q)}<section class="play-panel" aria-labelledby="question-title"><p class="eyebrow">${correct ? 'YOU DID IT, EXPLORER!' : id === 'maths' ? MATH_LEVELS[mathLevel].label.toUpperCase() : 'A LITTLE CLUE. A LITTLE DISCOVERY.'}</p><h2 id="question-title" class="${id === 'maths' ? `maths-prompt ${q.prompt.length < 25 ? 'short' : 'long'}` : ''}">${q.prompt}</h2><div class="choice-list ${choicesClass}" role="group" aria-label="Choose your answer">${q.choices.map((choice, i) => `<button class="choice-button ${correct && choice.id === q.answerId ? 'correct' : ''} ${keyboardMode && session.selected === i && !correct ? 'keyboard-selected' : ''}" type="button" data-choice="${choice.id}" ${id === 'world-map' ? `aria-label="${choice.label}"` : ''} ${correct || session.tried.has(choice.id) ? 'disabled' : ''}>${choice.flag ? `<img src="./assets/flags/${choice.flag}.svg" alt="${choice.label}"><span class="flag-option-label">Option ${i + 1}</span>` : `${choice.icon ? `<span class="choice-icon" aria-hidden="true">${choice.icon}</span>` : ''}<span>${id === 'world-map' ? `${choice.label.replace('Location ', '')}<small>LOCATION</small>` : choice.label}${choice.small ? `<small>${choice.small}</small>` : ''}</span>`}</button>`).join('')}</div><p class="round-feedback ${correct ? 'success' : ''}">${correct ? `★ ${q.explanation}` : feedback || (id === 'world-map' ? 'Follow the clue. Choose location A, B or C.' : 'Take your time. You can try again.')}</p>${correct ? transitionControls(session.completed===session.questions.length?'Your discoveries':'Next discovery') : ''}${!correct ? '<div class="play-tools"><button type="button" class="soft-button" data-action="repeat">♪ Hear again</button><button type="button" class="soft-button" data-action="hint">✧ A little clue</button></div>' : ''}</section></div>${progress(session.completed, session.questions.length, id === 'maths' ? 'Every puzzle adds a rocket spark.' : 'A little discovery at every step.')}`;
 }
 
 function answer(choice) {
@@ -166,9 +168,15 @@ function answer(choice) {
     audio.celebrate();
     announce(`Great exploring! ${session.current.explanation}`);
     confetti(false);
-    if (keyboardMode) $('[data-action="next"]').focus({ preventScroll: true });
+    flow.schedule(advanceRound);
+    if(keyboardMode)root.querySelector('[data-auto-toggle]')?.focus({preventScroll:true});
   }
 }
+
+function advanceRound(){
+  flow.cancel();if(!session?.advance())return;audio.stop();feedback='';renderRound();if(session.phase==='question'){speakQuestion();focusChoice();}else root.querySelector('[data-action=replay]')?.focus({preventScroll:true});scrollToBoard();
+}
+function continueTrail(){flow.cancel();if(!trail?.advance())return;feedback='';trailHint=false;renderTrail();announce(trailClue(trail));scrollToBoard();if(keyboardMode)root.querySelector('[data-trail-action=dig]')?.focus({preventScroll:true});}
 
 function focusChoice() {
   const buttons = [...root.querySelectorAll('[data-choice]')];
@@ -242,8 +250,8 @@ function handleTrailControl(button) {
     trailHint = true;
     feedback = trail.nextStep ? `Pepper says: go one square ${trail.nextStep}. Follow the glowing square!` : 'Pepper says: you found the spot! Time to dig.';
     renderTrail(); announce(feedback);
-  } else if (action === 'continue' && trail.advance()) {
-    feedback = ''; trailHint = false; renderTrail(); announce(trailClue(trail)); scrollToBoard();
+  } else if (action === 'continue') {
+    continueTrail();
   } else if (action === 'dig') {
     const result = trail.dig();
     if (result === 'ignored') return;
@@ -252,7 +260,8 @@ function handleTrailControl(button) {
       renderTrail(); announce(feedback);
     } else {
       feedback = ''; renderTrail(); confetti(false); audio.celebrate(); announce(trailClue(trail)); scrollToBoard();
-      if (keyboardMode) root.querySelector('[data-trail-action="continue"], [data-trail-key]')?.focus({ preventScroll: true });
+      if(trail.phase==='found')flow.schedule(continueTrail,3200);
+      if (keyboardMode) root.querySelector('[data-auto-toggle], [data-trail-key]')?.focus({ preventScroll: true });
     }
   }
 }
@@ -277,7 +286,7 @@ function confetti(final) {
 }
 
 root.addEventListener('change', event => {
-  if (event.target.name === 'math-level' && MATH_LEVELS[event.target.value]) mathLevel = event.target.value;
+  if (event.target.name === 'math-level' && MATH_LEVELS[event.target.value]) {mathLevel = event.target.value;setup();start();}
 });
 
 root.addEventListener('click', event => {
@@ -290,8 +299,8 @@ root.addEventListener('click', event => {
   const action = button.dataset.action;
   if (action === 'restart') restart.open();
   else if (action === 'start') start();
-  else if (action === 'replay') { setup(); scrollToBoard(); }
-  else if (action === 'next' && session.advance()) { feedback = ''; keyboardMode = false; renderRound(); if (session.phase === 'question') speakQuestion(); scrollToBoard(); }
+  else if (action === 'replay') { setup(); start(); }
+  else if (action === 'next') advanceRound();
   else if (action === 'repeat') { hearClue(); } else if (action === 'hint' && session?.phase === 'question') {
     feedback = session.current.hint; renderRound(); announce(feedback);
   }
@@ -345,7 +354,7 @@ if (game) {
   document.title = `${game.title} · Dhruva’s Discovery Club`;
   document.documentElement.style.setProperty('--accent', game.colour);
   document.documentElement.style.setProperty('--soft', { transport: '#b8f0de', maths: '#ffe4bf', 'world-map': '#a9e8ff', 'treasure-map': '#a9e8c7', flags: '#ffbcd8' }[id]);
-  setup();
+  setup();start();
 } else {
   root.innerHTML = '<section class="play-panel" style="margin:35px 0"><div class="setup-symbol" aria-hidden="true">🧭</div><h1>Let’s find an adventure</h1><p class="panel-copy">Choose a game from the Discovery Club.</p><a class="club-primary" href="./">See all games →</a></section>';
 }

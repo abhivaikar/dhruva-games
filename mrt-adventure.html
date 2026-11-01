@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./voice.css">
   <link rel="stylesheet" href="./restart.css">
+  <link rel="stylesheet" href="./flow.css">
   <script type="module" src="./src/app.js"></script>
 </head>
 <body>
@@ -81,8 +82,9 @@
     <form method="dialog"><div class="dialog-heading"><div><p class="eyebrow">FOR YOUR LITTLE EXPLORER</p><h2 id="settings-title">Journey settings</h2></div><button class="icon-button close-button" aria-label="Close settings" value="close">×</button></div>
     <fieldset><legend>Choose a little challenge</legend><div id="difficulty-options"></div></fieldset>
     <p class="settings-note" id="settings-note">Choose the maths for your next adventure.</p>
-    <p class="settings-help">No timers. Unlimited tries. Every little step counts.<br>Sound includes spoken questions and gentle chimes.</p>
-    <button class="primary-button" value="done">Ready to ride <span aria-hidden="true">→</span></button></form>
+    <fieldset><legend>Pick your train</legend><div id="train-preferences"></div></fieldset>
+    <p class="settings-help">No rush to answer. Unlimited tries. Every little step counts.<br>Sound includes spoken questions and gentle chimes.</p>
+    <button class="primary-button" value="done">Done <span aria-hidden="true">→</span></button></form>
   </dialog>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
   <p id="announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>

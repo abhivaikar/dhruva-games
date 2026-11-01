@@ -28,9 +28,17 @@ Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Tran
 
 The original game is now at `mrt-adventure.html`. Its 17-stop route, train colours, speech, tap-to-count objects, difficulty settings and automatic station progression remain available.
 
+## Quick play and less scrolling
+
+The home screen presents compact game tiles and remembers the chosen category for the current browser visit. A tile opens an actual game immediately, using its starting difficulty or saved MRT preferences. Maths level and language activity/world selectors live inside play. Choosing a puzzle picture starts it directly; piece and dot counts can be changed beside the board. MRT settings apply a chosen level or train colour immediately.
+
+Desktop layouts put painting tools beside the picture. Phone layouts keep the useful illustration, answers, puzzle tray and recovery controls close together. Workspaces are brought into view only when necessary; subsequent turns stay in the play area. Saved art and completion screens wait for an explicit choice of what to do next.
+
+Automatic feedback pauses in hidden tabs and open dialogs. Restart, mode changes and sentence undo/reset cancel stale transitions. Only feedback advances; unanswered questions, drawing, dot connections, puzzle placement and self-reported speaking turns remain child-controlled. New language words still have a picture-and-audio introduction before their matching challenge, which opens automatically after the clip is heard. Missing audio keeps the listening gate locked and offers replay.
+
 ## Controls and pace
 
-- Touch or click the large choices. New quiz games use **Next discovery** after a correct answer so the child controls the pace. Wrong answers invite another try.
+- Touch or click the large choices. Correct quiz answers, completed language turns and treasure discoveries move on automatically after a short celebration. Feedback waits for audio; **Pause** keeps the current card until **Continue** is chosen. Questions and creative play have no deadlines. Wrong answers wait for another try.
 - For quiz answers, **← / →** changes selection and **Space** confirms. Tab and Enter also work. World-map markers support Enter and Space.
 - In Treasure Trails, tap any walkable map square to have Captain Dhruva follow a path there, or use compass buttons / keyboard arrows one step at a time. Match the coordinate clue and **Dig for treasure**. **Parrot, help!** highlights one useful step. Collect three map pieces and shape keys, then match the shuffled key order to open the Sunstone vault. Five sparkle shells and Tilly’s rescue are optional discoveries. Every replay shuffles the hiding places.
 - **Hear again** repeats a spoken prompt and enables sound if muted. **A little clue** provides an untimed hint. Browser speech availability and voice quality vary; all prompts are also visible.
@@ -107,9 +115,9 @@ npm run build
 node scripts/serve.mjs --dist
 ```
 
-The 43 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, gallery updates and blocked storage.
+The 76 automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, gallery updates, blocked storage and the automatic-transition clock (delay, pause/resume, multiple blockers, audio waiting and stale callback cancellation).
 
-The build copies the four HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
+The build copies the five HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access.
 
 ## GitHub Pages
 

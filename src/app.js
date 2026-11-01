@@ -1,3 +1,4 @@
+import { revealWorkspace, mountAutoAdvance, transitionControls } from './auto-advance.js';
 import { mountRestart } from './restart-dialog.js';
 import { Journey } from './game.js';
 import { ROUTE, LEVELS, JOURNEY_START, JOURNEY_END } from './route.js';
@@ -20,7 +21,8 @@ let countableIds = new Set();
 let tokenCursor = 0;
 let sceneIndex = -1;
 let bellTimer = null;
-const restart=mountRestart({title:'Start the train journey again?',detail:'Return to Punggol Coast with an empty journey passport. Your saved discoveries and train colour will stay.',onOpen:pause,onCancel:resume,onRestart(){clearTimeout(pending?.id);pending=null;clearTimeout(bellTimer);$('#train').classList.remove('ding-dong');$('#train-greeting').classList.remove('visible');$('#confetti').replaceChildren();game=new Journey(game.level);keyboardMode=false;game.start();travel();$('#journey-restart')?.focus({preventScroll:true});}});
+const flow=mountAutoAdvance({ready:()=>!audio.utterance&&!audio.pendingVoice});
+const restart=mountRestart({title:'Start the train journey again?',detail:'Return to Punggol Coast with an empty journey passport. Your saved discoveries and train colour will stay.',onOpen(){flow.block('restart',true);pause();},onCancel(){flow.block('restart',false);resume();},onRestart(){flow.cancel();flow.block('restart',false);clearTimeout(pending?.id);pending=null;clearTimeout(bellTimer);$('#train').classList.remove('ding-dong');$('#train-greeting').classList.remove('visible');$('#confetti').replaceChildren();game=new Journey(game.level);keyboardMode=false;game.start();travel();$('#journey-restart')?.focus({preventScroll:true});}});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const soundIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>';
 const mutedIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zm5 4 5 6m0-6-5 6"/></svg>';
@@ -31,7 +33,7 @@ function announce(text) { $('#announcement').textContent = text; }
 function schedule(callback, delay) {
   clearTimeout(pending?.id);
   pending = { callback, remaining: delay, started: performance.now(), id: null };
-  if (!$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]')) {
+  if (!document.hidden && !$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]')) {
     pending.id = setTimeout(() => {
       const run = pending.callback;
       pending = null;
@@ -117,6 +119,7 @@ function renderQuestion() {
 }
 
 function render() {
+  document.body.classList.toggle('is-playing',game.phase!=='ready');
   const travelling = game.phase === 'travelling';
   const world = WORLDS[game.index];
   $('#scene').classList.toggle('travelling', travelling);
@@ -145,6 +148,7 @@ function render() {
   } else if (game.phase === 'complete') {
     $('#challenge').innerHTML = `<div class="badge-medal" aria-hidden="true">🏅</div><p class="card-kicker">OFFICIAL NORTH-EAST EXPLORER</p><h2>You did it, Captain Dhruva!</h2><p class="card-copy">${ROUTE.length} little worlds. ${ROUTE.length} happy treasures.<br>Pip loved exploring with you!</p><div class="treasure-collection" aria-label="Your ${ROUTE.length} treasures">${WORLDS.map((item, i) => `<span class="treasure-sticker" role="img" aria-label="${item.treasure} from ${ROUTE[i].name}" style="--sticker-delay:${i * .1}s">${item.icon}</span>`).join('')}</div><div class="finish-ticket"><span>${JOURNEY_START.code}</span><span aria-hidden="true">→</span><strong>Dhruva’s explorer passport</strong><span aria-hidden="true">→</span><span>${JOURNEY_END.code}</span></div><button class="primary-button" id="again" type="button">Another adventure! ${arrow}</button>`;
   } else $('#challenge').innerHTML = renderQuestion();
+  if(game.phase==='celebrating')$('#challenge').insertAdjacentHTML('beforeend',transitionControls('Next station'));
   if(!['ready','complete'].includes(game.phase))$('#challenge').insertAdjacentHTML('beforeend','<button type="button" class="repeat-button" id="journey-restart">↺ Restart journey</button>');
 }
 
@@ -154,7 +158,7 @@ function travel() {
   keyboardMode = false;
   render();
   if (window.matchMedia('(max-width: 700px)').matches) {
-    $('#scene').scrollIntoView({ block: 'start', behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+    revealWorkspace($('.game-grid'));
   }
   const words = `Next station, ${game.station.name}!`;
   announce(words);
@@ -163,6 +167,7 @@ function travel() {
   schedule(() => {
     if (!game.arrive()) return;
     render();
+    revealWorkspace($('.game-grid'));
     const question = `${game.station.name}! ${WORLDS[game.index].mission} ${activityQuestion(game.question, game.index)}`;
     announce(question);
     audio.speak(question);
@@ -192,7 +197,7 @@ function chooseAnswer(choice) {
   audio.celebrate();
   audio.speak(WORLDS[game.index].praise);
   confetti();
-  schedule(() => {
+  flow.schedule(() => {
     if (!game.advance()) return;
     if (game.phase === 'complete') {
       recordCompletion('mrt-adventure');
@@ -218,15 +223,7 @@ $('#challenge').addEventListener('click', event => {
   if (!button || button.disabled) return;
   audio.unlock();
   if (button.hasAttribute('data-train-colour')) {
-    preferences.train = button.dataset.trainColour;
-    savePreferences(preferences);
-    applyTrainColour();
-    document.querySelectorAll('.train-swatch').forEach(swatch => {
-      const selected = swatch.dataset.trainColour === preferences.train;
-      swatch.setAttribute('aria-pressed', String(selected));
-      swatch.querySelector('span').textContent = selected ? '✓' : '';
-    });
-    audio.bell();
+    chooseTrainColour(button.dataset.trainColour);
     return;
   }
   if (button.hasAttribute('data-count-item')) {
@@ -292,6 +289,11 @@ function setSound(enabled) {
 }
 $('#sound').addEventListener('click', () => setSound(!audio.enabled));
 
+function chooseTrainColour(value){
+  if(!TRAIN_COLOURS[value])return;
+  preferences.train=value;savePreferences(preferences);applyTrainColour();
+  document.querySelectorAll('.train-swatch').forEach(swatch=>{const selected=swatch.dataset.trainColour===value;swatch.setAttribute('aria-pressed',String(selected));swatch.querySelector('span').textContent=selected?'✓':'';});audio.bell();
+}
 function applyTrainColour() {
   const selected = TRAIN_COLOURS[preferences.train];
   document.documentElement.style.setProperty('--train-colour', selected.colour);
@@ -312,19 +314,21 @@ $('#train').addEventListener('click', () => {
 });
 
 $('#difficulty-options').innerHTML = Object.entries(LEVELS).map(([value, level]) => `<label class="level-option"><input type="radio" name="difficulty" value="${value}" ${value === preferences.level ? 'checked' : ''}><span class="level-icon" aria-hidden="true">${level.icon}</span><span><strong>${level.name}</strong><small>${level.description}</small></span></label>`).join('');
+$('#train-preferences').innerHTML=`<div class="train-picker" role="group" aria-label="Pick your train colour">${Object.entries(TRAIN_COLOURS).map(([key,colour])=>`<button type="button" class="train-swatch" data-train-colour="${key}" style="--swatch:${colour.colour}" aria-label="${colour.name} train" aria-pressed="${preferences.train===key}"><span>${preferences.train===key?'✓':''}</span></button>`).join('')}</div>`;
+$('#train-preferences').addEventListener('click',event=>{const button=event.target.closest('[data-train-colour]');if(button){chooseTrainColour(button.dataset.trainColour);$('#settings').close();}});
 $('#settings-open').addEventListener('click', () => {
   $('#settings').showModal();
   pause();
-  $('#settings-note').textContent = game.phase === 'ready' || game.phase === 'complete' ? 'Choose the maths for your next adventure.' : 'Your train is waiting. A new level starts on your next journey.';
+  $('#settings-note').textContent='Choose a level to start a new journey. Your saved discoveries stay.';
 });
 $('#settings').addEventListener('change', event => {
   if (event.target.name !== 'difficulty') return;
   preferences.level = event.target.value;
   savePreferences(preferences);
-  if (game.phase === 'ready') { game = new Journey(preferences.level); render(); }
+  flow.cancel();clearTimeout(pending?.id);pending=null;game=new Journey(preferences.level);$('#confetti').replaceChildren();game.start();travel();$('#settings').close();
 });
 $('#settings').addEventListener('close', resume);
-document.addEventListener('visibilitychange', () => { if (document.hidden) audio.stop(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden)pause();else resume(); });
 window.addEventListener('pagehide', () => { pause(); clearTimeout(bellTimer); });
 window.addEventListener('pageshow', event => {
   if (event.persisted && !$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]')) resume();
@@ -334,3 +338,4 @@ mountVoiceSettings(audio,{anchor:$('#sound'),onOpen:pause,onClose:resume});
 applyTrainColour();
 renderSound();
 render();
+if(new URLSearchParams(location.search).get('setup')!=='1'&&game.start()){audio.unlock();travel();}

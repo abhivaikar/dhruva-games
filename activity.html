@@ -10,12 +10,13 @@
   <link rel="stylesheet" href="./club.css">
   <link rel="stylesheet" href="./activity.css">
   <link rel="stylesheet" href="./voice.css">
+  <link rel="stylesheet" href="./flow.css">
   <script type="module" src="./src/club/activity.js"></script>
 </head>
 <body class="club activity-page">
   <div class="club-shell">
     <header class="club-header"><a class="club-brand" href="./"><img src="./assets/club.svg" width="43" height="43" alt=""><span>Dhruva’s<small>DISCOVERY CLUB</small></span></a><div class="play-header-actions"><a class="back-link" href="./">← All games</a><button id="activity-sound" class="round-button" type="button" aria-label="Turn sound off" aria-pressed="true">♪</button></div></header>
-    <nav class="activity-nav" aria-label="Activity book games"><a href="./activity.html?game=colouring">🎨 Colouring</a><a href="./activity.html?game=dots">✏️ Dot-to-dot</a><a href="./activity.html?game=puzzles">🧩 Puzzles</a><a href="./activity.html?game=book">📒 My book <span id="book-count">0</span></a></nav>
+    <nav class="activity-nav" aria-label="Activity book games"><a href="./activity.html?game=colouring">🎨 Colouring</a><a href="./activity.html?game=dots&start=1">✏️ Dot-to-dot</a><a href="./activity.html?game=puzzles&start=1">🧩 Puzzles</a><a href="./activity.html?game=book">📒 My book <span id="book-count">0</span></a></nav>
     <main><div class="activity-intro"><div><p class="eyebrow">MAKE A LITTLE SOMETHING WONDERFUL</p><h1 id="activity-title">My Activity Book</h1><p id="activity-subtitle">A book full of your own discoveries.</p></div><button class="activity-hear" id="activity-hear" type="button">♪ Hear what to do</button></div><div id="activity-root"></div></main>
     <footer class="club-footer"><span>Made by Dhruva. Powered by imagination.</span><a href="./">Choose another adventure ↗</a></footer>
   </div>
