@@ -402,3 +402,6 @@
 .puzzle-return { width:100%; margin-top:12px; font-size:10px; }
 .puzzle-return:disabled { opacity:.45; }
 .puzzle-remix { width:100%; margin-top:12px; font-size:11px; }
+/* Leave room for tabs that face outwards in an experimental arrangement. */
+.puzzle-play-layout > div:first-child { padding-top:7%; }
+.puzzle-board + .activity-feedback { margin-top:9%; }
