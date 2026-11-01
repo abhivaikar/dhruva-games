@@ -50,13 +50,22 @@ export function dotPoints(pageId, count) {
     return [clamp(a[0]+(b[0]-a[0])*ratio,600),clamp(a[1]+(b[1]-a[1])*ratio,440)];
   });
 }
-export class DotSession {
-  constructor(pageId, count=10) { this.pageId=getScene(pageId).id; this.points=dotPoints(this.pageId,count); this.connected=0; }
+class ReversibleSession {
+  constructor(){this.past=[];this.future=[];}
+  remember(){this.past.push(this.snapshot());if(this.past.length>80)this.past.shift();this.future=[];}
+  undo(){if(!this.past.length)return false;this.future.push(this.snapshot());this.restore(this.past.pop());return true;}
+  redo(){if(!this.future.length)return false;this.past.push(this.snapshot());this.restore(this.future.pop());return true;}
+}
+export class DotSession extends ReversibleSession {
+  constructor(pageId, count=10) { super();this.pageId=getScene(pageId).id; this.points=dotPoints(this.pageId,count); this.connected=0; }
+  snapshot(){return this.connected;}
+  restore(connected){this.connected=connected;}
+  reset(){if(!this.connected)return false;this.remember();this.connected=0;return true;}
   get complete() { return this.connected === this.points.length; }
   connect(number) {
     if (this.complete || !Number.isInteger(number) || number < 1 || number > this.points.length || number <= this.connected) return 'ignored';
     if (number !== this.connected+1) return 'retry';
-    this.connected++; return this.complete ? 'complete' : 'connected';
+    this.remember();this.connected++; return this.complete ? 'complete' : 'connected';
   }
 }
 const shuffle = (items,random) => {
@@ -66,8 +75,9 @@ const shuffle = (items,random) => {
   return result;
 };
 export const PUZZLE_LEVELS = Object.freeze({4:[2,2],6:[3,2],9:[3,3],12:[4,3]});
-export class PicturePuzzle {
+export class PicturePuzzle extends ReversibleSession {
   constructor(count=4, random=Math.random) {
+    super();
     if(!Number.isInteger(count)||!PUZZLE_LEVELS[count]) throw new RangeError('Choose 4, 6, 9 or 12 pieces.');
     [this.columns,this.rows]=PUZZLE_LEVELS[count]; this.count=count; this.placed=new Set();this.selected=null;
     this.order=shuffle(Array.from({length:count},(_,i)=>i),random);
@@ -75,11 +85,14 @@ export class PicturePuzzle {
     this.vertical=Array.from({length:this.rows},(_,r)=>Array.from({length:this.columns-1},(_,c)=>(r+c)%2?-1:1));
   }
   get complete(){return this.placed.size===this.count;}
+  snapshot(){return [...this.placed];}
+  restore(placed){this.placed=new Set(placed);this.selected=null;}
+  reset(){if(!this.placed.size)return false;this.remember();this.restore([]);return true;}
   select(piece){if(!Number.isInteger(piece)||piece<0||piece>=this.count||this.placed.has(piece))return false;this.selected=piece;return true;}
   place(slot){
     if(this.complete||this.selected===null||!Number.isInteger(slot)||slot<0||slot>=this.count||this.placed.has(slot))return 'ignored';
     if(slot!==this.selected)return 'retry';
-    this.placed.add(slot);this.selected=null;return this.complete?'complete':'placed';
+    this.remember();this.placed.add(slot);this.selected=null;return this.complete?'complete':'placed';
   }
   piece(id){
     const col=id%this.columns,row=Math.floor(id/this.columns),width=600/this.columns,height=440/this.rows;

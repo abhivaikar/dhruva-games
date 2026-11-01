@@ -19,6 +19,31 @@ const valueOf = value => {
   return Number(top) / Number(bottom);
 };
 
+test('restarting a quiz retains its exact questions and clears answers, selection and progress',()=>{
+  const questions=flagsDeck(randomGenerator()),session=new RoundSession(questions);
+  session.answer(session.current.answerId);session.advance();
+  session.answer(session.current.choices.find(choice=>choice.id!==session.current.answerId).id);
+  session.select(1);session.restart();
+  assert.equal(session.questions,questions);assert.equal(session.current,questions[0]);
+  assert.equal(session.index,0);assert.equal(session.completed,0);assert.equal(session.phase,'question');
+  assert.equal(session.tried.size,0);assert.equal(session.selected,0);
+  for(const question of questions){assert.equal(session.answer(question.answerId),'correct');session.advance();}
+  assert.equal(session.phase,'complete');session.restart();assert.equal(session.phase,'question');
+});
+
+test('restarting the treasure voyage keeps the same island but restores all discoveries and locks',()=>{
+  const trail=new TreasureTrail(randomGenerator()),layout=JSON.stringify([trail.missions,trail.shellSpots,trail.turtleCell,trail.lockOrder]);
+  for(const cell of [...trail.shellSpots,trail.turtleCell])for(const direction of islandPath(trail.cell,cell))trail.move(direction);
+  assert.equal(trail.shells.size,5);assert.equal(trail.rescued,true);
+  while(trail.completed<3){for(const direction of islandPath(trail.cell,trail.target))trail.move(direction);trail.dig();trail.advance();}
+  for(const direction of islandPath(trail.cell,trail.target))trail.move(direction);
+  trail.dig();trail.lockOrder.forEach(id=>trail.turnKey(id));assert.equal(trail.phase,'complete');
+  trail.restart();assert.equal(trail.cell,'A5');assert.equal(trail.phase,'exploring');
+  assert.deepEqual([...trail.visited],['A5']);assert.equal(trail.shells.size,0);assert.equal(trail.rescued,false);
+  for(const key of ['completed','steps','unlocked'])assert.equal(trail[key],0);
+  assert.equal(trail.lastEvent,null);assert.equal(JSON.stringify([trail.missions,trail.shellSpots,trail.turtleCell,trail.lockOrder]),layout);
+});
+
 test('all eleven offerings have unique URLs and local entry points', async () => {
   assert.equal(GAMES.length, 11);
   assert.equal(new Set(GAMES.map(game => game.id)).size, 11);

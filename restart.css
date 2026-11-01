@@ -1,0 +1,9 @@
+.restart-dialog { max-width:440px; width:calc(100% - 32px); padding:28px; border:2px solid #d4c5ef; border-radius:24px; background:#fffaf2; color:#33264e; box-shadow:0 12px 50px #28204733; }
+.restart-dialog::backdrop { background:#28204766; }
+.restart-dialog h2 { font-size:24px; line-height:1.25; margin:0 0 13px; }
+.restart-dialog p { font-size:14px; line-height:1.8; margin:0 0 22px; }
+.restart-dialog-actions { display:flex; flex-wrap:wrap; gap:12px; }
+.restart-dialog button { min-height:48px; padding:11px 16px; border:2px solid #ddd1ed; border-radius:14px; background:#fff; font:inherit; font-weight:700; color:inherit; cursor:pointer; }
+.restart-dialog .restart-confirm { background:#7043b5; border-color:#593194; color:#fff; }
+.restart-dialog button:focus-visible { outline:3px solid #336cb0; outline-offset:4px; }
+@media print { .restart-dialog { display:none !important; } }

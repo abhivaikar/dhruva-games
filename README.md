@@ -58,7 +58,15 @@ Colouring and puzzle pickers have theme filters, name search and pages of 12 pre
 - Dot-to-dot: choose a world (or all pictures), select 10, 15 or 20 dots and connect them in order. Each world uses a shuffled deck so every picture appears before repeats within that world during a visit. A hint highlights the next dot. The revealed picture links directly to its colouring page.
 - Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
 - **My book** keeps up to 18 pages in this browser. Saved artwork appears in the puzzle picker. Pages can be edited, downloaded as 1200 × 880 PNGs, or printed one per sheet. Removal offers Undo. Browser storage availability and capacity determine whether saves succeed; failures are shown without silently discarding existing pages.
+
 - **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
+
+### Undo and starting over
+
+- Picture puzzles and dot-to-dot have **Undo**, **Redo** and **Reset picture**, including on completion screens. Reset keeps the same picture, difficulty and original tray order; Undo can restore a reset. Incorrect guesses and hints do not create extra undo steps.
+- Colouring has a labelled **Reset page** alongside its existing undo/redo tools. Reset starts a fresh draft and leaves saved book pages intact. Undo restores the colours; empty reset drafts are not automatically added to the book.
+- Chinese and Marathi sentence puzzles have **Reset sentence** and **Take back a word**, even after solving. Re-solving a recovered sentence does not count the same practice twice within an adventure.
+- Maths, flags, world maps, Singapore transport, treasure voyages and both language games offer **Restart adventure** during play. The MRT train has **Restart journey**. A **Keep playing / Start again** dialog prevents an accidental restart. Restarts retain the selected level and original challenge set (or treasure island); the train returns to Punggol Coast. Saved achievements, language passports, artwork and preferences stay intact. Train timers and treasure walking stop safely while the dialog is open.
 
 ## Chinese and Marathi adventures
 

@@ -119,7 +119,7 @@ test('every mystery picture supports 10, 15 and 20 numbered dots with safe, dist
   assert.throws(()=>dotPoints('train',9),RangeError);
 });
 
-test('dot-to-dot requires every dot in order and locks completed connections',()=>{
+test('dot-to-dot requires every dot in order and ignores repeated connections',()=>{
   for(const count of [10,15,20]){
     const session=new DotSession('train',count);
     assert.equal(session.connect(4),'retry');assert.equal(session.connected,0);
@@ -129,6 +129,45 @@ test('dot-to-dot requires every dot in order and locks completed connections',()
       assert.equal(session.connect(number),'ignored');
     }
     assert.equal(session.complete,true);assert.equal(session.connect(1),'ignored');
+  }
+});
+
+test('dots can undo, redo and undo a reset without changing the mystery or dot positions',()=>{
+  for(const count of [10,15,20]){
+    const session=new DotSession('cat',count),points=JSON.stringify(session.points);
+    assert.equal(session.undo(),false);assert.equal(session.reset(),false);
+    session.connect(1);session.connect(2);session.connect(5);
+    assert.equal(session.undo(),true);assert.equal(session.connected,1);
+    assert.equal(session.redo(),true);assert.equal(session.connected,2);
+    assert.equal(session.reset(),true);assert.equal(session.connected,0);
+    assert.equal(session.undo(),true);assert.equal(session.connected,2);
+    assert.equal(session.redo(),true);assert.equal(session.connected,0);
+    assert.equal(session.reset(),false); // An empty reset must not erase recovery history.
+    session.undo();session.undo();session.connect(2);assert.equal(session.redo(),false);
+    for(let n=3;n<=count;n++)session.connect(n);
+    session.undo();assert.equal(session.complete,false);assert.equal(session.connected,count-1);
+    session.redo();assert.equal(session.complete,true);
+    session.reset();session.undo();assert.equal(session.complete,true);
+    assert.equal(session.pageId,'cat');assert.equal(JSON.stringify(session.points),points);
+  }
+});
+
+test('puzzle recovery restores placed pieces in order, clears selection and keeps the original tray',()=>{
+  for(const count of [4,6,9,12]){
+    const puzzle=new PicturePuzzle(count,()=>0),order=[...puzzle.order];
+    assert.equal(puzzle.undo(),false);assert.equal(puzzle.reset(),false);
+    puzzle.select(2);puzzle.place(0);assert.equal(puzzle.past.length,0);
+    puzzle.place(2);puzzle.select(0);puzzle.place(0);puzzle.select(1);
+    puzzle.undo();assert.deepEqual([...puzzle.placed],[2]);assert.equal(puzzle.selected,null);
+    puzzle.redo();assert.deepEqual([...puzzle.placed],[2,0]);
+    puzzle.reset();assert.equal(puzzle.placed.size,0);assert.equal(puzzle.selected,null);
+    puzzle.undo();assert.deepEqual([...puzzle.placed],[2,0]);
+    puzzle.undo();puzzle.select(1);puzzle.place(1);assert.equal(puzzle.redo(),false);
+    for(let n=0;n<count;n++)if(!puzzle.placed.has(n)){puzzle.select(n);puzzle.place(n);}
+    assert.equal(puzzle.complete,true);puzzle.undo();assert.equal(puzzle.complete,false);
+    puzzle.redo();assert.equal(puzzle.complete,true);
+    puzzle.reset();puzzle.undo();assert.equal(puzzle.complete,true);
+    assert.deepEqual(puzzle.order,order);
   }
 });
 

@@ -17,9 +17,11 @@ export function lessonDeck(language,mode,world='all',random=Math.random){
   });
 }
 export class LanguageRound {
-  constructor(language,mode,world='all',random=Math.random){this.language=language;this.mode=mode;this.deck=lessonDeck(language,mode,world,random);this.index=0;this.phase='question';this.tried=new Set();this.heard=false;}
+  constructor(language,mode,world='all',random=Math.random){this.language=language;this.mode=mode;this.deck=lessonDeck(language,mode,world,random);this.index=0;this.phase='question';this.tried=new Set();this.heard=false;this.credited=new Set();}
   get current(){return this.deck[this.index];}
+  restart(){this.index=0;this.phase='question';this.tried.clear();this.heard=false;}
   get completed(){return this.phase==='complete'?this.deck.length:this.index;}
+  claimPractice(){if(this.phase!=='feedback'||this.credited.has(this.index))return false;this.credited.add(this.index);return true;}
   heardWord(){if(this.phase==='question')this.heard=true;}
   answer(id){
     if(!['listen','read'].includes(this.mode)||this.phase!=='question'||!this.current.choices.some(choice=>choice.id===id)||this.tried.has(id))return 'ignored';
@@ -40,6 +42,7 @@ export class SentenceBuilder {
     this.picked.push(index);return this.complete?'complete':'placed';
   }
   undo(){return this.picked.pop()!==undefined;}
+  reset(){if(!this.picked.length)return false;this.picked=[];return true;}
 }
 const PROGRESS_KEY='dhruva-language-progress-v1';
 export function readLanguageProgress(language,storage){

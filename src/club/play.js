@@ -1,6 +1,7 @@
 import { GAMES } from './catalog.js';
 import { illustration, rocketArt } from './art.js';
 import { readClub, writeClub, recordCompletion } from './progress.js';
+import { mountRestart } from '../restart-dialog.js';
 import { RoundSession } from './rounds.js';
 import { flagsDeck, transportDeck, worldDeck } from './decks.js';
 import { mathsDeck, MATH_LEVELS } from './maths.js';
@@ -28,6 +29,16 @@ let recorded = false;
 let trailHint = false;
 let trailWalking = false;
 let voyageVersion = 0;
+const restart=mountRestart({
+  detail:'Return to the beginning of this adventure with the same challenges. Your saved discoveries will stay.',
+  onOpen(){audio.stop();voyageVersion++;if(trailWalking){trailWalking=false;renderTrail();}},
+  onCancel(){root.querySelector('[data-action="restart"]')?.focus({preventScroll:true});},
+  onRestart(){
+    feedback='';keyboardMode=false;trailHint=false;$('#club-confetti').replaceChildren();
+    if(trail){trail.restart();renderTrail();announce(trailClue(trail));}else{session.restart();renderRound();speakQuestion();}
+    root.querySelector('[data-choice]:not(:disabled),[data-trail-action="dig"]')?.focus({preventScroll:true});scrollToBoard();
+  },
+});
 
 const DESCRIPTIONS = {
   transport: { symbol: '🚆', eyebrow: 'YOU’RE THE DISPATCHER', title: 'Let’s get Singapore moving!', text: 'Follow real station names, read the train display, and discover MRT lines and buses.', button: 'Start dispatching', finish: 'Brilliant dispatching!', reward: 'Eight little missions. Singapore’s rides are in good hands.' },
@@ -51,7 +62,7 @@ function soundButton() {
 }
 
 function intro(status = 'A little adventure awaits') {
-  return `<div class="play-intro"><div><p class="eyebrow">${game.badge}</p><h1>${game.title}</h1><p>${game.detail}</p></div><span class="round-status">${status}</span></div>`;
+  return `<div class="play-intro"><div><p class="eyebrow">${game.badge}</p><h1>${game.title}</h1><p>${game.detail}</p></div><div class="play-status-tools"><span class="round-status">${status}</span>${(session||trail)&&((session||trail).phase!=='complete')?'<button type="button" class="soft-button" data-action="restart">↺ Restart adventure</button>':''}</div></div>`;
 }
 
 function setup() {
@@ -277,7 +288,8 @@ root.addEventListener('click', event => {
   if (button.hasAttribute('data-choice')) { answer(button.dataset.choice); return; }
   if (button.hasAttribute('data-map-answer')) { answer(button.dataset.mapAnswer); return; }
   const action = button.dataset.action;
-  if (action === 'start') start();
+  if (action === 'restart') restart.open();
+  else if (action === 'start') start();
   else if (action === 'replay') { setup(); scrollToBoard(); }
   else if (action === 'next' && session.advance()) { feedback = ''; keyboardMode = false; renderRound(); if (session.phase === 'question') speakQuestion(); scrollToBoard(); }
   else if (action === 'repeat') { hearClue(); } else if (action === 'hint' && session?.phase === 'question') {
@@ -291,7 +303,7 @@ root.addEventListener('focusin', event => {
 });
 document.addEventListener('pointerdown', () => { keyboardMode = false; document.querySelectorAll('.keyboard-selected').forEach(button => button.classList.remove('keyboard-selected')); });
 document.addEventListener('keydown', event => {
-  if (event.altKey || event.ctrlKey || event.metaKey || !game || document.querySelector('.voice-dialog[open]')) return;
+  if (event.altKey || event.ctrlKey || event.metaKey || !game || restart.openNow || document.querySelector('.voice-dialog[open]')) return;
   if (event.key === 'Tab') keyboardMode = true;
   const mapButton = event.target.closest('[data-map-answer]');
   if (mapButton && ['Enter', ' '].includes(event.key)) {

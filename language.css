@@ -52,6 +52,9 @@
 .language-lesson { border:2px solid #d1bee2; border-radius:24px; background:#fffdf8; box-shadow:0 5px 0 #e0d2eb; padding:24px; }
 .lesson-topline { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:11px; color:#9e7d9b; }
 .lesson-topline > strong { color:#9b7840; background:#fff0c6; padding:9px 12px; border-radius:12px; }
+.lesson-restart { display:block; margin:12px 0 0 auto; min-height:44px; }
+.sentence-recovery { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+.sentence-recovery button { min-height:44px; }
 .language-back { border:0; background:none; color:#9b7f99; min-height:44px; padding:8px 0; font-size:11px; }
 .language-back:disabled { opacity:.4; }
 .language-tickets { display:flex; justify-content:center; align-items:center; gap:10px; margin:20px 0 27px; }

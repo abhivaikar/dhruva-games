@@ -62,6 +62,10 @@ export class TreasureTrail {
     this.lastEvent = null;
   }
   get cell() { return coordinate(this.x, this.y); }
+  restart() {
+    this.x=0;this.y=4;this.completed=0;this.phase='exploring';this.visited=new Set([this.cell]);
+    this.shells.clear();this.rescued=false;this.steps=0;this.unlocked=0;this.lastEvent=null;
+  }
   get mission() { return this.missions[Math.min(this.completed, 3)]; }
   get target() { return this.mission.cell; }
   get distance() { return islandPath(this.cell, this.target)?.length ?? 0; }

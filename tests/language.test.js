@@ -9,6 +9,30 @@ import { PracticeRecording } from '../src/club/language-recording.js';
 const memory=()=>{const values=new Map();return {getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)};};
 const punctuation=text=>text.replace(/[\p{P}\s]/gu,'');
 
+test('language restarts keep their deck and replayed questions cannot claim the same practice twice',()=>{
+  for(const language of Object.keys(LANGUAGES))for(const mode of Object.keys(MODES)){
+    const round=new LanguageRound(language,mode),deck=round.deck;
+    assert.equal(round.claimPractice(),false);round.heardWord();
+    if(['listen','read'].includes(mode))round.answer(round.current.item.id);else round.finishPractice();
+    assert.equal(round.claimPractice(),true);assert.equal(round.claimPractice(),false);
+    round.next();round.heardWord();round.restart();
+    assert.equal(round.deck,deck);assert.equal(round.index,0);assert.equal(round.phase,'question');
+    assert.equal(round.heard,false);assert.equal(round.tried.size,0);round.heardWord();
+    if(['listen','read'].includes(mode))round.answer(round.current.item.id);else round.finishPractice();
+    assert.equal(round.claimPractice(),false);round.next();round.heardWord();
+    if(['listen','read'].includes(mode))round.answer(round.current.item.id);else round.finishPractice();
+    assert.equal(round.claimPractice(),true);
+  }
+});
+
+test('sentence resets keep the original tiles and undo reopens a completed sentence',()=>{
+  const builder=new SentenceBuilder(['मला','पाणी','पाहिजे']),order=[...builder.order];
+  assert.equal(builder.reset(),false);builder.choose(0);builder.choose(1);
+  assert.equal(builder.reset(),true);assert.deepEqual(builder.picked,[]);assert.deepEqual(builder.order,order);
+  [0,1,2].forEach(index=>builder.choose(index));assert.equal(builder.complete,true);
+  builder.undo();assert.equal(builder.complete,false);assert.equal(builder.choose(2),'complete');
+});
+
 test('both dedicated language games have 84 distinct words and 40 complete phrases across ten worlds',()=>{
   assert.equal(WORDS.length,84);assert.equal(PHRASES.length,40);assert.equal(WORLDS.length,10);
   for(const source of [WORDS,PHRASES]){

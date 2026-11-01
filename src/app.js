@@ -1,3 +1,4 @@
+import { mountRestart } from './restart-dialog.js';
 import { Journey } from './game.js';
 import { ROUTE, LEVELS, JOURNEY_START, JOURNEY_END } from './route.js';
 import { WORLDS, TRAIN_COLOURS, CountingHelper, activityQuestion, activityHint, objectArt, conductor, stationArt } from './adventure.js';
@@ -19,6 +20,7 @@ let countableIds = new Set();
 let tokenCursor = 0;
 let sceneIndex = -1;
 let bellTimer = null;
+const restart=mountRestart({title:'Start the train journey again?',detail:'Return to Punggol Coast with an empty journey passport. Your saved discoveries and train colour will stay.',onOpen:pause,onCancel:resume,onRestart(){clearTimeout(pending?.id);pending=null;clearTimeout(bellTimer);$('#train').classList.remove('ding-dong');$('#train-greeting').classList.remove('visible');$('#confetti').replaceChildren();game=new Journey(game.level);keyboardMode=false;game.start();travel();$('#journey-restart')?.focus({preventScroll:true});}});
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const soundIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>';
 const mutedIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zm5 4 5 6m0-6-5 6"/></svg>';
@@ -29,7 +31,7 @@ function announce(text) { $('#announcement').textContent = text; }
 function schedule(callback, delay) {
   clearTimeout(pending?.id);
   pending = { callback, remaining: delay, started: performance.now(), id: null };
-  if (!$('#settings').open && !document.querySelector('.voice-dialog[open]')) {
+  if (!$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]')) {
     pending.id = setTimeout(() => {
       const run = pending.callback;
       pending = null;
@@ -143,6 +145,7 @@ function render() {
   } else if (game.phase === 'complete') {
     $('#challenge').innerHTML = `<div class="badge-medal" aria-hidden="true">🏅</div><p class="card-kicker">OFFICIAL NORTH-EAST EXPLORER</p><h2>You did it, Captain Dhruva!</h2><p class="card-copy">${ROUTE.length} little worlds. ${ROUTE.length} happy treasures.<br>Pip loved exploring with you!</p><div class="treasure-collection" aria-label="Your ${ROUTE.length} treasures">${WORLDS.map((item, i) => `<span class="treasure-sticker" role="img" aria-label="${item.treasure} from ${ROUTE[i].name}" style="--sticker-delay:${i * .1}s">${item.icon}</span>`).join('')}</div><div class="finish-ticket"><span>${JOURNEY_START.code}</span><span aria-hidden="true">→</span><strong>Dhruva’s explorer passport</strong><span aria-hidden="true">→</span><span>${JOURNEY_END.code}</span></div><button class="primary-button" id="again" type="button">Another adventure! ${arrow}</button>`;
   } else $('#challenge').innerHTML = renderQuestion();
+  if(!['ready','complete'].includes(game.phase))$('#challenge').insertAdjacentHTML('beforeend','<button type="button" class="repeat-button" id="journey-restart">↺ Restart journey</button>');
 }
 
 function travel() {
@@ -239,7 +242,8 @@ $('#challenge').addEventListener('click', event => {
     audio.speak(String(count));
     return;
   }
-  if (button.id === 'start') { if (game.start()) travel(); }
+  if (button.id === 'journey-restart') restart.open();
+  else if (button.id === 'start') { if (game.start()) travel(); }
   else if (button.id === 'again') {
     game = new Journey(preferences.level);
     game.start();
@@ -264,7 +268,7 @@ document.addEventListener('pointerdown', () => {
 
 document.addEventListener('keydown', event => {
   const target = event.target;
-  const allowed = !$('#settings').open && !document.querySelector('.voice-dialog[open]') && (target === document.body || target.classList.contains('answer'));
+  const allowed = !$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]') && (target === document.body || target.classList.contains('answer'));
   if (allowed && event.repeat && ['ArrowLeft', 'ArrowRight', ' ', 'Spacebar'].includes(event.key)) {
     event.preventDefault();
     return;
@@ -323,7 +327,7 @@ $('#settings').addEventListener('close', resume);
 document.addEventListener('visibilitychange', () => { if (document.hidden) audio.stop(); });
 window.addEventListener('pagehide', () => { pause(); clearTimeout(bellTimer); });
 window.addEventListener('pageshow', event => {
-  if (event.persisted && !$('#settings').open && !document.querySelector('.voice-dialog[open]')) resume();
+  if (event.persisted && !$('#settings').open && !restart.openNow && !document.querySelector('.voice-dialog[open]')) resume();
 });
 
 mountVoiceSettings(audio,{anchor:$('#sound'),onOpen:pause,onClose:resume});

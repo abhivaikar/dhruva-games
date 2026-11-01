@@ -15,6 +15,7 @@ export class RoundSession {
     this.selected = 0;
   }
   get current() { return this.questions[this.index]; }
+  restart() { this.index=0;this.completed=0;this.phase='question';this.tried.clear();this.selected=0; }
   answer(id) {
     if (this.phase !== 'question' || !this.current.choices.some(choice => choice.id === id) || this.tried.has(id)) return 'ignored';
     if (id !== this.current.answerId) { this.tried.add(id); return 'retry'; }
