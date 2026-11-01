@@ -1,6 +1,6 @@
 # Dhruva’s Discovery Club
 
-A family website with nine playful learning games. Built with static HTML, CSS, original SVG illustrations and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
+A family website with eleven playful learning games. Built with static HTML, CSS, original SVG illustrations, bundled language audio and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
 
 | Game | What children do |
 | --- | --- |
@@ -13,6 +13,8 @@ A family website with nine playful learning games. Built with static HTML, CSS, 
 | Colouring Studio | Choose from 36 original pictures, paint with fills, freehand brushes and stamps, then save, download or print. |
 | Mystery Dot-to-Dot | Explore 108 challenges: 36 surprise pictures with 10, 15 or 20 dots, then colour the picture revealed. |
 | Picture Puzzle Factory | Assemble 144 picture/size combinations with 4, 6, 9 or 12 pieces, plus puzzles made from saved artwork. |
+| Pip’s Chinese Adventure | Explore Mandarin through 84 words, 40 useful phrases, listening missions, speaking turns and optional reading/sentence puzzles. |
+| Pip’s Marathi Adventure | Learn everyday Marathi with 84 words, 40 phrases, picture-led listening, speaking practice and Devanagari reading puzzles. |
 
 ## Play locally
 
@@ -22,7 +24,7 @@ Requires Node.js 22 or later. No packages to install.
 npm run dev
 ```
 
-Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps, Flags and Activity Book. Every game has an **All games** link.
+Open http://127.0.0.1:5173 and choose a game. The homepage filters games by Transport, Maths, Maps, Flags, Activity Book and Languages. Every game has an **All games** link.
 
 The original game is now at `mrt-adventure.html`. Its 17-stop route, train colours, speech, tap-to-count objects, difficulty settings and automatic station progression remain available.
 
@@ -57,6 +59,25 @@ Colouring and puzzle pickers have theme filters, name search and pages of 12 pre
 - Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
 - **My book** keeps up to 18 pages in this browser. Saved artwork appears in the puzzle picker. Pages can be edited, downloaded as 1200 × 880 PNGs, or printed one per sheet. Removal offers Undo. Browser storage availability and capacity determine whether saves succeed; failures are shown without silently discarding existing pages.
 - **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
+
+## Chinese and Marathi adventures
+
+Two dedicated games live at `language.html?lang=chinese` and `language.html?lang=marathi`. Both begin with K1-friendly picture-led activities; word recognition, optional sound guides and hideable sentence models provide reading challenges.
+
+- Each language has **84 words, 40 original everyday phrases and 10 worlds**: transport, people, animals, food, home, creative/school objects, body/feelings, outdoors, colours and numbers.
+- **Listen & find:** unfamiliar words are introduced with their picture, written form and audio before a three-picture matching question. Six different targets per adventure. Hearing the target is required before answering; gentle retries do not cost lives.
+- **Word detective:** match pictures to written words. Audio is available as help; it does not automatically reveal each new reading question.
+- **My speaking turn:** three everyday model phrases, slow replay and an explicit “I tried saying it” acknowledgement. Optional local record/replay is available where supported; it rewards trying, without pronunciation grading. Single phrases can also be practised directly from the phrase book.
+- **Sentence puzzles:** three phrases assembled from whole word/phrase tiles. Models can be hidden for a challenge, and undo is available. Marathi vowel signs stay with their words; Chinese word groups are authored rather than split into arbitrary characters.
+- **My word book / Everyday phrases:** searchable, themed libraries with pages of 12. Chinese has tone-marked Pinyin; Marathi’s optional Roman guide is an informal aid. Several familiar picture words link to their existing colouring templates.
+- Each game has its own passport, separating listening matches, written-word matches, speaking attempts and sentence puzzles. Counts are practice records, not proficiency scores. Progress and help preferences stay in the browser, with safe handling when storage is unavailable.
+- **Help me play** speaks the current activity's instructions using the shared English guide voice. Mandarin/Marathi word and phrase playback remains separate.
+
+All **248 learning clips** are bundled MP3s, generated in the appropriate Mandarin or Marathi language with gTTS. No speech service is called while playing. Slower playback preserves pitch. If a clip cannot load, a matching language voice may be used; English/Hindi are never substituted for Marathi, and Cantonese is not substituted for Mandarin. Missing audio leaves listening questions locked and offers retry or the word book. The shared **Voice** picker changes the English guide, not the bundled language voice.
+
+Practice recordings are optional, limited to 15 seconds and held only in memory. They are cleared on activity changes, page exit or hiding the page. Tracks are stopped and playback URLs revoked. Games work without microphone permission. Automated tests exercise recording lifecycle with a simulated microphone; no real child's recording was captured during verification.
+
+Material is original beginner practice, not a complete Singapore Chinese syllabus or Marathi course. Chinese uses simplified characters. Standalone Marathi colour words can change endings in sentences. Learning-content and audio provenance are documented in `assets/languages/README.md`; future stories and expanded reading pathways remain in `LANGUAGE-GAMES-PLAN.md`.
 
 ## Primary maths practice
 
@@ -101,7 +122,10 @@ No environment variables or backend are required. Other static hosts can serve t
 - `src/club/activity-library.js`, `src/club/activity-picker.js`: themes, searchable/paginated picture libraries and shuffled mystery decks.
 - `src/club/activity-model.js`: drawing history, numbered-dot progression and jigsaw geometry/matching.
 - `src/club/activity-book.js`: validated browser-local gallery, drafts and restoration.
-- `src/club/catalog.js`: the nine offerings and their navigation.
+- `src/club/catalog.js`: the eleven offerings and their navigation.
+- `language.html`, `language.css`, `src/club/language.js`: the two language games and their four activities, libraries and passports.
+- `src/club/language-data.js`, `language-model.js`, `language-art.js`: original vocabulary/phrases, guarded rounds, sentence tiles, progress and illustrations.
+- `src/club/language-audio.js`, `language-recording.js`, `assets/languages/`: bundled learning audio, language-specific fallback and optional in-memory speaking recordings.
 - `src/club/rounds.js`: guarded quiz sessions and answer selection.
 - `src/club/decks.js`: transport, flag and world-map missions.
 - `src/club/maths.js`: primary maths questions and exact answer formatting.

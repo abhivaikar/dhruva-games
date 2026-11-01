@@ -19,10 +19,10 @@ const valueOf = value => {
   return Number(top) / Number(bottom);
 };
 
-test('all nine offerings have unique URLs and local entry points', async () => {
-  assert.equal(GAMES.length, 9);
-  assert.equal(new Set(GAMES.map(game => game.id)).size, 9);
-  assert.equal(new Set(GAMES.map(game => game.href)).size, 9);
+test('all eleven offerings have unique URLs and local entry points', async () => {
+  assert.equal(GAMES.length, 11);
+  assert.equal(new Set(GAMES.map(game => game.id)).size, 11);
+  assert.equal(new Set(GAMES.map(game => game.href)).size, 11);
   for (const game of GAMES) await access(new URL(`../${game.href.split('?')[0]}`, import.meta.url));
   const mrt = await readFile(new URL('../mrt-adventure.html', import.meta.url), 'utf8');
   assert.ok(mrt.includes('src="./src/app.js"'));

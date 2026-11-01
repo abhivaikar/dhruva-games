@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087d68">
+  <meta name="description" content="Learn Mandarin Chinese and Marathi through playful listening, speaking and reading adventures. 84 words and 40 useful phrases in each language, with built-in audio.">
+  <title>Language Adventures · Dhruva’s Discovery Club</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./club.css">
+  <link rel="stylesheet" href="./language.css">
+  <link rel="stylesheet" href="./voice.css">
+  <script type="module" src="./src/club/language.js"></script>
+</head>
+<body class="club language-page">
+  <div class="club-shell">
+    <header class="club-header"><a class="club-brand" href="./"><img src="./assets/club.svg" width="43" height="43" alt=""><span>Dhruva’s<small>DISCOVERY CLUB</small></span></a><div class="play-header-actions"><a class="back-link" href="./">← All games</a><button id="language-sound" class="round-button" type="button" aria-label="Turn sound off" aria-pressed="true">♪</button></div></header>
+    <nav class="language-links" aria-label="Language games"><a href="./language.html?lang=chinese">你好 · Chinese</a><a href="./language.html?lang=marathi">नमस्कार · Marathi</a><button type="button" id="language-grownups">For grown-ups</button></nav>
+    <main>
+      <div class="language-heading"><div><p class="eyebrow">LITTLE WORDS. A WORLD OF POSSIBILITIES.</p><h1 id="language-title">Language Adventures</h1><p id="language-subtitle"></p><button type="button" id="language-help" class="language-help">♪ Help me play</button></div><button type="button" class="language-passport-button" data-view="passport" aria-label="Open my language passport">🎟️ <span>My passport</span></button></div>
+      <nav class="language-tabs" aria-label="Learning activities"><button type="button" data-view="setup">🚆 Let’s play</button><button type="button" data-view="words">📒 My word book</button><button type="button" data-view="phrases">💬 Everyday phrases</button></nav>
+      <div id="language-root"></div>
+    </main>
+    <footer class="club-footer"><span>Listen. Wonder. Have a little go.</span><a href="./">Choose another adventure ↗</a></footer>
+  </div>
+  <dialog class="club-dialog" id="language-parent-dialog" aria-labelledby="language-parent-title"><form method="dialog"><div class="dialog-top"><h2 id="language-parent-title">Little steps in a new language</h2><button class="round-button" value="close" aria-label="Close language information">×</button></div><p>Start with Listen & find. Each visit has just six words, or three speaking/sentence turns. Choose a familiar world and repeat favourites. Word detective and Sentence puzzles offer optional reading challenges.</p><p>All 84 words and 40 phrases in each game include bundled language audio. The Voice control changes the English guide; the learning clips have their own Mandarin or Marathi voice. The sound guide and English meanings are optional help, rather than a test of reading ability.</p><p>My speaking turn encourages trying a phrase aloud. Optional recording stays in memory on this device and is cleared when you change activity. It does not grade pronunciation or upload a recording. Passport counts record particular activities practised, not language proficiency.</p><p>These original beginner activities are not a complete school syllabus. Chinese uses simplified characters and Pinyin. Marathi uses Devanagari; colour words shown alone may change their endings in sentences. Play together and use a phrase away from the screen too.</p><button class="club-primary" value="done">Let’s discover →</button></form></dialog>
+  <p class="sr-only" id="language-announcement" role="status" aria-live="polite"></p><div class="club-confetti" id="language-confetti" aria-hidden="true"></div>
+  <noscript>Please enable JavaScript to play the language games.</noscript>
+</body>
+</html>

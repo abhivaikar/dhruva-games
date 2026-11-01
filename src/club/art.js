@@ -1,5 +1,6 @@
 import { activityCardArt } from './activity-card-art.js';
 import { treasureSceneArt } from './treasure-art.js';
+import { languageCardArt } from './language-art.js';
 
 const star = (x, y, size = 1, colour = '#ffdf45') => `<path d="m0-9 2.7 5.5 6 .9-4.3 4.2 1 6L0 4.8-5.4 7.6l1-6-4.3-4.2 6-.9Z" fill="${colour}" transform="translate(${x} ${y}) scale(${size})"/>`;
 const cloud = (x, y) => `<path d="M0 12q-2-13 11-13 13-21 28-3 21-4 22 14 12-1 13 9H0Z" transform="translate(${x} ${y})" fill="#fffdf5" opacity=".8"/>`;
@@ -10,6 +11,7 @@ export function rocketArt(completed = 0, total = 8, showCaption = true) {
 }
 
 export function illustration(type) {
+  if (['chinese','marathi'].includes(type)) return languageCardArt(type);
   if (['colouring', 'dots', 'puzzles'].includes(type)) return activityCardArt(type);
   let content = '';
   if (type === 'train') content = `<rect width="480" height="245" fill="#a5e4ff"/>${cloud(60, 44)}<circle cx="394" cy="51" r="25" fill="#ffe140"/><path d="M0 170q120-65 240-20t240-10v105H0" fill="#4bc591"/><path d="M0 209h480m-480 10h480" stroke="#369178" stroke-width="3"/><g><rect x="48" y="108" width="175" height="91" rx="18" fill="#ffffff"/><path d="M249 108h106q34 0 48 37l12 32q5 22-17 22H249Z" fill="#ffffff"/><path d="M48 177h175v13H48m201-13h161v13H249" fill="#7934e5"/><g fill="#53d9ef"><rect x="64" y="124" width="41" height="37" rx="8"/><rect x="117" y="124" width="41" height="37" rx="8"/><rect x="170" y="124" width="38" height="37" rx="8"/><rect x="264" y="124" width="40" height="37" rx="8"/><rect x="316" y="124" width="35" height="37" rx="8"/></g><path d="M363 123q22 8 30 37h-29Z" fill="#263b73"/><path d="M223 152h26v35h-26" fill="#b197db"/><g fill="#263354"><rect x="72" y="194" width="32" height="13" rx="6"/><rect x="168" y="194" width="32" height="13" rx="6"/><rect x="274" y="194" width="32" height="13" rx="6"/><rect x="364" y="194" width="32" height="13" rx="6"/></g><rect x="281" y="96" width="68" height="15" rx="5" fill="#5721ba"/><text x="315" y="107" font-family="sans-serif" font-size="9" fill="white" text-anchor="middle">NE18 → NE1</text></g>`;

@@ -8,6 +8,8 @@ export const GAMES = Object.freeze([
   { id: 'colouring', title: 'Colouring Studio', category: 'activities', badge: 'LITTLE ARTISTS', detail: '36 pictures · 6 colourful worlds', description: 'Give Pip rainbow windows. Paint a pink dinosaur. Make it yours!', href: './activity.html?game=colouring', colour: '#bd316f', art: 'colouring' },
   { id: 'dots', title: 'Mystery Dot-to-Dot', category: 'activities', badge: 'JOIN THE DOTS', detail: '108 challenges · 10, 15 or 20 dots', description: 'Follow the numbers. Reveal a surprise. Then bring it to life with colour.', href: './activity.html?game=dots', colour: '#8d4ac0', art: 'dots' },
   { id: 'puzzles', title: 'Picture Puzzle Factory', category: 'activities', badge: 'PIECE BY LITTLE PIECE', detail: '144 puzzles · 4 to 12 pieces', description: 'Put a picture together — even one you coloured yourself!', href: './activity.html?game=puzzles', colour: '#177caa', art: 'puzzles' },
+  { id: 'chinese', title: 'Pip’s Chinese Adventure', category: 'languages', badge: '你好 · LITTLE LANGUAGE EXPLORERS', detail: '84 words · 40 phrases · included audio', description: 'Listen, find pictures and try Mandarin with Lulu the panda. Little words, big discoveries!', href: './language.html?lang=chinese', colour: '#cc3e54', art: 'chinese' },
+  { id: 'marathi', title: 'Pip’s Marathi Adventure', category: 'languages', badge: 'नमस्कार · LET’S TALK & DISCOVER', detail: '84 words · 40 phrases · included audio', description: 'Talk, listen and explore Marathi with Mithu. Discover words for your everyday adventures!', href: './language.html?lang=marathi', colour: '#087d68', art: 'marathi' },
 ].map(Object.freeze));
 
 export const CATEGORIES = Object.freeze([
@@ -17,4 +19,5 @@ export const CATEGORIES = Object.freeze([
   { id: 'maps', label: 'Maps', icon: '🌍' },
   { id: 'flags', label: 'Flags', icon: '⚑' },
   { id: 'activities', label: 'Activity Book', icon: '🎨' },
+  { id: 'languages', label: 'Languages', icon: '💬' },
 ]);

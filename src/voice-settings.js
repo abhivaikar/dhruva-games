@@ -1,12 +1,13 @@
 import { narratorVoices, chooseNarrator, readVoice, writeVoice, DEFAULT_VOICE, PACES } from './voice-preferences.js';
 
-export function mountVoiceSettings(audio,{anchor,onOpen=()=>{},onClose=()=>{}}={}){
+export function mountVoiceSettings(audio,{anchor,onOpen=()=>{},onClose=()=>{},description}={}){
   if(!anchor)return;
   const button=document.createElement('button');button.type='button';button.className='voice-open';button.setAttribute('aria-label','Choose a narrator voice');button.innerHTML='<span aria-hidden="true">♬</span><span>Voice</span>';
   anchor.insertAdjacentElement('beforebegin',button);
   const dialog=document.createElement('dialog');dialog.className='voice-dialog';dialog.setAttribute('aria-labelledby','voice-title');
   dialog.innerHTML=`<form method="dialog"><div class="voice-heading"><div><p>MAKE IT SOUND LIKE AN ADVENTURE</p><h2 id="voice-title">Meet your narrator</h2></div><button class="voice-close" value="close" aria-label="Close voice choices">×</button></div><p class="voice-intro">Pick a voice you enjoy. It’ll join you in every game.</p><label class="voice-label" for="narrator-voice">Who’s coming along?</label><select id="narrator-voice"></select><p class="voice-choice-note" id="voice-choice-note"></p><fieldset class="voice-paces"><legend>Choose the pace</legend>${Object.entries(PACES).map(([id,pace])=>`<label><input type="radio" name="narrator-pace" value="${id}"><span>${pace.label}</span></label>`).join('')}</fieldset><div class="voice-demo"><span aria-hidden="true">✦</span><p>“Hello, Dhruva! Ready for a little adventure? Let’s discover something wonderful together!”</p></div><div class="voice-actions"><button type="button" class="voice-preview">▶ Hear this voice</button><button type="button" class="voice-stop">■ Stop</button></div><p id="voice-status" role="status"></p><p class="voice-device-note">Voices come from this device and browser. Natural or enhanced voices are preferred when available.</p><button class="voice-done" value="done">Let’s play →</button></form>`;
   document.body.append(dialog);
+  if(description)dialog.querySelector('.voice-intro').textContent=description;
   const select=dialog.querySelector('select'),note=dialog.querySelector('#voice-choice-note'),status=dialog.querySelector('#voice-status'),preview=dialog.querySelector('.voice-preview');
   let choices=[],previewVersion=0;
   const stopPreview=()=>{previewVersion++;audio.stop();status.textContent='';};

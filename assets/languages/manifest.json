@@ -1,0 +1,2485 @@
+{
+  "generator": "gTTS 2.5.4 / Google Translate text-to-speech",
+  "entries": [
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "animals-1",
+      "text": "我看见一只猫。",
+      "path": "chinese/phrase-animals-1.mp3",
+      "textHash": "a4ba650f35f8412cb451e7893c2b3e543a4b04f08507ed259e4adcb70a364c20",
+      "bytes": 16896
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "animals-2",
+      "text": "大象有长鼻子。",
+      "path": "chinese/phrase-animals-2.mp3",
+      "textHash": "11e5d22cd75ae66e7bd4be97ce3e51d99e4c1fa2b0e8164d69f0a5d1d96f13e2",
+      "bytes": 16704
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "animals-3",
+      "text": "小鸟在飞。",
+      "path": "chinese/phrase-animals-3.mp3",
+      "textHash": "325d8f3698ac4258f7124173034b704c834e3388225e5de624760873addca484",
+      "bytes": 13440
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "animals-4",
+      "text": "我喜欢小狗。",
+      "path": "chinese/phrase-animals-4.mp3",
+      "textHash": "dbad4d154d1ee0e35663ec3a55d74b91d1b9028d725402dcc42318c1899aec5f",
+      "bytes": 15744
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "body-1",
+      "text": "我很开心。",
+      "path": "chinese/phrase-body-1.mp3",
+      "textHash": "89d466702983c2f8c92634da272ed3fd1ccb694dd51a5337085931bf41f68f9b",
+      "bytes": 11904
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "body-2",
+      "text": "我有点难过。",
+      "path": "chinese/phrase-body-2.mp3",
+      "textHash": "536acfde6755575e6e4a924b91a01dae59c542507ac1626b5fa103d59737ffee",
+      "bytes": 14400
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "body-3",
+      "text": "请洗手。",
+      "path": "chinese/phrase-body-3.mp3",
+      "textHash": "053a6c584605e808b3ed8afd244d23000921eb5f09b9e7c8262b127c66b96477",
+      "bytes": 11712
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "body-4",
+      "text": "这是我的鼻子。",
+      "path": "chinese/phrase-body-4.mp3",
+      "textHash": "738e1dc8c23d31f5ab43ee649a3a50492b89ccb659ed9e689a51cc9f4941012d",
+      "bytes": 15936
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "colours-1",
+      "text": "我喜欢红色。",
+      "path": "chinese/phrase-colours-1.mp3",
+      "textHash": "cfd00863deec562a751ed9f150356070c05bebc22b66e842df3beb76e65847a9",
+      "bytes": 15360
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "colours-2",
+      "text": "天空是蓝色的。",
+      "path": "chinese/phrase-colours-2.mp3",
+      "textHash": "a58a6d0c0e8820c058e00f59a1e64dd50b95dfbf62d7131c44a2af067ddc10ad",
+      "bytes": 16320
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "colours-3",
+      "text": "小草是绿色的。",
+      "path": "chinese/phrase-colours-3.mp3",
+      "textHash": "ec4d964d8671d997fdff51ae502ffb9519f1b8e214b5fc76619a3bd951c77b03",
+      "bytes": 19584
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "colours-4",
+      "text": "请给花涂上黄色。",
+      "path": "chinese/phrase-colours-4.mp3",
+      "textHash": "cb3015e6ad8908218efa9039d90f1674e43f63799d7cfd7c7bc67184c67ce926",
+      "bytes": 21696
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "family-1",
+      "text": "你好，妈妈！",
+      "path": "chinese/phrase-family-1.mp3",
+      "textHash": "53a503550f43a77f25bc2b05c85a276a8bc0ca4d1e9da310481fbbe86fb7d6d7",
+      "bytes": 17280
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "family-2",
+      "text": "请帮帮我。",
+      "path": "chinese/phrase-family-2.mp3",
+      "textHash": "10fa1e92972aabad4b7b23fcdd3038f09b755753ac40972478ab7c2df5b3cadd",
+      "bytes": 13056
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "family-3",
+      "text": "晚安，爸爸！",
+      "path": "chinese/phrase-family-3.mp3",
+      "textHash": "6e31519a25036a56a5de819cf6c57f513c16cace6cb26c802360395deac5873b",
+      "bytes": 17088
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "family-4",
+      "text": "这是我的朋友。",
+      "path": "chinese/phrase-family-4.mp3",
+      "textHash": "9dec556c7b343d240287b0ef87a0dbbba98c4330f96f8df8c9202814ec31ef82",
+      "bytes": 16320
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "food-1",
+      "text": "我想喝水。",
+      "path": "chinese/phrase-food-1.mp3",
+      "textHash": "976a48063e29724a7c49c229eb62137a9220551365ae16232d1b6bcb8fbb23ff",
+      "bytes": 13056
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "food-2",
+      "text": "我饿了。",
+      "path": "chinese/phrase-food-2.mp3",
+      "textHash": "8bfd87f08ea1627fd9ff688be1f14156ae67dc9d1753c22056bad3243c39c84f",
+      "bytes": 9792
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "food-3",
+      "text": "我喜欢香蕉。",
+      "path": "chinese/phrase-food-3.mp3",
+      "textHash": "632556b926e18f81b02c40ac0b271191add6d52b536c2b18b333a75d23ece8e3",
+      "bytes": 14976
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "food-4",
+      "text": "饭很好吃。",
+      "path": "chinese/phrase-food-4.mp3",
+      "textHash": "13c76bec79504ae5c9535debe955643e8659ec58d99b076e08e58e08b6c9dec5",
+      "bytes": 13248
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "home-1",
+      "text": "请开门。",
+      "path": "chinese/phrase-home-1.mp3",
+      "textHash": "9189a0fb5e52c9c8b45bd558793122e9c67120f2a1cb393a9550b9e4e3890e1f",
+      "bytes": 11520
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "home-2",
+      "text": "我的球在哪里？",
+      "path": "chinese/phrase-home-2.mp3",
+      "textHash": "cabd7fac33ac9a7c755969a11b9907f04c668fa2ac574e3fe4b4f933b4917371",
+      "bytes": 17472
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "home-3",
+      "text": "我想回家。",
+      "path": "chinese/phrase-home-3.mp3",
+      "textHash": "7e75f75d2a8519c8ad54b2a49fa523b9a3b81b6ad7d8192ba0e38c41781749d6",
+      "bytes": 12480
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "home-4",
+      "text": "我们一起玩吧。",
+      "path": "chinese/phrase-home-4.mp3",
+      "textHash": "ebf4e63b662c04ba3e88d89728b1f7cb8dc7ef045119166bce3ed418d6c7c7ce",
+      "bytes": 13440
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "numbers-1",
+      "text": "我有两个苹果。",
+      "path": "chinese/phrase-numbers-1.mp3",
+      "textHash": "3fa3dcdf2f992f04fed60ca44cabd290ef8c177d597d4bb7a2bc5ecd48e52d86",
+      "bytes": 17664
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "numbers-2",
+      "text": "我们数一数吧。",
+      "path": "chinese/phrase-numbers-2.mp3",
+      "textHash": "38ddf01bafc55763a928e725ac724e9fbbd0e4d8487d222f8e2c2bc7a7f34d76",
+      "bytes": 16128
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "numbers-3",
+      "text": "这里有三朵花。",
+      "path": "chinese/phrase-numbers-3.mp3",
+      "textHash": "52f64f3b6de0db35ea747d9cb51da2fe9543cbe7af68698376c012248eb8e165",
+      "bytes": 17088
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "numbers-4",
+      "text": "请给我一个。",
+      "path": "chinese/phrase-numbers-4.mp3",
+      "textHash": "f5a004e45d2ec9dcff22605aa841fab8fb59e59dd48e8a192b3291775b3d5925",
+      "bytes": 13632
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "outdoors-1",
+      "text": "下雨了。",
+      "path": "chinese/phrase-outdoors-1.mp3",
+      "textHash": "e2a16aba52032d39ad09792743d4171ef9ddedaeb2c9ab0d16cadef9f06f6522",
+      "bytes": 10752
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "outdoors-2",
+      "text": "这朵花很美。",
+      "path": "chinese/phrase-outdoors-2.mp3",
+      "textHash": "9b72ea552bc301fd30d4adaa1029fbf403692f1e6c380418dacd233d00145e62",
+      "bytes": 14592
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "outdoors-3",
+      "text": "太阳在天上。",
+      "path": "chinese/phrase-outdoors-3.mp3",
+      "textHash": "815d05f5e1bd14f7a041eb24f7624066df7967c274eaa1132c1938bdade5afec",
+      "bytes": 15360
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "outdoors-4",
+      "text": "我们出去玩吧。",
+      "path": "chinese/phrase-outdoors-4.mp3",
+      "textHash": "b7c94a184b115df1dc220ea382b232a46b757708c176672df2f3f537938d6a06",
+      "bytes": 14208
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "school-1",
+      "text": "这是我的书。",
+      "path": "chinese/phrase-school-1.mp3",
+      "textHash": "cb1c35f2a781ae29189238a79db274b7a4bb89a76f13031b63530f55d8449f04",
+      "bytes": 14400
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "school-2",
+      "text": "我的书包在哪里？",
+      "path": "chinese/phrase-school-2.mp3",
+      "textHash": "9a64911eec2f6dd883ab6af8eef3db85c3f0519efdabfeaa0c6dbb4c5dec4fab",
+      "bytes": 18432
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "school-3",
+      "text": "请给我一支铅笔。",
+      "path": "chinese/phrase-school-3.mp3",
+      "textHash": "0d3a65df7919f01cb17b6d2238937bdfb67ccf698169471cbc56aae4e7733c0a",
+      "bytes": 21120
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "school-4",
+      "text": "我在画画。",
+      "path": "chinese/phrase-school-4.mp3",
+      "textHash": "b00c424737d4dd178005ae96b183ddf2ea1fe52a9d6f5dc2a8a6760246dd468e",
+      "bytes": 12288
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "transport-1",
+      "text": "地铁在哪里？",
+      "path": "chinese/phrase-transport-1.mp3",
+      "textHash": "c0f77117b5370c5e91bd8fb4cb1a63edbcc94d7c6c327a2b8688c1f7f81f6f94",
+      "bytes": 14016
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "transport-2",
+      "text": "我们坐巴士吧。",
+      "path": "chinese/phrase-transport-2.mp3",
+      "textHash": "555b42ea144bfff23a11f6e40925ad596b4cc287f8fc09416d4fb510f33f70bc",
+      "bytes": 14208
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "transport-3",
+      "text": "我们到站了。",
+      "path": "chinese/phrase-transport-3.mp3",
+      "textHash": "1fe624a98f6eb240a3c2240380b5596807ddc84a6473e8820799717ead87caf9",
+      "bytes": 12288
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "phrase",
+      "id": "transport-4",
+      "text": "我想坐在窗边。",
+      "path": "chinese/phrase-transport-4.mp3",
+      "textHash": "bc0ae937d649c5516475a2960116694fc4d0eb3ecffaa90662cbf0ce30ef7695",
+      "bytes": 18240
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "aeroplane",
+      "text": "飞机",
+      "path": "chinese/word-aeroplane.mp3",
+      "textHash": "c05f7cd6ed3587a2e538304db9acc70375173707e4741938a4fe94c3be6e5b6d",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "ambulance",
+      "text": "救护车",
+      "path": "chinese/word-ambulance.mp3",
+      "textHash": "63d2ebeaf55471550f2027e2328decdf43dbb54e87fbe47ce7f9c3e797cc1220",
+      "bytes": 11136
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "apple",
+      "text": "苹果",
+      "path": "chinese/word-apple.mp3",
+      "textHash": "50537dab76505dfc66dc78411b238de0f51d3d3a9ccfd7a8f133d46c484acbf3",
+      "bytes": 9600
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "baby",
+      "text": "宝宝",
+      "path": "chinese/word-baby.mp3",
+      "textHash": "da5a634993e1ba9b7ae073817b5fcf74c268abc1ccba458abf935299d95dae7f",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bag",
+      "text": "书包",
+      "path": "chinese/word-bag.mp3",
+      "textHash": "c48625607f03389a1e0d672acb62e0fd41f0adb45fd9783221e53b433600bd8d",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "ball",
+      "text": "球",
+      "path": "chinese/word-ball.mp3",
+      "textHash": "12a2aadcf0a5a2d28c9997e8caece542010fffe8623b01e31853095acd257b10",
+      "bytes": 7488
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "banana",
+      "text": "香蕉",
+      "path": "chinese/word-banana.mp3",
+      "textHash": "dbf9f9c94fc90b7cd675f33ffa464f3a69f0b74671295fdff342ed68cbfcd3eb",
+      "bytes": 9600
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bed",
+      "text": "床",
+      "path": "chinese/word-bed.mp3",
+      "textHash": "5cfd73078e3aaf3fc93296d4a4469864d8efebfdbaabf525af3e9b1b6940264e",
+      "bytes": 7680
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bicycle",
+      "text": "自行车",
+      "path": "chinese/word-bicycle.mp3",
+      "textHash": "4851e1ac595a3f731960e817d8373695f7661a6b0522c609944e9a7bfdd1547b",
+      "bytes": 11328
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bird",
+      "text": "鸟",
+      "path": "chinese/word-bird.mp3",
+      "textHash": "02d9cb10ca808b8abbfc789ea84d6ba6f79025a5429017fa669711412124dc41",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "black",
+      "text": "黑色",
+      "path": "chinese/word-black.mp3",
+      "textHash": "ed7d2c54184be5f5b81cbcae880942acec9635014aad20bab6cca1d68dbe3f75",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "blue",
+      "text": "蓝色",
+      "path": "chinese/word-blue.mp3",
+      "textHash": "67035e6b7f82acdb9ab43bb4925f377f4a7e5a5a3cc61b8eb3db2038364c3cf3",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "boat",
+      "text": "船",
+      "path": "chinese/word-boat.mp3",
+      "textHash": "15b7f7a95c1ccdcb5ba8bbff0800d2f57c7325758e591d02fd433dffccdd208c",
+      "bytes": 7488
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "book",
+      "text": "书",
+      "path": "chinese/word-book.mp3",
+      "textHash": "1be968f125240969534774b435cfb7128e919aa1a8e149adcc75d440646065e7",
+      "bytes": 7104
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bread",
+      "text": "面包",
+      "path": "chinese/word-bread.mp3",
+      "textHash": "b4bf241cd10ee181a00f77f817e8b85ba6f50b9a3bb83c99774e7b085e2f518a",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "brown",
+      "text": "棕色",
+      "path": "chinese/word-brown.mp3",
+      "textHash": "d4969ce9b575486772734276df5cad3bf087a803dd96bcfa29d8c809368198c2",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "bus",
+      "text": "巴士",
+      "path": "chinese/word-bus.mp3",
+      "textHash": "1acdfe82741420b6cde3e02f90dd28472b92fd0efcc8f515908c8157de2c315f",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "butterfly",
+      "text": "蝴蝶",
+      "path": "chinese/word-butterfly.mp3",
+      "textHash": "f7c9627a674bb8f4ea898284e342fef5b3d48db8e1c54dceecdf1153016de051",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "car",
+      "text": "汽车",
+      "path": "chinese/word-car.mp3",
+      "textHash": "1a19b5468c0683ab60b045d013481dda450d24eeac6e751dfc9d46f2ed40ec3f",
+      "bytes": 9408
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "cat",
+      "text": "猫",
+      "path": "chinese/word-cat.mp3",
+      "textHash": "a810bf845a307382118e6e6aef21a79f6a26b1b3ad2225fe97b7ee4c125e3380",
+      "bytes": 6336
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "chair",
+      "text": "椅子",
+      "path": "chinese/word-chair.mp3",
+      "textHash": "e57f49ca9c8120c9001bfcf5d954a533c4cb63de907fd14a088b508d2c9bf32f",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "child",
+      "text": "孩子",
+      "path": "chinese/word-child.mp3",
+      "textHash": "5f887419f463425a6f06d8823b08d2583f65830a488952bb2ee78ec6f70d9959",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "cloud",
+      "text": "云",
+      "path": "chinese/word-cloud.mp3",
+      "textHash": "32d42b97294a13655f4c2527ff6050186e63bd4c06a9dbfa34146f81abfc3b0c",
+      "bytes": 6720
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "crayon",
+      "text": "蜡笔",
+      "path": "chinese/word-crayon.mp3",
+      "textHash": "02ef5bf21490979559a15d17b861fca0a21ea2ad3a99dcdf4f16e965d6732268",
+      "bytes": 9408
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "cup",
+      "text": "杯子",
+      "path": "chinese/word-cup.mp3",
+      "textHash": "95f9e8e79208082d83e61a3fa658c3647b2d942be0ab38bf0225170dbfb4f6ab",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "dad",
+      "text": "爸爸",
+      "path": "chinese/word-dad.mp3",
+      "textHash": "d45ce71dd359d0e71e08dcfc2946f92804659f6141180460e366871c95f0bca9",
+      "bytes": 8064
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "dog",
+      "text": "狗",
+      "path": "chinese/word-dog.mp3",
+      "textHash": "cecd675a4c3cb00d1fee2e46eb53f902c9c5d09fa0636f7ea83e10e3214ba656",
+      "bytes": 7488
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "door",
+      "text": "门",
+      "path": "chinese/word-door.mp3",
+      "textHash": "a407325e0081cb7db7869427e4faf30e0fc8dcf53c03c7c9f9b92e118ec05a6d",
+      "bytes": 6912
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "ear",
+      "text": "耳朵",
+      "path": "chinese/word-ear.mp3",
+      "textHash": "86d7bf2d358bd82c5d5674d8ce6d91000d14cd8c99823e355b702a3bbee9cd41",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "egg",
+      "text": "鸡蛋",
+      "path": "chinese/word-egg.mp3",
+      "textHash": "e9f5b71a472d27bbaf9686b93db62af419f9b5fa4de88c762134683eac307672",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "eight",
+      "text": "八",
+      "path": "chinese/word-eight.mp3",
+      "textHash": "2c467d3673926b209f49dc3b46f97a30126a1d3470e5844052fade66fb2ce332",
+      "bytes": 6144
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "elephant",
+      "text": "大象",
+      "path": "chinese/word-elephant.mp3",
+      "textHash": "9da4b5a81abc151ec55e9de5856160135ba25ec7b95c118f245288943853b1b2",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "eye",
+      "text": "眼睛",
+      "path": "chinese/word-eye.mp3",
+      "textHash": "9069cc8f2c62b4b449dbe7ad49ba0d4e18c083465eaf1231ee847c0171918fff",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "fish",
+      "text": "鱼",
+      "path": "chinese/word-fish.mp3",
+      "textHash": "ac3069de682490aca2ec37da510a284281ac3f741456b22ef5432f3e988c3083",
+      "bytes": 6528
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "five",
+      "text": "五",
+      "path": "chinese/word-five.mp3",
+      "textHash": "c9b87f516a38ea36a0ca35f5137d4676a0705b6af36302cac4b68927a1e42c60",
+      "bytes": 8064
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "flower",
+      "text": "花",
+      "path": "chinese/word-flower.mp3",
+      "textHash": "b0a1eab5f902df03059fe7385071b377e577e3ef962d3257663af0dcbbe85449",
+      "bytes": 6912
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "foot",
+      "text": "脚",
+      "path": "chinese/word-foot.mp3",
+      "textHash": "94bf1ba00c1b0cfac9b213059e48a05be27b98f88f70a40f796f7d42d464d09f",
+      "bytes": 8064
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "four",
+      "text": "四",
+      "path": "chinese/word-four.mp3",
+      "textHash": "754a9d5828d502f19ae91df8f089811d9affe9e0a487b20528975700f7c90f75",
+      "bytes": 7104
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "friend",
+      "text": "朋友",
+      "path": "chinese/word-friend.mp3",
+      "textHash": "677aad1a0ee44cd64f79887236a96c3a7234fb6c1b9289f3354eaedee0d56942",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "grandma",
+      "text": "奶奶",
+      "path": "chinese/word-grandma.mp3",
+      "textHash": "b50dde9bb88540babe4221532384bbfe7228a3c28110a41343c581c8348cc541",
+      "bytes": 8064
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "grandpa",
+      "text": "爷爷",
+      "path": "chinese/word-grandpa.mp3",
+      "textHash": "05a394a5779b1ee5256465d17136151066f7e3451e42413c0e58a6268bae606c",
+      "bytes": 7872
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "green",
+      "text": "绿色",
+      "path": "chinese/word-green.mp3",
+      "textHash": "30c83dc25b12c32c466f0e53d832734caacf0474ebf33c63cdf92e9e8895e092",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "hand",
+      "text": "手",
+      "path": "chinese/word-hand.mp3",
+      "textHash": "48e3a023f89979771bf7c88683b1624393731c30796bce679f0f67dfb3d98bda",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "happy",
+      "text": "开心",
+      "path": "chinese/word-happy.mp3",
+      "textHash": "6e067999e2407ee34bfe9434f450f5e2adc86d3a16ca9711742439142f98dc51",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "helicopter",
+      "text": "直升机",
+      "path": "chinese/word-helicopter.mp3",
+      "textHash": "341394deda2bf631b66a3bfcbe4a56cf468c06b80693a53bed0b8a56dc3cf733",
+      "bytes": 10752
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "house",
+      "text": "家",
+      "path": "chinese/word-house.mp3",
+      "textHash": "c8ae97be80f3867c089e1c9ffa2d7cd62a6f26055fe67be3ad7ab9a6e7131da7",
+      "bytes": 6720
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "icecream",
+      "text": "冰淇淋",
+      "path": "chinese/word-icecream.mp3",
+      "textHash": "7ea01af14f9347464110646b909d101524e4ffd0567cf739e2232adf82463804",
+      "bytes": 11328
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "lion",
+      "text": "狮子",
+      "path": "chinese/word-lion.mp3",
+      "textHash": "e7c20034f075c68a78d4be84092ccc847fa677fc5e1fea3c8cd9b29d7d6b3156",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "milk",
+      "text": "牛奶",
+      "path": "chinese/word-milk.mp3",
+      "textHash": "b892a42b9695881d77512e97ade8d3c59c111c8a9065db9f728b769cbbc5fa3f",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "moon",
+      "text": "月亮",
+      "path": "chinese/word-moon.mp3",
+      "textHash": "917705b6ba5e02dd551c971f5833d9fc440dbf323c2df8adc05cca91da4490b7",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "mouth",
+      "text": "嘴巴",
+      "path": "chinese/word-mouth.mp3",
+      "textHash": "cbb4c198e88c338da0a433d59c24a7e3185c38cd7a5089dff62d0106975d2276",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "mum",
+      "text": "妈妈",
+      "path": "chinese/word-mum.mp3",
+      "textHash": "45f1364f08aed165934542d80884ffcfbcb991021f5a4ee3f077457b60e9fa80",
+      "bytes": 8256
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "nine",
+      "text": "九",
+      "path": "chinese/word-nine.mp3",
+      "textHash": "df897da6e02ecd3093c3c539ad905323f4b8413473f4e6abec237cec612542c0",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "nose",
+      "text": "鼻子",
+      "path": "chinese/word-nose.mp3",
+      "textHash": "ba582ff45de430b3e0f8567503f379088ba6eaa777e45b087fcd68221d085c5c",
+      "bytes": 7680
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "one",
+      "text": "一",
+      "path": "chinese/word-one.mp3",
+      "textHash": "51a75f4634dfa8598a0a1436da0b7764830edd1f3a97661222387da2fe2b38d1",
+      "bytes": 6144
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "orange",
+      "text": "橙色",
+      "path": "chinese/word-orange.mp3",
+      "textHash": "aa1e899dd35771b09b529c0cd95933b738c8439cabda7b9725cc0f0f7d84bd80",
+      "bytes": 9408
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "paper",
+      "text": "纸",
+      "path": "chinese/word-paper.mp3",
+      "textHash": "62e2af28ab4a412b98fcd43bdbb9a9dff255518bbc5f53f5d26fe8f10f4cda27",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "pencil",
+      "text": "铅笔",
+      "path": "chinese/word-pencil.mp3",
+      "textHash": "f77e30ee1aed88192e4c7cad4cb24391c8c4ccbd46f81f536f8f0bec27494f7e",
+      "bytes": 9984
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "pink",
+      "text": "粉红色",
+      "path": "chinese/word-pink.mp3",
+      "textHash": "bb60517f4d29afe00cb663918ea73d6d170c10cb7cf4f75babe9e2d3d1cca80d",
+      "bytes": 11136
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "purple",
+      "text": "紫色",
+      "path": "chinese/word-purple.mp3",
+      "textHash": "2ed9c6fabac2013a5f22579002391088dff9b7741db4f7eee2f5ed5381b2b708",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "rabbit",
+      "text": "兔子",
+      "path": "chinese/word-rabbit.mp3",
+      "textHash": "02ea6e1b01e9fc5220d0e09e99fb2df36df06fd6efd61f66ce7f1db48d98b49e",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "rain",
+      "text": "雨",
+      "path": "chinese/word-rain.mp3",
+      "textHash": "124d60580dfa9072dbea270f1470a9be88a3152d1c6c6485eb0f9e1dc9345352",
+      "bytes": 7680
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "red",
+      "text": "红色",
+      "path": "chinese/word-red.mp3",
+      "textHash": "789f61dbfcc7a2d21a5a9b3ef23d0dbac2aee42a2b91d65baaeb20a94f3152ab",
+      "bytes": 9216
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "rice",
+      "text": "米饭",
+      "path": "chinese/word-rice.mp3",
+      "textHash": "e233a13a49e5110647b505962b1e6b36264fdb70cd7e8afff2cdd6532c0779d1",
+      "bytes": 8448
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "sad",
+      "text": "难过",
+      "path": "chinese/word-sad.mp3",
+      "textHash": "668ce09171c3021aa1c220d43c7814d373c3010a26269e903359d5038e17d415",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "scissors",
+      "text": "剪刀",
+      "path": "chinese/word-scissors.mp3",
+      "textHash": "003e6674d0fe2cf600019d7c5d89d2cfc7c277b182135a1997aa020a4131ace6",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "seven",
+      "text": "七",
+      "path": "chinese/word-seven.mp3",
+      "textHash": "1b0542878c67f6cdf30e23c175cdcfc8c341b835e66bbf1596a823812397b2a3",
+      "bytes": 7104
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "six",
+      "text": "六",
+      "path": "chinese/word-six.mp3",
+      "textHash": "de07b5383874b2a32bd141d2655a9e8b01ea1b8fc2bed8195e27fc6848864163",
+      "bytes": 6720
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "spoon",
+      "text": "勺子",
+      "path": "chinese/word-spoon.mp3",
+      "textHash": "72407ec665b596b8ef23a0807fff360e0e912e844eac534246e41ac1b70a80f2",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "star",
+      "text": "星星",
+      "path": "chinese/word-star.mp3",
+      "textHash": "6a9fec7faf975f2e5c0758f12eaf01993430358ba60bae15188ec8fb3c4c213c",
+      "bytes": 9600
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "sun",
+      "text": "太阳",
+      "path": "chinese/word-sun.mp3",
+      "textHash": "5c313602f7beb4858f1623f57938bb804faaafb935a72e12c0f2959f4cfc4bfc",
+      "bytes": 9408
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "table",
+      "text": "桌子",
+      "path": "chinese/word-table.mp3",
+      "textHash": "306de547695f668d45baef6ae78381945d71d5ae193f6cec9737780881f3669b",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "teacher",
+      "text": "老师",
+      "path": "chinese/word-teacher.mp3",
+      "textHash": "c9a31a3f670b7f9973f2004ed383fc8c50a20c8d595556b8d8c266630234d8ee",
+      "bytes": 9024
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "teddy",
+      "text": "玩具熊",
+      "path": "chinese/word-teddy.mp3",
+      "textHash": "542ba74f37efba45ee5cd2573b68f90eab74b221770d75c49ec323dd8f5a4b68",
+      "bytes": 12096
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "ten",
+      "text": "十",
+      "path": "chinese/word-ten.mp3",
+      "textHash": "fc7edd399a5c4b93723eb0c091bf64e56e24c30195c1519067c68513a4d2c8fb",
+      "bytes": 7488
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "three",
+      "text": "三",
+      "path": "chinese/word-three.mp3",
+      "textHash": "a4c3313deb180960469d0e79a770b9deee47fdeed74fe0f74d0bf51006fcc4f0",
+      "bytes": 6912
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "train",
+      "text": "地铁",
+      "path": "chinese/word-train.mp3",
+      "textHash": "b8466cd555e689929442ee0d22e2c7f723415283e15e2403a995bc30699e2233",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "tree",
+      "text": "树",
+      "path": "chinese/word-tree.mp3",
+      "textHash": "635643d28367e5e06a55b3d5faaf17ca135120f437d507254903ec91b0b33173",
+      "bytes": 7104
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "turtle",
+      "text": "乌龟",
+      "path": "chinese/word-turtle.mp3",
+      "textHash": "071872976fba85c132b8df384fbb9a5e84c92da17dde9f08d9062a92965389bc",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "two",
+      "text": "二",
+      "path": "chinese/word-two.mp3",
+      "textHash": "084b42f6e95e4e6545e236975ade8e205383fefe1021c9d793f758c21f9377dc",
+      "bytes": 6144
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "water",
+      "text": "水",
+      "path": "chinese/word-water.mp3",
+      "textHash": "327b54d04f71f2126114d9d61d4c3640ca0fc5b30878ad28416ff634a51a712d",
+      "bytes": 8832
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "white",
+      "text": "白色",
+      "path": "chinese/word-white.mp3",
+      "textHash": "f56e7eff58bf730d36d96ba551937061a9ff5b800cfa12efafa7fe0a98c1257a",
+      "bytes": 8640
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "window",
+      "text": "窗户",
+      "path": "chinese/word-window.mp3",
+      "textHash": "da098a22509a9187d7e34121fc4c88fb5e7323c77adac64a3215e9ff4963e479",
+      "bytes": 9408
+    },
+    {
+      "language": "chinese",
+      "lang": "zh-CN",
+      "kind": "word",
+      "id": "yellow",
+      "text": "黄色",
+      "path": "chinese/word-yellow.mp3",
+      "textHash": "d451c07d739b33060e74dd870a7358770d977dbe716b40207b724a2c48629494",
+      "bytes": 9216
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "animals-1",
+      "text": "मला मांजर दिसते.",
+      "path": "marathi/phrase-animals-1.mp3",
+      "textHash": "955432f50808e0892a7c3a9b98d11afe0d65ff3120bf65b5be1b70eb6a289c96",
+      "bytes": 14592
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "animals-2",
+      "text": "हत्तीची सोंड लांब आहे.",
+      "path": "marathi/phrase-animals-2.mp3",
+      "textHash": "136593e0dad2d4dcdac07997045cf8a7e37700faefd951e5ec804b6eae6ff6af",
+      "bytes": 17664
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "animals-3",
+      "text": "पक्षी उडत आहे.",
+      "path": "marathi/phrase-animals-3.mp3",
+      "textHash": "050f1d60cb33254f7ac86b5b15032f27bab439dcd28e4222370217b71fb2e7fd",
+      "bytes": 13824
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "animals-4",
+      "text": "मला कुत्रे आवडतात.",
+      "path": "marathi/phrase-animals-4.mp3",
+      "textHash": "965ff1c1937bd27b6de27ef2555dd2cec8a02bdff4689ef356ba2c22bc722862",
+      "bytes": 14592
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "body-1",
+      "text": "मला आनंद झाला आहे.",
+      "path": "marathi/phrase-body-1.mp3",
+      "textHash": "86ad7746d20f332413ed8798178ec0c8b0c636266add411af9c995be388da7f8",
+      "bytes": 16512
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "body-2",
+      "text": "मला थोडे वाईट वाटते.",
+      "path": "marathi/phrase-body-2.mp3",
+      "textHash": "f0c8fdff6a4b9d97cdea525c07aaf385819737c0e579be8de401eb49a010e01f",
+      "bytes": 16512
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "body-3",
+      "text": "कृपया हात धुवा.",
+      "path": "marathi/phrase-body-3.mp3",
+      "textHash": "6c8044bd200d40a38af98a9cb757e7c8a15607d39f3011beaffad3e4fa6e60fa",
+      "bytes": 14400
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "body-4",
+      "text": "हे माझे नाक आहे.",
+      "path": "marathi/phrase-body-4.mp3",
+      "textHash": "c7ab76fa18784d25064993754e5373fe5f418e5d8638c555bbcf3cfd1073af13",
+      "bytes": 15168
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "colours-1",
+      "text": "मला लाल रंग आवडतो.",
+      "path": "marathi/phrase-colours-1.mp3",
+      "textHash": "0bfdf5d53dc630eb0c04199a918d2a00d1557b580a4ed566462ec271097ad935",
+      "bytes": 16128
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "colours-2",
+      "text": "आकाश निळे आहे.",
+      "path": "marathi/phrase-colours-2.mp3",
+      "textHash": "8f6c01db5d8e598f9b205bddf18e6286dc955a02cf24cf2a26331393c2c9ceec",
+      "bytes": 14400
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "colours-3",
+      "text": "गवत हिरवे आहे.",
+      "path": "marathi/phrase-colours-3.mp3",
+      "textHash": "545719a30674e19325fdf5cacc14a3c0ac9684e7544ebe9d6d46eff8e3d94aa5",
+      "bytes": 14976
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "colours-4",
+      "text": "फुलाला पिवळा रंग द्या.",
+      "path": "marathi/phrase-colours-4.mp3",
+      "textHash": "10a7c786400a3d62fd8e1d9a2dabbb6aff51020779201b1d1d6719f8512dd03e",
+      "bytes": 17472
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "family-1",
+      "text": "नमस्कार, आई!",
+      "path": "marathi/phrase-family-1.mp3",
+      "textHash": "d3805f57f0d84ad4b34029e6b697380d10a378fdf06828a450e994fa5c004f7b",
+      "bytes": 16896
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "family-2",
+      "text": "कृपया मला मदत करा.",
+      "path": "marathi/phrase-family-2.mp3",
+      "textHash": "4fcfd2476c45eb57b8f1adec904d443f119c1a197b8f46d9268615003f480b05",
+      "bytes": 16896
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "family-3",
+      "text": "शुभ रात्री, बाबा!",
+      "path": "marathi/phrase-family-3.mp3",
+      "textHash": "1babbf0258955ad4643c9511ae2cb1a0c360cdf0549937763924c4150b91778e",
+      "bytes": 16512
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "family-4",
+      "text": "हा माझा मित्र आहे.",
+      "path": "marathi/phrase-family-4.mp3",
+      "textHash": "e12bc531a4b264b5efe69a6e43135ed4492a23f13559cd50f21d4840acfd841f",
+      "bytes": 15936
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "food-1",
+      "text": "मला पाणी पाहिजे.",
+      "path": "marathi/phrase-food-1.mp3",
+      "textHash": "1d93cc8d767a3c159fff576e9ce6ff33778f3c94cf4f7b74a1d1e2e5c20cf8d3",
+      "bytes": 14208
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "food-2",
+      "text": "मला भूक लागली आहे.",
+      "path": "marathi/phrase-food-2.mp3",
+      "textHash": "0fd55af38fcd161ccf3c59bcde51e6688cdc127a0fcbd207dd6ea6f1cdd3b975",
+      "bytes": 16128
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "food-3",
+      "text": "मला केळे आवडते.",
+      "path": "marathi/phrase-food-3.mp3",
+      "textHash": "3b0d7d5e462a0a792fd5cb02d1d619070d9fc737368737ce4f3cb22284c72042",
+      "bytes": 14208
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "food-4",
+      "text": "जेवण छान आहे.",
+      "path": "marathi/phrase-food-4.mp3",
+      "textHash": "7205224fc0432fcc937ad114869f169506142cb18eef25627377d9caa22cb36a",
+      "bytes": 14784
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "home-1",
+      "text": "कृपया दार उघडा.",
+      "path": "marathi/phrase-home-1.mp3",
+      "textHash": "22be247ad96e54cf89b230853c1bedb4b71e99e4bc1475dad63cda67b6363046",
+      "bytes": 14592
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "home-2",
+      "text": "माझा चेंडू कुठे आहे?",
+      "path": "marathi/phrase-home-2.mp3",
+      "textHash": "c008f1fe78322ea8a02f8047c254e4cbe0c36cbbad88b3f0ff8eba8023bc0b6e",
+      "bytes": 17280
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "home-3",
+      "text": "मला घरी जायचे आहे.",
+      "path": "marathi/phrase-home-3.mp3",
+      "textHash": "0f9a84b91d81caeb9784fbdb288e663f536f240554d1205e318113f5acd8a2c0",
+      "bytes": 16128
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "home-4",
+      "text": "आपण एकत्र खेळूया.",
+      "path": "marathi/phrase-home-4.mp3",
+      "textHash": "24dd8853903073afa08b9d9683d3a9e4925b955622ab87006ff704eb9236b7c2",
+      "bytes": 15552
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "numbers-1",
+      "text": "माझ्याकडे दोन सफरचंदे आहेत.",
+      "path": "marathi/phrase-numbers-1.mp3",
+      "textHash": "1df02e611886242bf3bd73b6de60bfdbc7fe967836be0ab4b7060fbb31f97a9b",
+      "bytes": 20928
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "numbers-2",
+      "text": "चला, एकत्र मोजूया.",
+      "path": "marathi/phrase-numbers-2.mp3",
+      "textHash": "dfc29e9eedb1410c1776d0e119413592a3f316b8e3d089a31263ecf64785caa7",
+      "bytes": 20928
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "numbers-3",
+      "text": "इथे तीन फुले आहेत.",
+      "path": "marathi/phrase-numbers-3.mp3",
+      "textHash": "d85d7e844f495a9f0971293dd8c29cee2594407cfb9c09273ae53905002c4380",
+      "bytes": 15168
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "numbers-4",
+      "text": "कृपया मला एक द्या.",
+      "path": "marathi/phrase-numbers-4.mp3",
+      "textHash": "d725a4a0b3090c46eeeae87aea74dadb980dc96fa3c7d1bd99f3c2261654a4e4",
+      "bytes": 14592
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "outdoors-1",
+      "text": "पाऊस पडत आहे.",
+      "path": "marathi/phrase-outdoors-1.mp3",
+      "textHash": "081c99181642c64644874cd927e72a49aae804258dc5dd5188c9d1543bb573e0",
+      "bytes": 13440
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "outdoors-2",
+      "text": "हे फूल सुंदर आहे.",
+      "path": "marathi/phrase-outdoors-2.mp3",
+      "textHash": "dc2eb259f8e5d172abca9ac138b5c5d1f234fe64aa60d1bbb12d7c6a618e305c",
+      "bytes": 15744
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "outdoors-3",
+      "text": "सूर्य आकाशात आहे.",
+      "path": "marathi/phrase-outdoors-3.mp3",
+      "textHash": "0d9749b8cea63e833593b3c870b3532e0eb495b58b9b758a10e90423eff29f3a",
+      "bytes": 16512
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "outdoors-4",
+      "text": "चला, बाहेर खेळूया.",
+      "path": "marathi/phrase-outdoors-4.mp3",
+      "textHash": "d4ba5cc5a275aa4c03d48a2cca319c8740b89f9a89e12e4f326b72b9db0bab67",
+      "bytes": 19584
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "school-1",
+      "text": "हे माझे पुस्तक आहे.",
+      "path": "marathi/phrase-school-1.mp3",
+      "textHash": "2e01105a65cd9fd8bfa605d6834f3188dfd4587c212e77518c3f13ca748a0e02",
+      "bytes": 15936
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "school-2",
+      "text": "माझे दप्तर कुठे आहे?",
+      "path": "marathi/phrase-school-2.mp3",
+      "textHash": "c97cc5df0366a907ed5e3d54fd416b4b1caaaab13188e7fbe7239fdb1f3707b8",
+      "bytes": 17280
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "school-3",
+      "text": "कृपया मला पेन्सिल द्या.",
+      "path": "marathi/phrase-school-3.mp3",
+      "textHash": "fbce2e927a80de96d8eb0ab3b00094e3d0ca6c7f289ca95568b45dee1e2cc556",
+      "bytes": 17088
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "school-4",
+      "text": "मी चित्र काढत आहे.",
+      "path": "marathi/phrase-school-4.mp3",
+      "textHash": "794f6d8e4314ef0245f5575185bceb96d37acebe9c07ecc757d685dd7d751298",
+      "bytes": 15936
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "transport-1",
+      "text": "मेट्रो कुठे आहे?",
+      "path": "marathi/phrase-transport-1.mp3",
+      "textHash": "64e7043a94f241c8ca1d4c2b47a17b2f5b64a7b3f97c583ebc00679430bb4c72",
+      "bytes": 13824
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "transport-2",
+      "text": "चला, बसमध्ये बसूया.",
+      "path": "marathi/phrase-transport-2.mp3",
+      "textHash": "9484c23763d690ebb91e054a616f33a32cd831f264f00eb896ea32a5a74fb083",
+      "bytes": 21696
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "transport-3",
+      "text": "आपला थांबा आला.",
+      "path": "marathi/phrase-transport-3.mp3",
+      "textHash": "0e054974076796250a10bd3fb68aa36ea5f32979f8fe82268665b0d152d00c92",
+      "bytes": 13632
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "phrase",
+      "id": "transport-4",
+      "text": "मला खिडकीजवळ बसायचे आहे.",
+      "path": "marathi/phrase-transport-4.mp3",
+      "textHash": "6655198c48a63b403943ff0ea682c2a5e1a551aac850b6bd005618e2dc9f2277",
+      "bytes": 20928
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "aeroplane",
+      "text": "विमान",
+      "path": "marathi/word-aeroplane.mp3",
+      "textHash": "2ac6b3f98cf8ac8852a84ef15df52476d5da6fd30b1ebfc76b473fafc5a52d5f",
+      "bytes": 7296
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "ambulance",
+      "text": "रुग्णवाहिका",
+      "path": "marathi/word-ambulance.mp3",
+      "textHash": "0d2498be3d5827fa916733ff9a53c0e56eed5db20bad8c3578b742ea7836c404",
+      "bytes": 11136
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "apple",
+      "text": "सफरचंद",
+      "path": "marathi/word-apple.mp3",
+      "textHash": "6c8e43358d1d16d6a48d74540388210c03ffd29024d6d110a7b9dd2c4d9dbc05",
+      "bytes": 11328
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "baby",
+      "text": "बाळ",
+      "path": "marathi/word-baby.mp3",
+      "textHash": "bb04bf8dfcae52b31c0c4ed2c9c8e9b5254700917b3c18e712699454e553c0f0",
+      "bytes": 6336
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bag",
+      "text": "दप्तर",
+      "path": "marathi/word-bag.mp3",
+      "textHash": "db829c51d5c7f85da2f79962323eb2f1ce8f11c01752b3fda98b43be4d32bca4",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "ball",
+      "text": "चेंडू",
+      "path": "marathi/word-ball.mp3",
+      "textHash": "2d6325d8323ff6c8c903032253f8065bead16c9e86fc6e89cf66d54424a97538",
+      "bytes": 7872
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "banana",
+      "text": "केळे",
+      "path": "marathi/word-banana.mp3",
+      "textHash": "aa4755ca5fafae0255c18d255c72d91dbc37791b6fa1717125c509e4d07a2bd1",
+      "bytes": 6528
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bed",
+      "text": "पलंग",
+      "path": "marathi/word-bed.mp3",
+      "textHash": "b5e48a7818064ed8d688fed494c7a8a9d81b011016833ae9f777cf4793ea7170",
+      "bytes": 6336
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bicycle",
+      "text": "सायकल",
+      "path": "marathi/word-bicycle.mp3",
+      "textHash": "8fa5624783e7e90334f60de59c23b5175ea6d133887ac82f7b0f81895490affb",
+      "bytes": 8448
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bird",
+      "text": "पक्षी",
+      "path": "marathi/word-bird.mp3",
+      "textHash": "b42e8d8c164fc5967a93914f707e30a507e547810edf35a88b557433fe23faae",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "black",
+      "text": "काळा",
+      "path": "marathi/word-black.mp3",
+      "textHash": "5123338f6d9216070315644d202a343fd7da6b8638b6d0d9b8b1e46c66d1b97c",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "blue",
+      "text": "निळा",
+      "path": "marathi/word-blue.mp3",
+      "textHash": "59c188bb631c8740744f3e249367308b60d1e11c2db6813d64d9164039d4e6f2",
+      "bytes": 6528
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "boat",
+      "text": "होडी",
+      "path": "marathi/word-boat.mp3",
+      "textHash": "0e29ae6075520100539958d804e1e7eadaa67dc0ce6d418502d733816039bb02",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "book",
+      "text": "पुस्तक",
+      "path": "marathi/word-book.mp3",
+      "textHash": "97b9991689443712dcaa04de5d2580a560d4d937afb7efee4ac696d080a906e7",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bread",
+      "text": "पाव",
+      "path": "marathi/word-bread.mp3",
+      "textHash": "23cf099be0ff4252d9462f1f32a51200fabc049b24b70448070cdd2b1a9408ae",
+      "bytes": 5760
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "brown",
+      "text": "तपकिरी",
+      "path": "marathi/word-brown.mp3",
+      "textHash": "c8c5ce6c150523d67a5c738bf78a0f0fec7bf247e849edbb08722fee7536db3d",
+      "bytes": 8640
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "bus",
+      "text": "बस",
+      "path": "marathi/word-bus.mp3",
+      "textHash": "3e1b46d49f033c2909eb00932be35ddbaa1a3965d6e41c7b0646793547180e30",
+      "bytes": 7104
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "butterfly",
+      "text": "फुलपाखरू",
+      "path": "marathi/word-butterfly.mp3",
+      "textHash": "faea550c31fb800ae22c7ebfb73d5e47faa2d09a40f7916b48a318c7272825a4",
+      "bytes": 10752
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "car",
+      "text": "गाडी",
+      "path": "marathi/word-car.mp3",
+      "textHash": "93186283ab9c47708638b6df45e8a9219a32da822363e0070cb0b0d75da2abb9",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "cat",
+      "text": "मांजर",
+      "path": "marathi/word-cat.mp3",
+      "textHash": "47967f0e45720af174c08a0ceb4a7f03e6ceea1f8c7e71bb71f160c1ddafff26",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "chair",
+      "text": "खुर्ची",
+      "path": "marathi/word-chair.mp3",
+      "textHash": "e13e970329a3ea0d79e14f502fce856da0889e4de44369ec9503586a9874cb74",
+      "bytes": 7680
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "child",
+      "text": "मूल",
+      "path": "marathi/word-child.mp3",
+      "textHash": "cb06ea886745006b6df5facb163f6922d59cf81996474d0e38431bf4c024865c",
+      "bytes": 5952
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "cloud",
+      "text": "ढग",
+      "path": "marathi/word-cloud.mp3",
+      "textHash": "bca0a97aebbbc366be5b1f9af872b6916da77275a621b8e2d4085fa5d3897a1b",
+      "bytes": 5760
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "crayon",
+      "text": "रंगीत खडू",
+      "path": "marathi/word-crayon.mp3",
+      "textHash": "884b3cf7da8de31e61017e6402f695c632c0768d047387c254928ab032c921c5",
+      "bytes": 11136
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "cup",
+      "text": "कप",
+      "path": "marathi/word-cup.mp3",
+      "textHash": "9995edc6627d976217d70234ab22c97cc2de4f521a27f618b22a96831076651b",
+      "bytes": 5184
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "dad",
+      "text": "बाबा",
+      "path": "marathi/word-dad.mp3",
+      "textHash": "d7eeb89ca19b830167d5b56c575ef4b5e1f39f6143bd1bd21ef45bab43c492f2",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "dog",
+      "text": "कुत्रा",
+      "path": "marathi/word-dog.mp3",
+      "textHash": "71340bdae6d34ac5c90c8d8d9d44573064f05b6d2e382b62accce480bcdf6af7",
+      "bytes": 7296
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "door",
+      "text": "दार",
+      "path": "marathi/word-door.mp3",
+      "textHash": "641d992d1315c116a61f0705553cdf7dbc2795c40777be67bf3be3583282f260",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "ear",
+      "text": "कान",
+      "path": "marathi/word-ear.mp3",
+      "textHash": "7b06d17d42bdfdd58cbda996886b9c90c17554fada951f64aceaec519fe869c8",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "egg",
+      "text": "अंडे",
+      "path": "marathi/word-egg.mp3",
+      "textHash": "414c95cff56b222a0d52de6edda010377043019011503c8f7c1e736061d61ad1",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "eight",
+      "text": "आठ",
+      "path": "marathi/word-eight.mp3",
+      "textHash": "671d622d1fd4f60d6c9c550517653e87bbc4e091755f999e1f81eac3efe0033c",
+      "bytes": 5952
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "elephant",
+      "text": "हत्ती",
+      "path": "marathi/word-elephant.mp3",
+      "textHash": "e9d267954758e652970b491eac8b3990e6d6d410a9f472f52b474606a876c681",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "eye",
+      "text": "डोळा",
+      "path": "marathi/word-eye.mp3",
+      "textHash": "f7413f6682094641d2412e7360bdbed0f5ca21937e7244ff968907868357ffcd",
+      "bytes": 7104
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "fish",
+      "text": "मासा",
+      "path": "marathi/word-fish.mp3",
+      "textHash": "5c34ce65edb900a2f423c2a8662d5c1f206e066cbc4c7e67ecab2d5ebd66760e",
+      "bytes": 8064
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "five",
+      "text": "पाच",
+      "path": "marathi/word-five.mp3",
+      "textHash": "b4d1c644e021ec52d4cfefa8bbfe54af24281ee2ef87bafb9f56196e0d8f08e2",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "flower",
+      "text": "फूल",
+      "path": "marathi/word-flower.mp3",
+      "textHash": "bed20d1039996cc1cc8b6709a03620a763adfcc97da871cb402f9a823f7f296d",
+      "bytes": 5952
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "foot",
+      "text": "पाय",
+      "path": "marathi/word-foot.mp3",
+      "textHash": "cbb7405c7656205ce1c757759280a3bf53358ae2fdc314d6dbfcb6baae459230",
+      "bytes": 5376
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "four",
+      "text": "चार",
+      "path": "marathi/word-four.mp3",
+      "textHash": "014be450a59c4335de781d1986894993f70558ac98dc36a30e394105f4903904",
+      "bytes": 6528
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "friend",
+      "text": "मित्र",
+      "path": "marathi/word-friend.mp3",
+      "textHash": "0951562897d8210cedbe3df626ac61ab7552936164d7ed216c598f051b101e5f",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "grandma",
+      "text": "आजी",
+      "path": "marathi/word-grandma.mp3",
+      "textHash": "5c6fb3adec4f565bb6984e1de91e44bf48c4a00a5e9c3cbb2c79f93eb02e223c",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "grandpa",
+      "text": "आजोबा",
+      "path": "marathi/word-grandpa.mp3",
+      "textHash": "7dfc29c8217c222a36c23584a9fbfee6ecc92f7109670b153691f447136bb00c",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "green",
+      "text": "हिरवा",
+      "path": "marathi/word-green.mp3",
+      "textHash": "8a91d486aba1f5bc5d941180980ce22cf48a4cceeaf1e320faea5df0594c5f63",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "hand",
+      "text": "हात",
+      "path": "marathi/word-hand.mp3",
+      "textHash": "a05eb64335617d79aea87fdf1f071bb4314728e55071a9d596cf6be5c1d6dee0",
+      "bytes": 6336
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "happy",
+      "text": "आनंदी",
+      "path": "marathi/word-happy.mp3",
+      "textHash": "5c0d680a4daa9d10f51c0cbd4a9863ac43e40419707955b4863af8bc143059a2",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "helicopter",
+      "text": "हेलिकॉप्टर",
+      "path": "marathi/word-helicopter.mp3",
+      "textHash": "25d8386bf32edcf71b75cebadf0475e6dd8408040aab96f0c743261cfca0dbc9",
+      "bytes": 10560
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "house",
+      "text": "घर",
+      "path": "marathi/word-house.mp3",
+      "textHash": "51a6de05d6b276d51e4e14bc937073624db39d1ae695e84123c245bc4c7cb1e3",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "icecream",
+      "text": "आईस्क्रीम",
+      "path": "marathi/word-icecream.mp3",
+      "textHash": "63d99f55eee6e01ca063cde6f2e88cbb4db57caaa462741bcd16b37785f4d70c",
+      "bytes": 8832
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "lion",
+      "text": "सिंह",
+      "path": "marathi/word-lion.mp3",
+      "textHash": "8b354dc2f7266ae192a8e9679f27631ab94c972cfaf7e71d0f4b329f64e9a05e",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "milk",
+      "text": "दूध",
+      "path": "marathi/word-milk.mp3",
+      "textHash": "c3c4e4b338ee0bee893098616d0da8aa5d66045a48d9e27c6e5f0803e99ac67c",
+      "bytes": 6144
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "moon",
+      "text": "चंद्र",
+      "path": "marathi/word-moon.mp3",
+      "textHash": "113d5b2de38a56559f60f8f86f203426eb7d2ecb8f0a6263a7ec7a2e798600d6",
+      "bytes": 7872
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "mouth",
+      "text": "तोंड",
+      "path": "marathi/word-mouth.mp3",
+      "textHash": "8c1bda6a424f2c491d4bebec2fbc22c223c177863e36a9b816b505e8ff10c698",
+      "bytes": 6336
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "mum",
+      "text": "आई",
+      "path": "marathi/word-mum.mp3",
+      "textHash": "18d0feb6109ebebedb80a87b025ec62495343f4cbe75479052e54b958a214c66",
+      "bytes": 5760
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "nine",
+      "text": "नऊ",
+      "path": "marathi/word-nine.mp3",
+      "textHash": "076c10054cb04472323e1fbaef3b0291371fe862221f48a3f6c160e6927e83f6",
+      "bytes": 6528
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "nose",
+      "text": "नाक",
+      "path": "marathi/word-nose.mp3",
+      "textHash": "a58c6234dc5b0375e80007da3d660cc4516b75460aa93d6634ad7cf2e7eb3f0c",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "one",
+      "text": "एक",
+      "path": "marathi/word-one.mp3",
+      "textHash": "4716a9f9d13c6e13385089364ebca7c6904f7f00fbc76cd3fcad974b74d87a23",
+      "bytes": 5376
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "orange",
+      "text": "केशरी",
+      "path": "marathi/word-orange.mp3",
+      "textHash": "308fb8cb4cb1d53490bd8c8d59a38eee915fbb46d1894ecddec0364288f0969c",
+      "bytes": 8064
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "paper",
+      "text": "कागद",
+      "path": "marathi/word-paper.mp3",
+      "textHash": "97382fd6dc8db867968a82f6efd54c8cdffeda4401a1227a0e14f0d5afd7ab89",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "pencil",
+      "text": "पेन्सिल",
+      "path": "marathi/word-pencil.mp3",
+      "textHash": "126114f082084724e1ff89a119b4ad65482dbef0d0d2ef497d427f66de3d9212",
+      "bytes": 8064
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "pink",
+      "text": "गुलाबी",
+      "path": "marathi/word-pink.mp3",
+      "textHash": "573538cbc88e3790e3958ccbc2892f496bb74263f7f12ae56bb4b11079602f44",
+      "bytes": 9024
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "purple",
+      "text": "जांभळा",
+      "path": "marathi/word-purple.mp3",
+      "textHash": "230ef97b8910e7d772294e90fa673ed63b470b8d344708c7f72ebf87b6fc7eaf",
+      "bytes": 9024
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "rabbit",
+      "text": "ससा",
+      "path": "marathi/word-rabbit.mp3",
+      "textHash": "20ac578024864b392a08a66ae81ec2ed37235cd1136bb27f43fd49d8cfed6f8b",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "rain",
+      "text": "पाऊस",
+      "path": "marathi/word-rain.mp3",
+      "textHash": "4b6166d90f534ede7792eae7ac7c3fa707fd4d71e175d0aa47514218dcd917ca",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "red",
+      "text": "लाल",
+      "path": "marathi/word-red.mp3",
+      "textHash": "4e9b43d14a02b731ec7d3631191647171e1e807655e6e4d7009e0dfcdd6f2160",
+      "bytes": 6336
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "rice",
+      "text": "भात",
+      "path": "marathi/word-rice.mp3",
+      "textHash": "eb7006e275e7facde5147d7cbb7033f57c8c19326c7b6cb57cef6f8bf6709a03",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "sad",
+      "text": "उदास",
+      "path": "marathi/word-sad.mp3",
+      "textHash": "6ce02d71173435719e69dd72c9e54a2c210d98c9859313d33324fac69e63e78e",
+      "bytes": 8064
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "scissors",
+      "text": "कात्री",
+      "path": "marathi/word-scissors.mp3",
+      "textHash": "4bdda0b020a5cfbe6f5d49b5efbf87c50b21b2f18671593790f02cdd18f59a0a",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "seven",
+      "text": "सात",
+      "path": "marathi/word-seven.mp3",
+      "textHash": "6cf6b47c8225a8049e6244917d0fc3b8d639a2d7cc067f4d93ac78594ebc9f94",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "six",
+      "text": "सहा",
+      "path": "marathi/word-six.mp3",
+      "textHash": "071de8dff7f5464b98f97840124e0fcf4c65bbd8a52220ab072785dd768378c8",
+      "bytes": 7104
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "spoon",
+      "text": "चमचा",
+      "path": "marathi/word-spoon.mp3",
+      "textHash": "89b2061ab19902d870b001066b552b86c1b1e13a73486b865d899b4f11134a0d",
+      "bytes": 7680
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "star",
+      "text": "तारा",
+      "path": "marathi/word-star.mp3",
+      "textHash": "6d786726155ccc777bf8fdad2b892e6e322b28be83dc24f4bb7cc85fdfa6944d",
+      "bytes": 7104
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "sun",
+      "text": "सूर्य",
+      "path": "marathi/word-sun.mp3",
+      "textHash": "42935be6b144314b3dbee8f66c10f76f84a15ccd295d2622e39e14b8e3815ee4",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "table",
+      "text": "टेबल",
+      "path": "marathi/word-table.mp3",
+      "textHash": "73f5b14b90b12b8d0963258ace0119b0d4c1b4a121604e29158e4e3f5d88d7a1",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "teacher",
+      "text": "शिक्षक",
+      "path": "marathi/word-teacher.mp3",
+      "textHash": "89e2b6574cd9032dcfe6eee6968571e1ddc2e2593465c42b66bb71470ec9f666",
+      "bytes": 8256
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "teddy",
+      "text": "खेळण्यातले अस्वल",
+      "path": "marathi/word-teddy.mp3",
+      "textHash": "f83ddd73ea78030fe6d381dce31be5c2c02f59cba1ee395ef4a9ad7101f45db3",
+      "bytes": 14400
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "ten",
+      "text": "दहा",
+      "path": "marathi/word-ten.mp3",
+      "textHash": "2ce3fcd4c487e711586d039ce7925bbb291044e82daba8dd698f2105491ae547",
+      "bytes": 6528
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "three",
+      "text": "तीन",
+      "path": "marathi/word-three.mp3",
+      "textHash": "abeefca7836a506a361e76024226bca9532ba867369f5da33f380a0060a4241f",
+      "bytes": 5952
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "train",
+      "text": "मेट्रो",
+      "path": "marathi/word-train.mp3",
+      "textHash": "03a6d9cb237a3326fa358651ca881492247b35770a5c4e153b778b28c3cbfd40",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "tree",
+      "text": "झाड",
+      "path": "marathi/word-tree.mp3",
+      "textHash": "669d135166a067cb79d9bc58f77e68c9838d8789e13f43706c08511131ade102",
+      "bytes": 6912
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "turtle",
+      "text": "कासव",
+      "path": "marathi/word-turtle.mp3",
+      "textHash": "1ed9afb810f74af7fa9ee11c1aaabf6c58cb265032298adaa464891bfe1683c0",
+      "bytes": 7680
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "two",
+      "text": "दोन",
+      "path": "marathi/word-two.mp3",
+      "textHash": "b0a6f2f1890328d2750b6f6686a01bc4a275b7220762bbc1c9618292eae03dda",
+      "bytes": 6720
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "water",
+      "text": "पाणी",
+      "path": "marathi/word-water.mp3",
+      "textHash": "96be5a6c7dc9c97ece169717269aaabf766636004c55673d86ad02b13c23fc6e",
+      "bytes": 7104
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "white",
+      "text": "पांढरा",
+      "path": "marathi/word-white.mp3",
+      "textHash": "5ab1ff7dde4abc1ac939b1acd28e8fa758bb2dad8a385972cc1215516d391499",
+      "bytes": 8064
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "window",
+      "text": "खिडकी",
+      "path": "marathi/word-window.mp3",
+      "textHash": "5ac5ed3e6ace9389bdf786cb1d57b3a775b2bdbac55c69e3fdd63f8279599e9e",
+      "bytes": 7488
+    },
+    {
+      "language": "marathi",
+      "lang": "mr",
+      "kind": "word",
+      "id": "yellow",
+      "text": "पिवळा",
+      "path": "marathi/word-yellow.mp3",
+      "textHash": "ba443aa44afe06145caa1c4f8e24e10440cb34a551e857c541149587f2fe4c54",
+      "bytes": 7296
+    }
+  ]
+}

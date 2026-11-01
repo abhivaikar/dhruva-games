@@ -1,8 +1,8 @@
 # Chinese and Marathi game plan
 
-Status: proposal for discussion; no language games have been implemented yet.
+Status: the first release is implemented as **two dedicated games**, Pip’s Chinese Adventure (`language.html?lang=chinese`) and Pip’s Marathi Adventure (`language.html?lang=marathi`). Each contains Listen & find, Word detective, My speaking turn and Sentence puzzles, plus a searchable word/phrase book and its own passport. Each offers 84 words, 40 phrases, 10 worlds and bundled audio. The additional story ideas below remain future work.
 
-The activity-book expansion is complete and published: 36 original pictures, 108 dot-to-dot challenges and 144 picture/size puzzle combinations. The next collection should connect Dhruva’s interest in transport, drawing, puzzles and stories to language he can use in everyday life.
+The activity-book expansion is complete and published: 36 original pictures, 108 dot-to-dot challenges and 144 picture/size puzzle combinations. The language games connect transport, picture matching and sentence puzzles to everyday language. Word-book entries with a corresponding activity template link to colouring; a full talking gallery of a child’s own drawings and the story collections remain planned.
 
 ## What we want Dhruva to be able to do
 
@@ -72,10 +72,10 @@ Use familiar Singapore situations and school vocabulary where provided. Offer Pi
 - Optional microphone recording should start only after an explicit tap and browser permission. Keep recordings on the device, provide playback and deletion, and allow every game to work without a microphone. Family audio must not be committed to the public repository without separate authorization.
 - Keep this collection compatible with the existing static GitHub Pages website. No account or server is needed for bundled audio, local progress or optional local recordings.
 
-## Recommended build order
+## Release status and next steps
 
-1. **Review a small content sample at the confirmed K1 starting point.** Establish what he understands in each language, his script knowledge, and a few current kindergarten Chinese topics. Offer optional P1-style extensions. Use built-in game audio first and have fluent speakers check model phrases and audio. This is needed before calling a pack ready for a child to learn from.
-2. **First playable release:** Pip’s Marathi Missions and Pip’s Mandarin MRT Missions. Make the speaking response part of the play loop, alongside accessible listen-and-act activities. Publish only the reviewed packs, with their actual available counts.
+1. **K1 foundation implemented.** Unfamiliar words get a picture/audio introduction before matching. Optional reading modes and hideable sentence models offer more challenge. The first release uses original content and generated Mandarin/Marathi audio; no independent human educator review is claimed. Adapt future packs to Dhruva’s demonstrated language and script knowledge and invite fluent-speaker feedback.
+2. **First playable release implemented inside two games:** 84 words and 40 phrases per language, all with included audio. Speaking acknowledgement records an attempt, not verified pronunciation. Sentence puzzles use authored Chinese word groups and whole Marathi words. Automated checks cover all content/audio pairings, rounds, progress separation and audio/recording lifecycle.
 3. **Connect to the activity book:** My Talking Picture Book, beginning with Marathi. Add picture-led prompts and optional local record/replay, then a Chinese mode after its content is reviewed.
 4. **Build the reading paths:** Akshar Adventure and Character Detectives, with the learner’s script knowledge guiding the starting tier.
 5. **Extend conversation and stories:** Marathi Story Club, Little Singapore Stories, and Tone Coaster where appropriate. Expand each content bank with reviewed theme packs rather than releasing many nearly empty games.
