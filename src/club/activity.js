@@ -16,7 +16,7 @@ if(params.get('game')!==game||params.has('art')){params.set('game',game);params.
 const audio=new AudioGuide(readClub().sound),reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const names={colouring:'Colouring Studio',dots:'Mystery Dot-to-Dot',puzzles:'Picture Puzzle Factory'};
 const subtitles={colouring:'A splash of colour. A sprinkle of you.',dots:'Follow the numbers. What could it be?',puzzles:'Little pieces. One brilliant picture.'};
-const instructions={colouring:'Pick a colour. With the paint bucket, tap a shape to fill it. Or choose the brush and draw. Add stamps, undo anything, and download or print your picture.',dots:'Tap each numbered dot in order, starting at one. After the last number, tap one again to close your picture. Your drawing stays here until you choose another activity.',puzzles:'Pick a picture and choose how many pieces. Drag a piece to its place, or tap a piece and then tap a space. Undo takes back your last piece. Reset picture puts all the pieces back, and you can undo that too. Take your time!'};
+const instructions={colouring:'Pick a colour. With the paint bucket, tap a shape to fill it. Or choose the brush and draw. Add stamps, undo anything, and download or print your picture.',dots:'Tap each numbered dot in order, starting at one. After the last number, tap one again to close your picture. Your drawing stays here until you choose another activity.',puzzles:'Pick a picture and choose how many pieces. Put any piece in any space. Tap or drag a placed piece to move it. Pieces can swap spaces, or go back in the tray. Keep arranging until your picture looks right. Undo, redo and reset can help you experiment!'};
 let drawing=null,dirty=false,tool='fill',colour=PALETTE[0],brushSize=12,stampKind='star';
 let stroke=null,strokeSVG=null,preview=null,cursor=[300,220],drag=null,suppressClick=false;
 let dots=null,dotCount=DOT_COUNTS.includes(Number(params.get('count')))?Number(params.get('count')):10,dotHint=false,dotFeedback='',dotTheme='all',dotAwarded=false;
@@ -81,11 +81,35 @@ function puzzlePiece(id,placed=false){const piece=puzzle.piece(id),{col,row,widt
 function renderPuzzle(){
   document.body.classList.toggle('is-playing',Boolean(puzzle));
   if(!puzzle){root.innerHTML=`<section class="puzzle-setup"><div class="puzzle-setup-header"><div><p class="eyebrow">EVERY PICTURE HAS A LITTLE PUZZLE IN IT</p><h2>Tap a picture to play!</h2><p>${SCENES.length} pictures and four puzzle sizes to explore.</p></div><span aria-hidden="true">🧩</span></div><div class="puzzle-start-row"><fieldset class="activity-levels"><legend>How many pieces?</legend>${PIECE_COUNTS.map(n=>`<label><input type="radio" name="piece-count" value="${n}" ${n===puzzleCount?'checked':''}><span>${n}<small>pieces</small></span></label>`).join('')}</fieldset></div>${sourceOptions()}</section>`;return;}
-  if(puzzle.complete){root.innerHTML=`<section class="activity-complete"><div class="activity-reveal-picture">${artworkSVG(puzzleSource.art,{coloured:true})}<span class="reveal-sticker" aria-hidden="true">PERFECT FIT! ★</span></div><div class="activity-complete-copy"><p class="eyebrow">LOOK WHAT YOU PUT TOGETHER!</p><h2>Piece by piece,<br>you did it!</h2><p>${puzzle.count} little pieces. One brilliant ${getScene(puzzleSource.art.pageId).short.toLowerCase()}.</p><button type="button" class="club-primary" data-action="remix-puzzle">🧩 Mix it up again</button><button type="button" class="activity-secondary" data-action="choose-puzzle">Choose another picture →</button>${recoveryControls(puzzle,'puzzle')}</div></section>`;return;}
-  root.innerHTML=`<section class="puzzle-workspace"><div class="puzzle-game-top"><span class="mystery-chip">🧩 ${getScene(puzzleSource.art.pageId).short.toUpperCase()}</span><strong>${puzzle.placed.size} / ${puzzle.count}</strong><label class="inline-level">Pieces<select name="live-piece-count" aria-label="Number of puzzle pieces">${PIECE_COUNTS.map(n=>`<option value="${n}" ${n===puzzle.count?'selected':''}>${n}</option>`).join('')}</select></label><button type="button" class="activity-secondary" data-action="puzzle-guide" aria-pressed="${showGuide}">${showGuide?'Hide':'Show'} the picture</button></div>${recoveryControls(puzzle,'puzzle')}<div class="puzzle-play-layout"><div><div class="puzzle-board ${showGuide?'show-guide':''}" style="--cols:${puzzle.columns};--rows:${puzzle.rows}" role="group" aria-label="Puzzle spaces">${showGuide?`<div class="puzzle-ghost-picture">${paper(puzzleSource.art,true)}</div>`:''}${Array.from({length:puzzle.count},(_,id)=>`<button type="button" data-slot="${id}" class="puzzle-slot ${puzzle.placed.has(id)?'placed':''}" aria-label="Space ${id+1}${puzzle.placed.has(id)?', filled':''}" ${puzzle.placed.has(id)?'disabled':''}>${puzzle.placed.has(id)?puzzlePiece(id,true):`<span aria-hidden="true">${id+1}</span>`}</button>`).join('')}</div><p class="activity-feedback">${puzzleFeedback||'Tap a piece, then its space. Or drag it into place!'}</p></div><div class="puzzle-tray-wrap"><p class="eyebrow">YOUR LITTLE PIECES</p><div class="puzzle-tray" style="--tray-cols:${puzzle.count>6?3:2}" role="group" aria-label="Puzzle pieces">${puzzle.order.filter(id=>!puzzle.placed.has(id)).map(id=>`<button type="button" data-piece="${id}" class="puzzle-piece ${puzzle.selected===id?'selected':''}" aria-label="Puzzle piece ${id+1}" aria-pressed="${puzzle.selected===id}">${puzzlePiece(id)}</button>`).join('')}</div><button type="button" class="activity-text-button" data-action="choose-puzzle">← Choose another picture</button></div></div></section>`;
+  root.innerHTML=`<section class="puzzle-workspace"><div class="puzzle-game-top"><span class="mystery-chip">${puzzle.complete?'★ PICTURE COMPLETE':'🧩 '+getScene(puzzleSource.art.pageId).short.toUpperCase()}</span><strong>${puzzle.placed.size} / ${puzzle.count} on board</strong><label class="inline-level">Pieces<select name="live-piece-count" aria-label="Number of puzzle pieces">${PIECE_COUNTS.map(n=>`<option value="${n}" ${n===puzzle.count?'selected':''}>${n}</option>`).join('')}</select></label><button type="button" class="activity-secondary" data-action="puzzle-guide" aria-pressed="${showGuide}">${showGuide?'Hide':'Show'} the picture</button></div>${recoveryControls(puzzle,'puzzle')}<div class="puzzle-play-layout"><div><div class="puzzle-board ${showGuide?'show-guide':''}" style="--cols:${puzzle.columns};--rows:${puzzle.rows}" role="group" aria-label="Puzzle spaces">${showGuide?`<div class="puzzle-ghost-picture">${paper(puzzleSource.art,true)}</div>`:''}${Array.from({length:puzzle.count},(_,slot)=>{
+    const piece=puzzle.pieceAt(slot),filled=piece!==null;
+    return `<button type="button" data-slot="${slot}" ${filled?`data-board-piece="${piece}"`:''} class="puzzle-slot ${filled?'placed':''} ${filled&&puzzle.selected===piece?'selected':''}" aria-label="Space ${slot+1}${filled?', puzzle piece '+(piece+1):', empty'}" ${filled?`aria-pressed="${puzzle.selected===piece}"`:''}>${filled?puzzlePiece(piece,true):`<span aria-hidden="true">${slot+1}</span>`}</button>`;
+  }).join('')}</div><p class="activity-feedback" role="status">${puzzleFeedback||(puzzle.complete?'You did it! Keep playing, or mix it up again.':'Try any piece in any space. You can move and swap them!')}</p></div><div class="puzzle-tray-wrap"><p class="eyebrow">YOUR LITTLE PIECES</p><div class="puzzle-tray ${puzzle.positionOf(puzzle.selected)!==null?'can-return':''}" data-puzzle-tray style="--tray-cols:${puzzle.count>6?3:2}" role="group" aria-label="Puzzle pieces. Drop a placed piece here to return it">${puzzle.tray.map(id=>`<button type="button" data-piece="${id}" class="puzzle-piece ${puzzle.selected===id?'selected':''}" aria-label="Puzzle piece ${id+1}" aria-pressed="${puzzle.selected===id}">${puzzlePiece(id)}</button>`).join('')}${puzzle.tray.length?'':'<p class="puzzle-tray-empty">All pieces are on the board.<br>You can move or swap them, or bring one back here.</p>'}</div><button type="button" class="activity-secondary puzzle-return" data-action="return-piece" ${puzzle.positionOf(puzzle.selected)===null?'disabled':''}>↩ Return selected piece to tray</button>${puzzle.complete?'<button type="button" class="club-primary puzzle-remix" data-action="remix-puzzle">🧩 Mix it up again</button>':''}<button type="button" class="activity-text-button" data-action="choose-puzzle">← Choose another picture</button></div></div></section>`;
 }
-function startPuzzle(){puzzle=new PicturePuzzle(puzzleCount);puzzleFeedback='';puzzleAwarded=false;showGuide=false;renderPuzzle();revealWorkspace(root.querySelector('.puzzle-workspace'));say('Your pieces are ready! Tap a piece and then a space, or drag it into place.',true);}
-function placePiece(slot){const result=puzzle.place(slot);if(result==='ignored')return;if(result==='retry'){puzzleFeedback='That piece belongs somewhere else. Try another space!';say(puzzleFeedback);}else if(result==='complete'){if(!puzzleAwarded){celebrate('puzzles');puzzleAwarded=true;}say('Every piece fits! You did it!',true);}else{puzzleFeedback='A lovely fit! Which piece comes next?';say(`${puzzle.placed.size} pieces in place.`);}renderPuzzle();}
+
+function startPuzzle(){puzzle=new PicturePuzzle(puzzleCount);puzzleFeedback='';puzzleAwarded=false;showGuide=false;renderPuzzle();revealWorkspace(root.querySelector('.puzzle-workspace'));say('Your pieces are ready! Put any piece in any space, then move or swap them to build your picture.',true);}
+function selectPiece(piece){
+  if(!puzzle.select(piece))return;
+  puzzleFeedback=puzzle.positionOf(piece)===null?'Choose any space for this piece.':'Choose any space to move or swap this piece, or return it to the tray.';
+  renderPuzzle();
+}
+function placePiece(slot){
+  const result=puzzle.place(slot);
+  if(result==='complete'){
+    if(!puzzleAwarded){celebrate('puzzles');puzzleAwarded=true;}
+    puzzleFeedback='You did it! The picture is complete. You can keep playing or mix it up again.';say(puzzleFeedback,true);
+  }else if(result!=='ignored'){
+    puzzleFeedback=puzzle.placed.size===puzzle.count?'All pieces are on the board. Move or swap them until your picture looks right.':result==='swapped'?'Pieces swapped! Keep exploring your picture.':'Piece placed! You can move it again whenever you like.';
+    say(puzzleFeedback);
+  }else puzzleFeedback='Tap a piece to choose it, then pick any space.';
+  renderPuzzle();
+}
+function returnPiece(piece=puzzle.selected){
+  const restoreFocus=root.contains(document.activeElement);
+  if(!puzzle.returnToTray(piece))return;
+  puzzleFeedback='Back in the tray. Try another arrangement!';say(puzzleFeedback);renderPuzzle();
+  if(restoreFocus)root.querySelector(`[data-piece="${piece}"]`)?.focus({preventScroll:true});
+}
 async function downloadArt(art){
   let url;
   try{url=URL.createObjectURL(new Blob([artworkSVG(art)],{type:'image/svg+xml;charset=utf-8'}));const image=new Image();image.src=url;await image.decode();const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=880;const context=canvas.getContext('2d');if(!context)throw Error('No canvas');context.drawImage(image,0,0,1200,880);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('No picture');const png=URL.createObjectURL(blob);const link=document.createElement('a');link.href=png;link.download=`dhruva-${getScene(art.pageId).id}.png`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(png),10000);toast('Your picture is ready to keep!');}catch{toast('The picture couldn’t download. Try Print to keep a copy.');}finally{if(url)URL.revokeObjectURL(url);}
@@ -106,6 +130,7 @@ function action(name){
   else if(name==='dot-hint'){dotHint=true;dotFeedback=`The glowing dot is ${dots.next}. Tap it!`;renderDots();say(dotFeedback,true);}
   else if(name==='start-puzzle'||name==='remix-puzzle'){$('#activity-confetti').replaceChildren();startPuzzle();}
   else if(name==='choose-puzzle'){$('#activity-confetti').replaceChildren();puzzle=null;renderPuzzle();revealWorkspace(root.querySelector('.puzzle-setup'));}
+  else if(name==='return-piece')returnPiece();
   else if(name==='puzzle-guide'){showGuide=!showGuide;renderPuzzle();}
 }
 root.addEventListener('click',event=>{
@@ -125,8 +150,8 @@ root.addEventListener('click',event=>{
   else if(button?.hasAttribute('data-stamp')){stampKind=button.dataset.stamp;renderColouring();}
   else if(button?.hasAttribute('data-dot')){if(event.detail<2)connectDot(Number(button.dataset.dot));}
   else if(button?.hasAttribute('data-puzzle-scene')){puzzleSource={art:freshArtwork(button.dataset.puzzleScene)};startPuzzle();}
-  else if(button?.hasAttribute('data-piece')){puzzle.select(Number(button.dataset.piece));puzzleFeedback='Now tap the space where this piece belongs.';renderPuzzle();if(event.detail===0)root.querySelector('[data-slot]:not(:disabled)')?.focus({preventScroll:true});}
-  else if(button?.hasAttribute('data-slot')){if(puzzle.selected===null){puzzleFeedback='Choose a little piece first.';renderPuzzle();}else {placePiece(Number(button.dataset.slot));if(event.detail===0)root.querySelector('[data-piece], [data-action=remix-puzzle]')?.focus({preventScroll:true});}}
+  else if(button?.hasAttribute('data-piece')){selectPiece(Number(button.dataset.piece));if(event.detail===0)root.querySelector('[data-slot]')?.focus({preventScroll:true});}
+  else if(button?.hasAttribute('data-slot')){const slot=Number(button.dataset.slot);if(puzzle.selected===null){const piece=puzzle.pieceAt(slot);if(piece!==null)selectPiece(piece);else{puzzleFeedback='Choose a piece from the tray or the board first.';renderPuzzle();}if(event.detail===0)root.querySelector(`[data-slot="${slot}"]`)?.focus({preventScroll:true});}else{placePiece(slot);if(event.detail===0)root.querySelector(`[data-slot="${slot}"]`)?.focus({preventScroll:true});}}
   else if(button?.dataset.action)action(button.dataset.action);
 });
 root.addEventListener('input',event=>{if(event.target.hasAttribute('data-library-search')){library.query=event.target.value;library.page=0;renderLibraryResults();}});
@@ -141,11 +166,11 @@ root.addEventListener('keydown',event=>{
   }
 });
 root.addEventListener('pointerdown',event=>{
-  const svg=event.target.closest('[data-drawing]'),piece=event.target.closest('[data-piece]');
+  const svg=event.target.closest('[data-drawing]'),piece=event.target.closest('[data-piece], [data-board-piece]');
   if(event.button!==0)return;
   if(svg&&tool==='brush'){
     const point=pointAt(event,svg);if(!point)return;audio.unlock();stroke={colour,size:brushSize,points:[point]};strokeSVG=svg;svg.setPointerCapture(event.pointerId);preview=document.createElementNS('http://www.w3.org/2000/svg','path');preview.setAttribute('fill','none');preview.setAttribute('stroke',colour);preview.setAttribute('stroke-width',brushSize);preview.setAttribute('stroke-linecap','round');preview.setAttribute('stroke-linejoin','round');preview.setAttribute('pointer-events','none');preview.setAttribute('d',`M${point.join(' ')}l.1 .1`);svg.append(preview);event.preventDefault();
-  }else if(piece&&puzzle){drag={id:Number(piece.dataset.piece),x:event.clientX,y:event.clientY,pointerId:event.pointerId,button:piece,ghost:null};piece.setPointerCapture(event.pointerId);}
+  }else if(piece&&puzzle){drag={id:Number(piece.dataset.piece??piece.dataset.boardPiece),x:event.clientX,y:event.clientY,pointerId:event.pointerId,button:piece,ghost:null};piece.setPointerCapture(event.pointerId);}
 });
 root.addEventListener('pointermove',event=>{
   if(stroke&&strokeSVG){const point=pointAt(event,strokeSVG);if(!point||Math.hypot(point[0]-stroke.points.at(-1)[0],point[1]-stroke.points.at(-1)[1])<2)return;if(stroke.points.length>=MAX_POINTS)stroke.points=stroke.points.filter((_,i)=>i%2===0);stroke.points.push(point);preview.setAttribute('d',stroke.points.map(([x,y],i)=>`${i?'L':'M'}${x} ${y}`).join(' '));}
@@ -153,7 +178,7 @@ root.addEventListener('pointermove',event=>{
 });
 function endPointer(event,cancel=false){
   if(stroke){const finished=stroke;stroke=null;strokeSVG=null;preview=null;if(!cancel&&drawing.brush(finished))changed();else{renderColouring();if(!cancel)toast('A page full of brushwork! Download it, or undo a stroke to add another.');}}
-  if(drag){const current=drag;drag=null;if(current.ghost){current.ghost.remove();suppressClick=true;setTimeout(()=>{suppressClick=false;},0);if(!cancel){const slot=document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-slot]');if(slot){puzzle.select(current.id);placePiece(Number(slot.dataset.slot));}else{puzzleFeedback='Try dropping the piece onto a space on the picture.';renderPuzzle();}}}}
+  if(drag){const current=drag;drag=null;if(current.ghost){current.ghost.remove();suppressClick=true;setTimeout(()=>{suppressClick=false;},0);if(!cancel){const slot=document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-slot]');if(slot){puzzle.select(current.id);placePiece(Number(slot.dataset.slot));}else if(document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-puzzle-tray]'))returnPiece(current.id);else{puzzleFeedback='Drop on any board space, or return a placed piece to the tray.';renderPuzzle();}}}}
 }
 root.addEventListener('pointerup',event=>endPointer(event));root.addEventListener('pointercancel',event=>endPointer(event,true));
 $('#activity-sound').addEventListener('click',()=>{audio.enabled=!audio.enabled;writeClub({...readClub(),sound:audio.enabled});if(audio.enabled)audio.unlock();else audio.stop();soundButton();});

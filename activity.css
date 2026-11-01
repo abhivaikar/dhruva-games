@@ -392,3 +392,13 @@
   .dot-tools .activity-recovery small { font-size:9px; margin:4px 0 0; }
   .dot-tools .dot-progress { margin-bottom:18px; }
 }
+
+/* Pieces remain available for experiments wherever they are on the board. */
+.puzzle-slot.placed { cursor:grab; touch-action:none; }
+.puzzle-slot.selected { z-index:2; outline:3px solid #d69b3d; outline-offset:-3px; background:#fff3bf; }
+.puzzle-slot:focus-visible { z-index:3; outline:3px solid #7443cd; outline-offset:-3px; }
+.puzzle-tray.can-return { border:2px dashed #d69b3d; }
+.puzzle-tray-empty { grid-column:1/-1; align-self:center; text-align:center; color:#627c90; font-size:12px; line-height:1.8; margin:10px; }
+.puzzle-return { width:100%; margin-top:12px; font-size:10px; }
+.puzzle-return:disabled { opacity:.45; }
+.puzzle-remix { width:100%; margin-top:12px; font-size:11px; }

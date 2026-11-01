@@ -153,18 +153,24 @@ test('dots can undo, redo and undo a reset without changing the mystery or dot p
   }
 });
 
-test('puzzle recovery restores placed pieces in order, clears selection and keeps the original tray',()=>{
+test('puzzle recovery restores arbitrary placements, swaps and returns without changing the original tray order',()=>{
   for(const count of [4,6,9,12]){
     const puzzle=new PicturePuzzle(count,()=>0),order=[...puzzle.order];
     assert.equal(puzzle.undo(),false);assert.equal(puzzle.reset(),false);
-    puzzle.select(2);puzzle.place(0);assert.equal(puzzle.past.length,0);
-    puzzle.place(2);puzzle.select(0);puzzle.place(0);puzzle.select(1);
-    puzzle.undo();assert.deepEqual([...puzzle.placed],[2]);assert.equal(puzzle.selected,null);
-    puzzle.redo();assert.deepEqual([...puzzle.placed],[2,0]);
+    puzzle.select(2);assert.equal(puzzle.place(0),'placed');
+    puzzle.select(0);puzzle.place(1);puzzle.select(1);
+    puzzle.undo();assert.deepEqual([...puzzle.placed],[[0,2]]);assert.equal(puzzle.selected,null);
+    puzzle.redo();assert.deepEqual([...puzzle.placed],[[0,2],[1,0]]);
+    puzzle.select(2);assert.equal(puzzle.place(1),'swapped');
+    const swapped=[...puzzle.placed];
+    puzzle.undo();assert.deepEqual([...puzzle.placed],[[0,2],[1,0]]);
+    puzzle.redo();assert.deepEqual([...puzzle.placed],swapped);
+    puzzle.returnToTray(2);assert.equal(puzzle.positionOf(2),null);
+    puzzle.undo();assert.deepEqual([...puzzle.placed],swapped);
     puzzle.reset();assert.equal(puzzle.placed.size,0);assert.equal(puzzle.selected,null);
-    puzzle.undo();assert.deepEqual([...puzzle.placed],[2,0]);
-    puzzle.undo();puzzle.select(1);puzzle.place(1);assert.equal(puzzle.redo(),false);
-    for(let n=0;n<count;n++)if(!puzzle.placed.has(n)){puzzle.select(n);puzzle.place(n);}
+    puzzle.undo();assert.deepEqual([...puzzle.placed],swapped);
+    puzzle.undo();puzzle.select(1);puzzle.place(3);assert.equal(puzzle.redo(),false);
+    for(let n=0;n<count;n++){puzzle.select(n);puzzle.place(n);}
     assert.equal(puzzle.complete,true);puzzle.undo();assert.equal(puzzle.complete,false);
     puzzle.redo();assert.equal(puzzle.complete,true);
     puzzle.reset();puzzle.undo();assert.equal(puzzle.complete,true);
@@ -188,19 +194,47 @@ test('all jigsaw sizes have complementary shared edges, flat borders and a shuff
   for(const count of [0,5,'4',NaN])assert.throws(()=>new PicturePuzzle(count),RangeError);
 });
 
-test('jigsaw placement requires the selected piece, allows retries, and completes exactly once',()=>{
+test('any jigsaw piece may stay in any space, and a full incorrect arrangement remains playable',()=>{
+  for(const count of [4,6,9,12]){
+    for(let piece=0;piece<count;piece++)for(let slot=0;slot<count;slot++){
+      const puzzle=new PicturePuzzle(count);
+      assert.equal(puzzle.place(slot),'ignored');assert.equal(puzzle.select(-1),false);
+      assert.equal(puzzle.select(piece),true);assert.equal(puzzle.place(slot),'placed');
+      assert.equal(puzzle.pieceAt(slot),piece);assert.equal(puzzle.positionOf(piece),slot);
+      assert.equal(puzzle.tray.includes(piece),false);assert.equal(puzzle.complete,false);
+    }
+    const puzzle=new PicturePuzzle(count);
+    for(let piece=0;piece<count;piece++){puzzle.select(piece);puzzle.place((piece+1)%count);}
+    assert.equal(puzzle.placed.size,count);assert.equal(puzzle.tray.length,0);assert.equal(puzzle.complete,false);
+    for(let piece=0;piece<count;piece++){puzzle.select(piece);puzzle.place(piece);}
+    assert.equal(puzzle.complete,true);
+    puzzle.select(0);assert.equal(puzzle.place(1),'swapped');assert.equal(puzzle.complete,false);
+    assert.equal(puzzle.pieceAt(1),0);assert.equal(puzzle.pieceAt(0),1);
+  }
+});
+
+test('moving, replacing, swapping and returning pieces never duplicates or loses a piece',()=>{
   for(const count of [4,6,9,12]){
     const puzzle=new PicturePuzzle(count,()=>0);
-    assert.equal(puzzle.place(0),'ignored');assert.equal(puzzle.select(-1),false);
-    for(let id=0;id<count;id++){
-      assert.equal(puzzle.select(id),true);
-      const wrong=(id+1)%count;
-      if(!puzzle.placed.has(wrong))assert.equal(puzzle.place(wrong),'retry');
-      assert.equal(puzzle.placed.size,id);
-      assert.equal(puzzle.place(id),id===count-1?'complete':'placed');
-      assert.equal(puzzle.select(id),false);assert.equal(puzzle.place(id),'ignored');
+    const assertPieces=()=>{
+      const pieces=[...puzzle.placed.values(),...puzzle.tray];
+      assert.equal(pieces.length,count);assert.equal(new Set(pieces).size,count);
+      assert.deepEqual([...pieces].sort((a,b)=>a-b),Array.from({length:count},(_,id)=>id));
+    };
+    puzzle.select(0);puzzle.place(2);puzzle.select(1);puzzle.place(2);
+    assert.equal(puzzle.pieceAt(2),1);assert.equal(puzzle.positionOf(0),null);assert.ok(puzzle.tray.includes(0));assertPieces();
+    puzzle.select(1);assert.equal(puzzle.place(3),'moved');assert.equal(puzzle.pieceAt(2),null);assert.equal(puzzle.pieceAt(3),1);assertPieces();
+    puzzle.select(0);puzzle.place(0);puzzle.select(1);puzzle.place(0);
+    assert.equal(puzzle.pieceAt(0),1);assert.equal(puzzle.pieceAt(3),0);assertPieces();
+    puzzle.select(1);assert.equal(puzzle.returnToTray(),true);assert.ok(puzzle.tray.includes(1));assertPieces();
+    assert.equal(puzzle.returnToTray(1),false);
+    const history=puzzle.past.length;puzzle.select(0);assert.equal(puzzle.place(3),'ignored');assert.equal(puzzle.past.length,history);assert.equal(puzzle.selected,null);
+    for(const slot of [-1,count,1.5,'1',NaN]){puzzle.select(0);assert.equal(puzzle.place(slot),'ignored');assertPieces();}
+    for(let step=0;step<300;step++){
+      puzzle.select((step*7)%count);
+      if(step%7===0)puzzle.returnToTray();else puzzle.place((step*3+2)%count);
+      if(step%11===0)puzzle.undo();if(step%13===0)puzzle.redo();assertPieces();
     }
-    assert.equal(puzzle.complete,true);
   }
 });
 

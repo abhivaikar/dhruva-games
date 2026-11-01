@@ -131,20 +131,33 @@ export class PicturePuzzle extends ReversibleSession {
   constructor(count=4, random=Math.random) {
     super();
     if(!Number.isInteger(count)||!PUZZLE_LEVELS[count]) throw new RangeError('Choose 4, 6, 9 or 12 pieces.');
-    [this.columns,this.rows]=PUZZLE_LEVELS[count]; this.count=count; this.placed=new Set();this.selected=null;
+    [this.columns,this.rows]=PUZZLE_LEVELS[count]; this.count=count; this.placed=new Map();this.selected=null;
     this.order=shuffle(Array.from({length:count},(_,i)=>i),random);
     this.horizontal=Array.from({length:this.rows-1},(_,r)=>Array.from({length:this.columns},(_,c)=>(r+c)%2?1:-1));
     this.vertical=Array.from({length:this.rows},(_,r)=>Array.from({length:this.columns-1},(_,c)=>(r+c)%2?-1:1));
   }
-  get complete(){return this.placed.size===this.count;}
+  get complete(){return this.placed.size===this.count&&[...this.placed].every(([slot,piece])=>slot===piece);}
+  get tray(){return this.order.filter(piece=>this.positionOf(piece)===null);}
+  pieceAt(slot){return this.placed.get(slot)??null;}
+  positionOf(piece){return [...this.placed].find(([,value])=>value===piece)?.[0]??null;}
   snapshot(){return [...this.placed];}
-  restore(placed){this.placed=new Set(placed);this.selected=null;}
+  restore(placed){this.placed=new Map(placed);this.selected=null;}
   reset(){if(!this.placed.size)return false;this.remember();this.restore([]);return true;}
-  select(piece){if(!Number.isInteger(piece)||piece<0||piece>=this.count||this.placed.has(piece))return false;this.selected=piece;return true;}
+  select(piece){if(!Number.isInteger(piece)||piece<0||piece>=this.count)return false;this.selected=piece;return true;}
   place(slot){
-    if(this.complete||this.selected===null||!Number.isInteger(slot)||slot<0||slot>=this.count||this.placed.has(slot))return 'ignored';
-    if(slot!==this.selected)return 'retry';
-    this.remember();this.placed.add(slot);this.selected=null;return this.complete?'complete':'placed';
+    if(this.selected===null||!Number.isInteger(slot)||slot<0||slot>=this.count)return 'ignored';
+    const piece=this.selected,origin=this.positionOf(piece),displaced=this.pieceAt(slot);
+    if(origin===slot){this.selected=null;return 'ignored';}
+    this.remember();
+    if(origin!==null)this.placed.delete(origin);
+    this.placed.set(slot,piece);
+    if(displaced!==null&&origin!==null)this.placed.set(origin,displaced);
+    this.selected=null;
+    return this.complete?'complete':displaced!==null?'swapped':origin!==null?'moved':'placed';
+  }
+  returnToTray(piece=this.selected){
+    const slot=this.positionOf(piece);if(slot===null)return false;
+    this.remember();this.placed.delete(slot);this.selected=null;return true;
   }
   piece(id){
     const col=id%this.columns,row=Math.floor(id/this.columns),width=600/this.columns,height=440/this.rows;

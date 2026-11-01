@@ -93,3 +93,10 @@ A play session with Dhruva is the best next check of reading load, voice, pace a
 - Checked completion Undo/Redo, Reset and undoing Reset. A held Enter on the 20-dot robot connects only one dot. No timer changes the finished picture.
 - Desktop drawing and controls are arranged alongside one another. Completion retains the trace and numbered dots rather than replacing them with a colouring-page screen.
 - All 80 automated tests and the static build pass. Regression checks cover retained contour corners, explicit closure, reversible completion, label spacing, disjoint targets, and consistent release versions across the published module graph.
+
+## Unrestricted picture-puzzle placement
+
+- Any piece can occupy any board space at all four puzzle sizes. The board stores the actual piece in each space, and a full incorrect arrangement does not complete the puzzle.
+- Verified in the browser: put piece 1 in space 4; filled all four spaces incorrectly; swapped board pieces by clicking and by dragging; dragged a board piece back to the tray; replaced an occupied space from the tray; moved a piece and returned it with the keyboard/button.
+- Verified a correct picture celebrates on the same board, its pieces can still move afterward, and Undo/Redo, Reset and undoing Reset restore both correct and incorrect arrangements.
+- All 81 tests and the static build pass. Regression checks cover every piece/space combination for 4, 6, 9 and 12 pieces, displaced-piece recovery, and piece uniqueness during repeated moves and history operations.
