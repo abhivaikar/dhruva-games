@@ -10,9 +10,9 @@ A family website with nine playful learning games. Built with static HTML, CSS, 
 | World Explorer | Find eight countries on an actual world map using highlighted outlines, locator dots, and A/B/C controls. |
 | Treasure Trails | Become Captain Dhruva: explore a misty island, find three map pieces and shape keys, collect shells, rescue Tilly and unlock the lost Sunstone. |
 | Flag Detective | Match countries to flags and flags to countries, drawing from 20 locally bundled flag images. |
-| Colouring Studio | Colour six original pictures with fill colours, freehand brushes and stamps; save, download or print the artwork. |
-| Mystery Dot-to-Dot | Connect 10, 15 or 20 numbered dots, reveal a surprise picture, then open it in Colouring Studio. |
-| Picture Puzzle Factory | Assemble 4, 6, 9 or 12 interlocking pieces by dragging or tapping; use original pictures or saved artwork. |
+| Colouring Studio | Choose from 36 original pictures, paint with fills, freehand brushes and stamps, then save, download or print. |
+| Mystery Dot-to-Dot | Explore 108 challenges: 36 surprise pictures with 10, 15 or 20 dots, then colour the picture revealed. |
+| Picture Puzzle Factory | Assemble 144 picture/size combinations with 4, 6, 9 or 12 pieces, plus puzzles made from saved artwork. |
 
 ## Play locally
 
@@ -37,11 +37,22 @@ The original game is now at `mrt-adventure.html`. Its 17-stop route, train colou
 
 ## Creative activity book
 
-The three new games share six original SVG scenes: train, dinosaur, rocket, turtle, butterfly and robot.
+Each activity offers 36 distinct SVG pictures across six worlds. These are individual drawings and silhouettes, rather than colour variants of the same templates.
+
+| World | Six pictures |
+| --- | --- |
+| On the move | Train, double-decker bus, aeroplane, helicopter, sailboat, excavator |
+| Animal friends | Dinosaur, cat, owl, elephant, lion, penguin |
+| Under the sea | Turtle, whale, octopus, crab, seahorse, jellyfish |
+| In the garden | Butterfly, bee, ladybird, sunflower, snail, apple tree |
+| Space & make-believe | Rocket, robot, flying saucer, castle, dragon, astronaut |
+| Happy days | Ice cream, cupcake, hot-air balloon, kite, cosy house, treasure chest |
+
+Colouring and puzzle pickers have theme filters, name search and pages of 12 previews. The puzzle picker also has a **My artwork** filter for saved drawings. Existing saved pictures retain their original region IDs and colours.
 
 - Colouring: choose a colour and tap a shape with **Fill**. Use **Brush** for freehand strokes, or tap to add star, heart and flower stamps. Undo/redo applies to fills, brushwork, stamps and clearing. Keyboard users can fill focused shapes with Enter; in Brush/Stamp mode arrows move a drawing cursor, Enter adds a mark, and Shift+arrows draw a line.
 - Colouring drafts persist after each change. Changing pictures or leaving an edited page also keeps its work in the activity book when storage is available. **Save in my book** explicitly saves or updates the current page.
-- Dot-to-dot: select 10, 15 or 20 dots and connect them in order. A hint highlights the next dot. The revealed picture links directly to its colouring page.
+- Dot-to-dot: choose a world (or all pictures), select 10, 15 or 20 dots and connect them in order. Each world uses a shuffled deck so every picture appears before repeats within that world during a visit. A hint highlights the next dot. The revealed picture links directly to its colouring page.
 - Puzzles: select a picture and 4, 6, 9 or 12 pieces. Drag a piece to its matching space, or tap a piece and then a space. Tab/Enter supports the same interaction. **Show the picture** provides an optional guide.
 - **My book** keeps up to 18 pages in this browser. Saved artwork appears in the puzzle picker. Pages can be edited, downloaded as 1200 × 880 PNGs, or printed one per sheet. Removal offers Undo. Browser storage availability and capacity determine whether saves succeed; failures are shown without silently discarding existing pages.
 - **Print** opens the browser’s print dialog. Page size, printer margins and final print output should be checked on the family’s printer.
@@ -85,7 +96,8 @@ No environment variables or backend are required. Other static hosts can serve t
 - `index.html`, `club.css`, `src/club/hub.js`: the game hub and category filters.
 - `play.html`, `src/club/play.js`: new game presentation, touch/keyboard controls, voice, and celebrations.
 - `activity.html`, `activity.css`, `src/club/activity.js`: the three creative games, gallery, pointer controls, PNG export and print layouts.
-- `src/club/activity-scenes.js`, `src/club/activity-card-art.js`: original colourable scenes and card illustrations.
+- `src/club/activity-scenes.js`, `src/club/activity-extra-scenes.js`, `src/club/activity-card-art.js`: original colourable scenes, silhouettes and card illustrations.
+- `src/club/activity-library.js`, `src/club/activity-picker.js`: themes, searchable/paginated picture libraries and shuffled mystery decks.
 - `src/club/activity-model.js`: drawing history, numbered-dot progression and jigsaw geometry/matching.
 - `src/club/activity-book.js`: validated browser-local gallery, drafts and restoration.
 - `src/club/catalog.js`: the nine offerings and their navigation.

@@ -1,6 +1,7 @@
+import { EXTRA_SCENES } from './activity-extra-scenes.js';
 const shape = (id, label, tag, attrs, colour) => ({ id, label, tag, attrs, colour });
 const S = shape;
-export const SCENES = Object.freeze([
+const ORIGINAL_SCENES = [
   { id: 'train', name: 'Pip’s rainbow train', short: 'Train', icon: '🚆', background: '#e0f6ff', shapes: [
     S('sun','sun','circle',{cx:506,cy:66,r:36},'#ffcf43'), S('hill','rolling hill','path',{d:'M0 330Q150 205 310 300T600 285V440H0Z'},'#97d77c'),
     S('carriage','carriage','rect',{x:68,y:173,width:228,height:157,rx:24},'#9c71ed'), S('engine','engine','path',{d:'M316 173H443Q481 173 498 222L525 292Q536 330 495 330H316Z'},'#f99a54'),
@@ -25,7 +26,9 @@ export const SCENES = Object.freeze([
   {id:'robot',name:'Beep’s brilliant invention',short:'Robot',icon:'🤖',background:'#e8e7fb',shapes:[
     S('head','robot head','rect',{x:174,y:79,width:252,height:144,rx:28},'#8edbe0'),S('antenna','antenna light','circle',{cx:300,cy:37,r:17},'#ffcc5b'),S('ear1','left ear','rect',{x:151,y:126,width:23,height:58,rx:7},'#b491e3'),S('ear2','right ear','rect',{x:426,y:126,width:23,height:58,rx:7},'#b491e3'),S('body','robot body','rect',{x:202,y:242,width:196,height:111,rx:20},'#ffce73'),S('arm1','left arm','path',{d:'M202 257H156L125 301 147 321 178 285H202Z'},'#ae91e5'),S('arm2','right arm','path',{d:'M398 257H444L475 301 453 321 422 285H398Z'},'#ae91e5'),S('foot1','left boot','rect',{x:211,y:353,width:63,height:39,rx:10},'#8ad4df'),S('foot2','right boot','rect',{x:326,y:353,width:63,height:39,rx:10},'#8ad4df'),S('eye1','left eye','circle',{cx:238,cy:138,r:27},'#bfc0eb'),S('eye2','right eye','circle',{cx:362,cy:138,r:27},'#bfc0eb'),S('heart','heart button','path',{d:'M300 326 271 298C250 273 287 260 300 284 315 260 350 275 329 299Z'},'#f78fa6'),
   ],details:'<path d="M300 54v25m-38 144v19m76-19v19M249 191h102m-13-7v14m-25-14v14m-25-14v14m-25-14v14"/><circle cx="238" cy="138" r="7" fill="#29304c"/><circle cx="362" cy="138" r="7" fill="#29304c"/>',dots:[[300,37],[300,79],[204,79],[174,100],[174,126],[151,126],[151,184],[174,184],[183,215],[224,223],[224,242],[202,257],[156,257],[125,301],[147,321],[178,285],[202,285],[202,353],[211,392],[274,392],[274,353],[326,353],[326,392],[389,392],[398,353],[398,285],[422,285],[453,321],[475,301],[444,257],[398,257],[376,242],[376,223],[417,215],[426,184],[449,184],[449,126],[426,126],[426,100],[396,79],[300,79]]},
-]);
+];
+const originalThemes={train:'transport',dinosaur:'animals',turtle:'ocean',butterfly:'garden',rocket:'fantasy',robot:'fantasy'};
+export const SCENES = Object.freeze([...ORIGINAL_SCENES.map(scene=>({...scene,theme:originalThemes[scene.id]})),...EXTRA_SCENES]);
 export const getScene = id => SCENES.find(scene => scene.id === id) || SCENES[0];
 export const PALETTE = Object.freeze(['#ef5262','#ff9644','#ffcf43','#b7da59','#45bc8d','#47c9c7','#4da7e5','#6655c7','#a46fe0','#f183b5','#9b6c46','#ffffff']);
 export const STAMPS = Object.freeze(['star','heart','flower']);

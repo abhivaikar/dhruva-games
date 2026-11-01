@@ -1,12 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SCENES, artworkSVG } from '../src/club/activity-scenes.js';
+import { THEMES, libraryPage, MysteryDeck, DOT_COUNTS, PIECE_COUNTS } from '../src/club/activity-library.js';
+import { picturePicker, pickerResults } from '../src/club/activity-picker.js';
 import { DrawingSession, DotSession, dotPoints, PicturePuzzle, piecePath, normaliseArtwork, freshArtwork, MAX_STROKES, MAX_POINTS, MAX_STAMPS } from '../src/club/activity-model.js';
 import { readBook, savePage, removePage, restorePage, writeDraft, readDraft, BOOK_LIMIT, openArtwork } from '../src/club/activity-book.js';
 const memory=()=>{const values=new Map();return {getItem:key=>values.get(key)||null,setItem:(key,value)=>values.set(key,value)};};
 
-test('all six original activity pictures have named, unique colourable regions and complete SVG documents',()=>{
-  assert.equal(SCENES.length,6);
+test('36 distinct activity pictures have named, unique colourable regions and complete SVG documents',()=>{
+  assert.equal(SCENES.length,36);
+  assert.equal(new Set(SCENES.map(scene=>scene.id)).size,36);
+  assert.equal(new Set(SCENES.map(scene=>scene.name)).size,36);
+  assert.equal(new Set(SCENES.map(scene=>JSON.stringify(scene.shapes))).size,36);
   for(const scene of SCENES){
     assert.equal(new Set(scene.shapes.map(shape=>shape.id)).size,scene.shapes.length);
     assert.ok(scene.shapes.length>=9);
@@ -16,6 +21,56 @@ test('all six original activity pictures have named, unique colourable regions a
     assert.ok(!/https?:\/\/(?!www.w3.org\/2000\/svg)/.test(svg));
     assert.ok(!svg.includes('<script'));
   }
+});
+
+test('each of six worlds has six genuine drawings with all 108 dot and 144 puzzle challenges available',()=>{
+  assert.equal(THEMES.length,6);
+  for(const theme of THEMES)assert.equal(SCENES.filter(scene=>scene.theme===theme.id).length,6,theme.id);
+  assert.ok(SCENES.every(scene=>THEMES.some(theme=>theme.id===scene.theme)));
+  assert.equal(SCENES.length*DOT_COUNTS.length,108);
+  assert.equal(SCENES.length*PIECE_COUNTS.length,144);
+  assert.equal(new Set(SCENES.map(scene=>JSON.stringify(scene.dots))).size,36);
+});
+
+test('the picture library browses every page without omissions, filters by theme and searches names',()=>{
+  const all=Array.from({length:3},(_,page)=>libraryPage({page}));
+  assert.deepEqual(all.map(result=>result.scenes.length),[12,12,12]);
+  assert.equal(new Set(all.flatMap(result=>result.scenes.map(scene=>scene.id))).size,36);
+  assert.equal(libraryPage({page:999}).page,2);
+  assert.equal(libraryPage({page:-1}).page,0);
+  for(const theme of THEMES){const result=libraryPage({theme:theme.id});assert.equal(result.total,6);assert.equal(result.pages,1);assert.ok(result.scenes.every(scene=>scene.theme===theme.id));}
+  assert.deepEqual(libraryPage({query:'  DOUBLE-decker  '}).scenes.map(scene=>scene.id),['bus']);
+  assert.deepEqual(libraryPage({theme:'fantasy',query:'dragon'}).scenes.map(scene=>scene.id),['dragon']);
+  assert.equal(libraryPage({theme:'ocean',query:'dragon'}).total,0);
+  assert.equal(libraryPage({query:'no such picture',page:9}).page,0);
+});
+
+test('mysteries explore every picture before repeating, including across shuffled bag boundaries',()=>{
+  for(const random of [()=>0,()=>.99999,Math.random])for(const theme of ['all',...THEMES.map(theme=>theme.id)]){
+    const deck=new MysteryDeck(random),size=theme==='all'?36:6;
+    let previous=null;
+    for(let cycle=0;cycle<3;cycle++){
+      const ids=[];
+      for(let i=0;i<size;i++){const id=deck.next(theme);assert.notEqual(id,previous);ids.push(id);previous=id;}
+      assert.equal(new Set(ids).size,size);
+      if(theme!=='all')assert.ok(ids.every(id=>SCENES.find(scene=>scene.id===id).theme===theme));
+    }
+  }
+  assert.throws(()=>new MysteryDeck().next('unknown'),RangeError);
+  const switching=new MysteryDeck(()=>0),themes=['all',...THEMES.map(theme=>theme.id)];
+  let last=null;
+  for(let i=0;i<1000;i++){const theme=themes[Math.floor(i/3)%themes.length],id=switching.next(theme);assert.notEqual(id,last);last=id;}
+});
+
+test('picture picking safely renders search text, empty results and a child’s artwork as a puzzle source',()=>{
+  const options={selected:'dragon',attribute:'data-page',ownPages:[]};
+  const markup=picturePicker({theme:'fantasy',query:'"<script>',page:0},options);
+  assert.ok(markup.includes('&quot;&lt;script&gt;'));assert.ok(!markup.includes('<script>'));
+  assert.ok(markup.includes('No pictures found'));
+  const drawings=[{id:'art-one',art:freshArtwork('dragon')}];
+  const own=pickerResults({theme:'book',query:'dragon',page:0},{...options,selected:'art-one',ownPages:drawings});
+  assert.ok(own.includes('data-puzzle-art="art-one"'));assert.ok(own.includes('My dragon picture'));assert.ok(own.includes('aria-pressed="true"'));
+  assert.ok(!own.includes('data-page="dragon"'));
 });
 
 test('colour fills, brush drawing and stamps support true undo/redo and clearing can be undone',()=>{
