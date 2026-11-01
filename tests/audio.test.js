@@ -5,9 +5,10 @@ import { chooseNarrator, narratorVoices, readVoice, writeVoice, DEFAULT_VOICE, V
 const voice=(name,lang='en-US',voiceURI=name)=>({name,lang,voiceURI});
 const memory=()=>{const items=new Map();return {getItem:key=>items.get(key)||null,setItem:(key,value)=>items.set(key,value)};};
 
-test('narrator selection prefers natural voices over the first regional match and excludes novelty voices',()=>{
+test('Google US English is the default narrator with ranked English fallbacks and no novelty voices',()=>{
   const voices=[voice('Albert'),voice('Plain regional voice','en-SG'),voice('Samantha'),voice('Microsoft Sonia Online (Natural)','en-GB'),voice('Google US English'),voice('Mei','zh-CN')];
-  assert.equal(chooseNarrator(voices).name,'Microsoft Sonia Online (Natural)');
+  assert.equal(chooseNarrator(voices).name,'Google US English');
+  assert.equal(chooseNarrator(voices.filter(voice=>voice.name!=='Google US English')).name,'Microsoft Sonia Online (Natural)');
   assert.deepEqual(narratorVoices(voices).map(voice=>voice.name),['Microsoft Sonia Online (Natural)','Google US English','Samantha','Plain regional voice']);
   assert.equal(chooseNarrator([voice('Albert'),voice('Samantha')]).name,'Samantha');
   assert.equal(chooseNarrator([voice('Albert'),voice('Mei','zh-CN')]),null);
@@ -21,6 +22,15 @@ test('explicit narrator choice wins, survives voice reordering and falls back sa
   assert.equal(chooseNarrator([...voices].reverse(),saved).voiceURI,'my-samantha');
   assert.equal(chooseNarrator([voice('Samantha','en-US','another-uri')],saved).name,'Samantha');
   assert.equal(chooseNarrator([voices[0]],saved).name,'Google US English');
+  assert.equal(chooseNarrator([voice('Microsoft Sonia Online (Natural)','en-GB'),voices[0]],saved).name,'Google US English');
+});
+
+test('fresh and legacy automatic preferences use Google US English while preserving the saved pace',()=>{
+  const storage=memory();
+  assert.deepEqual(readVoice(storage),DEFAULT_VOICE);
+  storage.setItem(VOICE_KEY,JSON.stringify({voiceURI:'',name:'',lang:'',pace:'gentle'}));
+  assert.deepEqual(readVoice(storage),{...DEFAULT_VOICE,pace:'gentle'});
+  assert.equal(chooseNarrator([voice('Google US English','en-US','device-specific-uri')],readVoice(storage)).voiceURI,'device-specific-uri');
 });
 
 test('voice preferences validate saved settings and tolerate corrupt or unavailable storage',()=>{
@@ -41,6 +51,13 @@ function withSpeech(run){
     run({audio:new AudioGuide(),spoken,load(list){voices=list;for(const listener of [...listeners])listener();},get cancelled(){return cancelled;},listeners});
   }finally{globalThis.window=oldWindow;globalThis.localStorage=oldStorage;}
 }
+
+test('fresh spoken prompts use Google US English even when a natural voice is available',()=>withSpeech(({audio,spoken,load})=>{
+  load([voice('Microsoft Sonia Online (Natural)','en-GB'),voice('Google US English','en-US','browser-google-voice')]);
+  audio.speak('Hello, Dhruva!');
+  assert.equal(spoken[0].voice.voiceURI,'browser-google-voice');
+  assert.equal(spoken[0].lang,'en-US');
+}));
 
 test('spoken prompts use the selected voice, its language and a natural default pace',()=>withSpeech(({audio,spoken,load})=>{
   load([voice('Albert'),voice('Samantha')]);

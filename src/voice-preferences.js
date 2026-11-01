@@ -1,5 +1,5 @@
 export const VOICE_KEY = 'dhruva-narrator-v1';
-export const DEFAULT_VOICE = Object.freeze({voiceURI:'',name:'',lang:'',pace:'natural'});
+export const DEFAULT_VOICE = Object.freeze({voiceURI:'',name:'Google US English',lang:'en-US',pace:'natural'});
 export const PACES = Object.freeze({natural:{label:'Lively & natural',rate:1},gentle:{label:'A little gentler',rate:.92}});
 const novelty = /\b(albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|fred|good news|hysterical|junior|organ|ralph|trinoids|whisper|zarvox|jester|superstar|wobble)\b/i;
 export function narratorVoices(voices=[]){
@@ -18,13 +18,15 @@ export function chooseNarrator(voices,preference=DEFAULT_VOICE){
   const choices=narratorVoices(voices);
   return choices.find(voice=>preference.voiceURI&&voice.voiceURI===preference.voiceURI)
     ||choices.find(voice=>preference.name&&voice.name===preference.name&&voice.lang===preference.lang)
+    ||choices.find(voice=>voice.name===DEFAULT_VOICE.name&&voice.lang===DEFAULT_VOICE.lang)
     ||choices[0]||null;
 }
 export function readVoice(storage){
   try{
     const value=JSON.parse((storage||globalThis.localStorage)?.getItem(VOICE_KEY)||'null');
     if(!value||typeof value!=='object')return {...DEFAULT_VOICE};
-    return {voiceURI:typeof value.voiceURI==='string'?value.voiceURI.slice(0,500):'',name:typeof value.name==='string'?value.name.slice(0,200):'',lang:typeof value.lang==='string'?value.lang.slice(0,40):'',pace:Object.hasOwn(PACES,value.pace)?value.pace:'natural'};
+    const preference={voiceURI:typeof value.voiceURI==='string'?value.voiceURI.slice(0,500):'',name:typeof value.name==='string'?value.name.slice(0,200):'',lang:typeof value.lang==='string'?value.lang.slice(0,40):'',pace:Object.hasOwn(PACES,value.pace)?value.pace:'natural'};
+    return preference.voiceURI||preference.name?preference:{...DEFAULT_VOICE,pace:preference.pace};
   }catch{return {...DEFAULT_VOICE};}
 }
 export function writeVoice(value,storage){
