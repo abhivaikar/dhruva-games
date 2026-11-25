@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#293f37">
+  <meta name="description" content="A gentle storybook adventure for Dhruva and Chiku. Walk, paddle, ride and float through eight original landscapes on the long way home.">
+  <title>The Long Way Home · Dhruva’s Discovery Club</title>
+  <link rel="icon" href="./assets/club.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./home.css"><link rel="stylesheet" href="./voice.css">
+  <script type="module" src="./src/club/home.js"></script>
+</head>
+<body>
+  <header class="home-header"><a href="./index.html">All games</a><span class="wordmark">THE LONG WAY <b>HOME</b></span><nav aria-label="Journey tools"><button id="chapters">Journey book</button><button id="sound" aria-pressed="true">Sound on</button><button id="help">Help</button></nav></header>
+  <main>
+    <section class="journey" aria-label="Storybook adventure">
+      <div class="landscape"><canvas id="landscape" aria-hidden="true"></canvas><div class="vignette"></div></div>
+      <div class="scene-heading"><p id="place">A LITTLE JOURNEY WITH DHRUVA & CHIKU</p><h1 id="chapter-title">The Long Way Home</h1><span id="chapter-count">Eight places. Two friends. One lovely way home.</span></div>
+      <div id="intro" class="intro"><p class="intro-kicker">A STORY TO STEP INSIDE</p><h2>Take the long<br>way home.</h2><p>A little boy. A faithful dog.<br>A world full of small wonders.</p><button id="begin" class="primary">Let’s wander</button><p class="intro-note">Walk · paddle · ride · float<br>Go gently. There is no hurry.</p></div>
+      <div id="ending" class="intro ending" hidden><p class="intro-kicker">EVERY LITTLE STEP BROUGHT YOU HERE</p><h2>Home, at last.</h2><p id="ending-story"></p><button id="read-book" class="primary">Open my journey book</button><button id="again" class="text-button">Wander again</button></div>
+      <div class="scene-footer" id="scene-footer" hidden><div id="discoveries" class="discoveries" aria-label="Discoveries in this chapter"></div><button id="pet" class="pet-button">♡ Cuddle Chiku</button></div>
+      <div class="pause-overlay" id="pause-overlay" hidden><p>Resting a little.</p><button class="primary" id="resume">Keep wandering</button></div>
+    </section>
+    <section class="story-panel" id="story-panel" tabindex="-1" hidden aria-label="Story and controls">
+      <div class="story-copy"><p class="story-label" id="story-label">YOUR LITTLE ADVENTURE</p><p id="story" role="status" aria-live="polite"></p><button class="text-button" id="hear">Hear this</button></div>
+      <div class="play-controls"><div class="move-controls" role="group" aria-label="Travel controls"><button data-move="-1" aria-label="Travel left">◀</button><button data-move="1" aria-label="Travel right">▶</button></div><button id="interact" class="primary">Explore</button><button id="next" class="primary" hidden>Next chapter</button><button id="pause" class="quiet">Pause</button><p id="control-hint">Tap the landscape to walk · ← → to move · Space to explore</p></div>
+    </section>
+  </main>
+  <dialog id="book" aria-labelledby="book-title"><div class="dialog-header"><div><p class="story-label">A POCKETFUL OF MEMORIES</p><h2 id="book-title">Our journey book</h2></div><button data-close="book" aria-label="Close journey book">×</button></div><p>Revisit the places you’ve explored. New pages open as you travel.</p><div id="book-pages" class="book-pages"></div><button id="restart" class="quiet">Start a fresh journey</button></dialog>
+  <dialog id="help-dialog" aria-labelledby="help-title"><div class="dialog-header"><h2 id="help-title">A little help along the way</h2><button data-close="help-dialog" aria-label="Close help">×</button></div><p>Tap a place in the landscape to travel there, or hold the left and right buttons. On a keyboard, use the arrow keys or A and D.</p><p>Look for golden circles. When you’re close, choose <strong>Explore</strong> or press <strong>Space</strong> or <strong>Enter</strong>. Find three small wonders, then choose the next chapter.</p><p>Tap a discovery circle at the bottom of the scene to travel straight to it. Chiku loves a cuddle whenever you need a break.</p><p>There are no timers or wrong answers. Your journey is saved in this browser when storage is available. Sound and narration are optional.</p><button data-close="help-dialog" class="primary">Let’s wander</button></dialog>
+  <dialog id="restart-dialog" aria-labelledby="restart-title"><h2 id="restart-title">A fresh beginning?</h2><p>This clears this story’s saved discoveries and takes you back to the meadow.</p><div class="restart-actions"><button data-close="restart-dialog" class="quiet">Keep my journey</button><button id="confirm-restart" class="primary">Start again</button></div></dialog>
+  <noscript>Please enable JavaScript to explore the story.</noscript>
+</body>
+</html>

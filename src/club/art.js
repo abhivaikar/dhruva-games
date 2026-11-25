@@ -1,6 +1,8 @@
+import { homeCardArt } from './home-art.js';
 import { activityCardArt } from './activity-card-art.js';
 import { treasureSceneArt } from './treasure-art.js';
 import { languageCardArt } from './language-art.js';
+import { brainCardArt } from './brain-art.js';
 
 const star = (x, y, size = 1, colour = '#ffdf45') => `<path d="m0-9 2.7 5.5 6 .9-4.3 4.2 1 6L0 4.8-5.4 7.6l1-6-4.3-4.2 6-.9Z" fill="${colour}" transform="translate(${x} ${y}) scale(${size})"/>`;
 const cloud = (x, y) => `<path d="M0 12q-2-13 11-13 13-21 28-3 21-4 22 14 12-1 13 9H0Z" transform="translate(${x} ${y})" fill="#fffdf5" opacity=".8"/>`;
@@ -11,6 +13,8 @@ export function rocketArt(completed = 0, total = 8, showCaption = true) {
 }
 
 export function illustration(type) {
+  if (type === 'long-way-home') return homeCardArt();
+  if (['turtle-words','canopy-four','picnic-maze','rainbow-rhythm'].includes(type)) return brainCardArt(type);
   if (['chinese','marathi'].includes(type)) return languageCardArt(type);
   if (['colouring', 'dots', 'puzzles'].includes(type)) return activityCardArt(type);
   let content = '';

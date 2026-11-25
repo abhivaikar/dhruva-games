@@ -44,10 +44,11 @@ test('restarting the treasure voyage keeps the same island but restores all disc
   assert.equal(trail.lastEvent,null);assert.equal(JSON.stringify([trail.missions,trail.shellSpots,trail.turtleCell,trail.lockOrder]),layout);
 });
 
-test('all eleven offerings have unique URLs and local entry points', async () => {
-  assert.equal(GAMES.length, 11);
-  assert.equal(new Set(GAMES.map(game => game.id)).size, 11);
-  assert.equal(new Set(GAMES.map(game => game.href)).size, 11);
+test('all offerings have unique URLs and local entry points', async () => {
+  assert.ok(GAMES.some(game => game.id === 'long-way-home'));
+  assert.ok(GAMES.length >= 12);
+  assert.equal(new Set(GAMES.map(game => game.id)).size, GAMES.length);
+  assert.equal(new Set(GAMES.map(game => game.href)).size, GAMES.length);
   for (const game of GAMES) await access(new URL(`../${game.href.split('?')[0]}`, import.meta.url));
   const mrt = await readFile(new URL('../mrt-adventure.html', import.meta.url), 'utf8');
   assert.ok(mrt.includes('src="./src/app.js"'));

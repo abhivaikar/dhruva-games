@@ -100,3 +100,11 @@ A play session with Dhruva is the best next check of reading load, voice, pace a
 - Verified in the browser: put piece 1 in space 4; filled all four spaces incorrectly; swapped board pieces by clicking and by dragging; dragged a board piece back to the tray; replaced an occupied space from the tray; moved a piece and returned it with the keyboard/button.
 - Verified a correct picture celebrates on the same board, its pieces can still move afterward, and Undo/Redo, Reset and undoing Reset restore both correct and incorrect arrangements.
 - All 81 tests and the static build pass. Regression checks cover every piece/space combination for 4, 6, 9 and 12 pieces, displaced-piece recovery, and piece uniqueness during repeated moves and history operations.
+
+## The Long Way Home — 25 November 2026
+
+- Added an original eight-chapter story with Dhruva and Chiku, 24 proximity-gated discoveries, foot/canoe/train/balloon travel, a journey book, optional cuddles/narration/music, pause, confirmed restart and browser-local recovery.
+- All 86 Node tests pass. New checks cover the complete story, one-time discoveries, free discovery order, movement bounds, locked chapters, partial-save recovery, completed-story recovery and corrupt/blocked storage. A Canvas-context smoke test executes every landscape and travel mode at desktop and phone proportions with regular and reduced motion; it does not establish visual quality.
+- The complete working tree and an isolated release copy both pass tests and static production builds. The isolated copy contains this addition without the pre-existing, uncommitted brain-game changes.
+- Browser playthrough and visual QA remain unverified: the session denied local server binding and browser access to a standalone local-file preview.
+- Local Git staging was blocked by read-only Git metadata. The connected GitHub integration could read the current main branch but rejected tree creation with HTTP 403, “Resource not accessible by integration.” No remote commit, push or deployment was made.

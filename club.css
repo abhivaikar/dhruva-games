@@ -365,3 +365,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-vis
   *, *:before, *:after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .club-confetti { display: none; }
 }
+
+.new-game-badge { position:absolute; top:4px; left:4px; background:#fff1a8; border:1px solid #d4b65f; color:#826522; padding:3px 5px; border-radius:6px; font-size:7px; font-weight:900; letter-spacing:.6px; }

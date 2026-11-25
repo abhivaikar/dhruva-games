@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#378a70">
+  <meta name="description" content="Play Turtle Word Hunt, Canopy Four, Picnic Maze and Rainbow Rhythm with Dhruva. Original word, strategy, maze and music adventures for curious little minds.">
+  <title>Let’s discover · Dhruva’s Discovery Club</title>
+  <link rel="icon" href="./assets/club.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./club.css">
+  <link rel="stylesheet" href="./voice.css">
+  <link rel="stylesheet" href="./restart.css">
+  <link rel="stylesheet" href="./brain.css">
+  <script type="module" src="./src/club/brain.js"></script>
+</head>
+<body class="club brain-page">
+  <div class="club-shell">
+    <header class="club-header"><a class="club-brand" href="./"><img src="./assets/club.svg" width="43" height="43" alt=""><span>Dhruva’s<small>DISCOVERY CLUB</small></span></a><div class="play-header-actions"><a class="back-link" href="./">← All games</a><button id="brain-sound" class="round-button" type="button" aria-label="Turn sound off" aria-pressed="true">♪</button></div></header>
+    <nav class="brain-links" aria-label="Words, thinking and music games"><a href="./brain.html?game=turtle-words">🐢 Word hunt</a><a href="./brain.html?game=canopy-four">🌿 Four in a row</a><a href="./brain.html?game=picnic-maze">🧺 Mazes</a><a href="./brain.html?game=rainbow-rhythm">🎹 Music</a></nav>
+    <main><div class="brain-intro"><div><p id="brain-eyebrow">LITTLE IDEAS. LOVELY DISCOVERIES.</p><h1 id="brain-title">Turtle Word Hunt</h1><p id="brain-subtitle">Little letters. A big adventure.</p></div><button type="button" class="brain-secondary" id="brain-hear">♪ Hear how to play</button></div><div id="brain-root"></div></main>
+    <footer class="club-footer"><span>Take your time. Try your ideas.</span><a href="./">Choose another adventure ↗</a></footer>
+  </div>
+  <p id="brain-announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <noscript><p class="no-script">Please enable JavaScript to play these games.</p></noscript>
+</body>
+</html>

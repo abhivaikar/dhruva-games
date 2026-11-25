@@ -1,9 +1,10 @@
 # Dhruva’s Discovery Club
 
-A family website with eleven playful learning games. Built with static HTML, CSS, original SVG illustrations, bundled language audio and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
+A family website with playful learning games and storybook adventures. Built with static HTML, CSS, original SVG illustrations, bundled language audio and browser JavaScript. No package installation, accounts, advertisements, analytics, or paid backend.
 
 | Game | What children do |
 | --- | --- |
+| The Long Way Home | Travel with Dhruva and Chiku through eight original storybook landscapes by foot, canoe, train and balloon; discover little wonders on the way to Grandma’s cottage. |
 | MRT Adventure | Ride with Pip from Punggol Coast to HarbourFront; count at all 17 stations and collect souvenirs. |
 | Transport Dispatcher | Read real Singapore station sequences and destination displays, recognise MRT line colours, and distinguish buses from rail. |
 | Maths Workshop | Solve eight selected primary maths puzzles to light up a rocket. Choose Primary 1–2, 3–4, or 5–6 practice. |
@@ -45,6 +46,12 @@ Automatic feedback pauses in hidden tabs and open dialogs. Restart, mode changes
 - **Voice** in the header opens a narrator preview shared by all games. Google US English (en-US) is the default narrator. If it is unavailable, the automatic choice prefers natural/enhanced English voices and excludes novelty voices. Choose a different voice and a natural or gentler pace; the browser remembers the choice. Previews work even when game sounds are muted and do not turn game sound back on. Available voices and their quality depend on the device/browser; the website does not bundle studio narration.
 - Club games share a locally saved sound preference and “Explored” badges. MRT Adventure keeps its existing sound, train-colour and difficulty preferences. Quiz and treasure refreshes start fresh sessions. Colouring resumes its current draft; completed badges remain when browser storage is available.
 - Reduced-motion preferences suppress celebration motion. Sound starts after user interaction to respect browser autoplay rules.
+
+## The Long Way Home
+
+A quiet, original side-scrolling story at `home.html`, inspired by the gentle journeys in Getting There. Eight chapters move through a meadow, river, bamboo garden, lantern village, coastal railway, autumn woods, cloud garden and Grandma’s cottage. All landscape art, characters and the music-box accompaniment are generated locally with Canvas and Web Audio. There are no external assets or runtime services.
+
+Tap the landscape or a discovery chip to travel; hold the on-screen left/right buttons or use arrow keys / A and D. Explore nearby golden circles with the labelled action button, Space or Enter. Find all three discoveries before choosing the next chapter. The journey book revisits unlocked chapters. Cuddles, narration, music and pause are optional; there are no timers or fail states. Browser-local saves resume discoveries, chapter unlocks and position, with recovery when storage is blocked. Reduced motion removes decorative animation. Restart requires a confirmation and clears only this story’s journey.
 
 ## Creative games
 
@@ -116,7 +123,7 @@ node scripts/serve.mjs --dist
 
 The automated tests cover 15,000 generated maths questions across both the MRT game and new primary practice, answer locking, retries, full progression, transport ordering, flag assets, map data, 500 generated pirate voyages, island reachability, one-time collectibles, key-lock progression, keyboard selection, drawing undo/redo, dot ordering, jigsaw seams/progression, draft recovery, blocked storage and the automatic-transition clock (delay, pause/resume, multiple blockers, audio waiting and stale callback cancellation).
 
-The build copies the five HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access. Published stylesheets, entry scripts and every dependency import share a content-based release version so browsers load compatible files after updates.
+The build copies the HTML entry points and their local assets into `dist/`. Every link and import is relative, so GitHub Pages project subdirectories work without SPA routing or rewrites. Builds and tests do not need network access. Published stylesheets, entry scripts and every dependency import share a content-based release version so browsers load compatible files after updates.
 
 ## GitHub Pages
 

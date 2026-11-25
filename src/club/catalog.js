@@ -1,4 +1,9 @@
 export const GAMES = Object.freeze([
+  { id: 'long-way-home', title: 'The Long Way Home', category: 'stories', badge: 'A LITTLE JOURNEY WITH DHRUVA & CHIKU', detail: '8 chapters · walk, paddle, ride & float', description: 'A boy, a dog, and a pocketful of little wonders. A gentle storybook journey to Grandma’s cottage.', href: './home.html', colour: '#59795f', art: 'long-way-home', fresh: true },
+  { id: 'turtle-words', title: 'Turtle Word Hunt', category: 'words', badge: 'TILLY’S LITTLE LETTER ADVENTURE', detail: '12 worlds · your own words', description: 'Find hidden words with Tilly. Hear them, spot them, and brighten her shell!', href: './brain.html?game=turtle-words', colour: '#34866a', art: 'turtle-words', fresh: true },
+  { id: 'canopy-four', title: 'Canopy Four', category: 'thinking', badge: 'LITTLE MOVES. BIG IDEAS.', detail: 'Four in a row · Pip or two players', description: 'Drop leaves and flowers. Can you grow four in a row?', href: './brain.html?game=canopy-four', colour: '#a77b23', art: 'canopy-four', fresh: true },
+  { id: 'picnic-maze', title: 'Picnic Maze', category: 'thinking', badge: 'A PATH TO SOMETHING LOVELY', detail: '8 worlds · fresh mazes', description: 'Collect picnic treats and guide Tilly through twisty little paths.', href: './brain.html?game=picnic-maze', colour: '#5b863b', art: 'picnic-maze', fresh: true },
+  { id: 'rainbow-rhythm', title: 'Rainbow Rhythm', category: 'music', badge: 'LISTEN. PLAY. MAKE SOMETHING.', detail: '72 tune challenges · make music', description: 'Echo Pip’s colourful tunes, or make a melody all your own.', href: './brain.html?game=rainbow-rhythm', colour: '#8860ae', art: 'rainbow-rhythm', fresh: true },
   { id: 'mrt-adventure', title: 'MRT Adventure', category: 'transport', badge: 'COUNT & RIDE', detail: 'Punggol Coast → HarbourFront', description: 'Ride with Pip. Count little treasures at all 17 stations.', href: './mrt-adventure.html', colour: '#6935d3', art: 'train' },
   { id: 'transport', title: 'Transport Dispatcher', category: 'transport', badge: 'SINGAPORE TRANSPORT', detail: 'Stations, lines & little journeys', description: 'Read the route, pick a direction, and send the right ride.', href: './play.html?game=transport', colour: '#087a62', art: 'transport' },
   { id: 'maths', title: 'Maths Workshop', category: 'maths', badge: 'PRIMARY 1–6', detail: 'Numbers, fractions & more', description: 'Solve a little puzzle. Build a rocket. Reach for the stars!', href: './play.html?game=maths', colour: '#ce3c16', art: 'maths' },
@@ -14,6 +19,10 @@ export const GAMES = Object.freeze([
 
 export const CATEGORIES = Object.freeze([
   { id: 'all', label: 'All adventures', icon: '✦' },
+  { id: 'stories', label: 'Story adventures', icon: '🌄' },
+  { id: 'words', label: 'Word games', icon: '🐢' },
+  { id: 'thinking', label: 'Thinking games', icon: '🧠' },
+  { id: 'music', label: 'Music', icon: '🎹' },
   { id: 'transport', label: 'Transport', icon: '🚆' },
   { id: 'maths', label: 'Maths', icon: '＋' },
   { id: 'maps', label: 'Maps', icon: '🌍' },
